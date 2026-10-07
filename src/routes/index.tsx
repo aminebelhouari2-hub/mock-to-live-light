@@ -58,8 +58,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title:
-          "Salaouandji School | صلوانجي سكول — مدرسة خاصة بسيدي سعيد، تلمسان",
+        title: "Salaouandji School | صلوانجي سكول — مدرسة خاصة بسيدي سعيد، تلمسان",
       },
       {
         name: "description",
@@ -178,10 +177,9 @@ function useReveal() {
       (entries) =>
         entries.forEach(
           (entry) =>
-            entry.isIntersecting &&
-            (entry.target.classList.add("in"), io.unobserve(entry.target))
+            entry.isIntersecting && (entry.target.classList.add("in"), io.unobserve(entry.target)),
         ),
-      { threshold: 0.12 }
+      { threshold: 0.12 },
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -214,9 +212,7 @@ function Section({
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="reveal mx-auto mb-14 max-w-2xl text-center">
           <Eyebrow>{label}</Eyebrow>
-          <h2 className="text-3xl font-bold text-forest sm:text-4xl">
-            {title}
-          </h2>
+          <h2 className="text-3xl font-bold text-forest sm:text-4xl">{title}</h2>
         </div>
         {children}
       </div>
@@ -233,19 +229,15 @@ function Index() {
   const p = (x: L) => x[lang];
   const dir = lang === "ar" ? "rtl" : "ltr";
 
-  const wa = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(
-    p(contact.waMessage)
-  )}`;
+  const wa = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(p(contact.waMessage))}`;
 
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(
-    contact.mapQuery
+    contact.mapQuery,
   )}&output=embed`;
 
   const mapHref =
     contact.mapLink ||
-    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-      contact.mapQuery
-    )}`;
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contact.mapQuery)}`;
 
   useReveal();
 
@@ -284,20 +276,14 @@ function Index() {
   ];
 
   const LangSwitch = () => (
-    <div
-      className="flex rounded-full bg-sand p-1"
-      role="group"
-      aria-label="Language"
-    >
+    <div className="flex rounded-full bg-sand p-1" role="group" aria-label="Language">
       {(["ar", "fr"] as Lang[]).map((c) => (
         <button
           key={c}
           onClick={() => setLang(c)}
           aria-pressed={lang === c}
           className={`rounded-full px-3 py-1.5 text-xs font-bold transition ${
-            lang === c
-              ? "bg-forest text-cream"
-              : "text-forest/70 hover:text-forest"
+            lang === c ? "bg-forest text-cream" : "text-forest/70 hover:text-forest"
           }`}
         >
           {c === "ar" ? "ع" : "FR"}
@@ -307,10 +293,7 @@ function Index() {
   );
 
   return (
-    <div
-      dir={dir}
-      className="relative overflow-x-hidden bg-background text-foreground"
-    >
+    <div dir={dir} className="relative overflow-x-hidden bg-background text-foreground">
       {/* WhatsApp */}
       <a
         href={wa}
@@ -340,9 +323,7 @@ function Index() {
               >
                 SALAOUANDJI <span className="text-primary">SCHOOL</span>
               </div>
-              <div className="truncate text-[11.5px] text-forest/60">
-                {t.tagline}
-              </div>
+              <div className="truncate text-[11.5px] text-forest/60">{t.tagline}</div>
             </div>
           </a>
 
@@ -441,9 +422,7 @@ function Index() {
                 <span className="text-primary">{t.heroTitle[1]}</span>
               </h1>
 
-              <p className="max-w-[56ch] text-[17px] leading-[1.95] text-forest/75">
-                {t.heroText}
-              </p>
+              <p className="max-w-[56ch] text-[17px] leading-[1.95] text-forest/75">{t.heroText}</p>
 
               <div className="flex flex-col gap-3 sm:flex-row">
                 <a
@@ -492,12 +471,8 @@ function Index() {
                   className="h-12 w-12 rounded-xl object-contain"
                 />
                 <div>
-                  <div className="text-xs text-forest/60">
-                    {t.addressLabel}
-                  </div>
-                  <div className="text-sm font-bold text-forest">
-                    Sidi Saïd, Tlemcen
-                  </div>
+                  <div className="text-xs text-forest/60">{t.addressLabel}</div>
+                  <div className="text-sm font-bold text-forest">Sidi Saïd, Tlemcen</div>
                 </div>
               </div>
             </div>
@@ -505,10 +480,7 @@ function Index() {
         </section>
 
         {/* Marquee */}
-        <div
-          className="overflow-hidden border-y-2 border-primary bg-forest py-3.5"
-          aria-hidden
-        >
+        <div className="overflow-hidden border-y-2 border-primary bg-forest py-3.5" aria-hidden>
           <div className="marquee-track">
             {Array.from({ length: 14 }).map((_, i) => (
               <span
@@ -527,9 +499,7 @@ function Index() {
           <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8 lg:py-28">
             <div className="reveal">
               <Eyebrow>{t.aboutLabel}</Eyebrow>
-              <h2 className="text-3xl font-bold leading-snug sm:text-4xl">
-                {t.aboutTitle}
-              </h2>
+              <h2 className="text-3xl font-bold leading-snug sm:text-4xl">{t.aboutTitle}</h2>
             </div>
             <div className="reveal space-y-4 text-[16.5px] leading-[2] text-cream/80">
               <p>{t.aboutP1}</p>
@@ -566,12 +536,8 @@ function Index() {
                   <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-peach text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
                     <I className="h-7 w-7" />
                   </div>
-                  <h3 className="mb-2 text-lg font-semibold text-forest">
-                    {p(s.title)}
-                  </h3>
-                  <p className="text-[15px] leading-7 text-forest/70">
-                    {p(s.desc)}
-                  </p>
+                  <h3 className="mb-2 text-lg font-semibold text-forest">{p(s.title)}</h3>
+                  <p className="text-[15px] leading-7 text-forest/70">{p(s.desc)}</p>
                 </article>
               );
             })}
@@ -584,9 +550,7 @@ function Index() {
           <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
             <div className="reveal mx-auto mb-12 max-w-3xl text-center">
               <Eyebrow>
-                {lang === "ar"
-                  ? "الموسم الدراسي الحالي"
-                  : "Saison scolaire actuelle"}
+                {lang === "ar" ? "الموسم الدراسي الحالي" : "Saison scolaire actuelle"}
               </Eyebrow>
 
               <div className="mb-4 flex justify-center">
@@ -614,9 +578,7 @@ function Index() {
                       {course.shortLevel}
                     </span>
                   </div>
-                  <h3 className="mb-3 text-2xl font-bold text-forest">
-                    {course.level}
-                  </h3>
+                  <h3 className="mb-3 text-2xl font-bold text-forest">{course.level}</h3>
                   <p className="mb-6 text-sm leading-relaxed text-forest/70">
                     {course.description[lang]}
                   </p>
@@ -626,7 +588,10 @@ function Index() {
                     </h4>
                     <ul className="space-y-2.5">
                       {course.subjects.map((sub) => (
-                        <li key={sub.ar} className="flex items-center gap-2.5 text-sm font-medium text-forest">
+                        <li
+                          key={sub.ar}
+                          className="flex items-center gap-2.5 text-sm font-medium text-forest"
+                        >
                           <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
                           {sub[lang]}
                         </li>
@@ -665,7 +630,12 @@ function Index() {
         </Section>
 
         {/* Activities */}
-        <Section id="activities" label={t.activitiesLabel} title={t.activitiesTitle} className="bg-sand/40">
+        <Section
+          id="activities"
+          label={t.activitiesLabel}
+          title={t.activitiesTitle}
+          className="bg-sand/40"
+        >
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {activities.map((act) => (
               <div
@@ -763,7 +733,10 @@ function Index() {
                     </div>
                     <div>
                       <div className="text-xs text-cream/60">{t.phoneLabel}</div>
-                      <a href={`tel:${contact.phone}`} className="text-sm font-bold dir-ltr hover:text-primary">
+                      <a
+                        href={`tel:${contact.phone}`}
+                        className="text-sm font-bold dir-ltr hover:text-primary"
+                      >
                         {contact.phone}
                       </a>
                     </div>
