@@ -59,6 +59,14 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-forest: var(--forest);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --color-peach: var(--peach);
+  --color-shell: var(--shell);
+  --color-night: var(--night);
+  --color-whatsapp: var(--whatsapp);
+  --font-sans: 'Tajawal', sans-serif;
 }
 
 :root {
@@ -95,6 +103,21 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --forest: oklch(0.21 0.006 60);
+  --cream: oklch(0.993 0.007 80);
+  --sand: oklch(0.93 0.03 75);
+  --peach: oklch(0.94 0.05 75);
+  --shell: oklch(0.97 0.017 80);
+  --night: oklch(0.21 0.006 60);
+  --whatsapp: oklch(0.76 0.19 150);
+  --background: oklch(0.993 0.007 80);
+  --foreground: oklch(0.24 0.007 50);
+  --primary: oklch(0.74 0.16 65);
+  --primary-hover: oklch(0.67 0.16 60);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.93 0.03 75);
+  --secondary-foreground: oklch(0.21 0.006 60);
+  --card: oklch(1 0 0);
 }
 
 .dark {
@@ -142,3 +165,19 @@
     color: var(--color-foreground);
   }
 }
+
+@layer components {
+  .lift { transition: transform .2s, box-shadow .2s; }
+  .lift:hover { transform: translateY(-4px); box-shadow: 0 16px 32px oklch(0.2 0.01 60 / 0.12); }
+}
+@keyframes wa-pulse { 0%,100% { box-shadow: 0 0 0 0 oklch(0.76 0.19 150 / .45); } 50% { box-shadow: 0 0 0 14px oklch(0.76 0.19 150 / 0); } }
+.wa-float { animation: wa-pulse 2.4s ease-in-out infinite; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(50%); } }
+.marquee-track { display: flex; align-items: center; gap: 40px; width: max-content; animation: marquee 26s linear infinite; direction: ltr; }
+@keyframes float-a { 0%,100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(14px,-22px) rotate(8deg); } }
+@keyframes float-b { 0%,100% { transform: translate(0,0) rotate(18deg); } 50% { transform: translate(-18px,16px) rotate(8deg); } }
+@keyframes float-c { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(10px,14px) scale(1.08); } }
+.float-a { animation: float-a 7s ease-in-out infinite; }
+.float-b { animation: float-b 8.5s ease-in-out infinite; }
+.float-c { animation: float-c 6s ease-in-out infinite; }
+html { scroll-behavior: smooth; }
