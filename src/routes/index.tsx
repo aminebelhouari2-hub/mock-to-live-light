@@ -1,3 +1,4 @@
+import { cdn } from "@/lib/cdn";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
@@ -159,7 +160,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 }
 
 function LogoDivider() {
-  return <div aria-hidden="true" className="overflow-hidden border-y border-primary/25 bg-forest py-3"><div className="marquee-track">{Array.from({ length: 10 }, (_, i) => <span key={i} className="flex items-center gap-10 whitespace-nowrap text-xs font-semibold text-cream">SALAOUANDJI SCHOOL<img src={logo.url} alt="" width={36} height={36} className="h-9 w-9 rounded-full object-cover" /></span>)}</div></div>;
+  return <div aria-hidden="true" className="overflow-hidden border-y border-primary/25 bg-forest py-3"><div className="marquee-track">{Array.from({ length: 10 }, (_, i) => <span key={i} className="flex items-center gap-10 whitespace-nowrap text-xs font-semibold text-cream">SALAOUANDJI SCHOOL<img src={cdn(logo.url)} alt="" width={36} height={36} className="h-9 w-9 rounded-full object-cover" /></span>)}</div></div>;
 }
 
 function Section({
@@ -308,7 +309,7 @@ function Index() {
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 xl:flex xl:justify-between lg:px-8">
           <a href="#top" className="flex min-w-0 items-center gap-3">
             <img
-              src={logo.url}
+              src={cdn(logo.url)}
               alt="Salaouandji School"
               width={44}
               height={44}
@@ -469,7 +470,7 @@ function Index() {
                 className="flex items-center gap-10 whitespace-nowrap font-display text-sm font-semibold text-cream"
               >
                 SALAOUANDJI SCHOOL — صلوانجي سكول
-                <img src={logo.url} alt="" width={40} height={40} className="h-10 w-10 shrink-0 rounded-full border border-primary/40 object-cover" />
+                <img src={cdn(logo.url)} alt="" width={40} height={40} className="h-10 w-10 shrink-0 rounded-full border border-primary/40 object-cover" />
               </span>
             ))}
           </div>
@@ -727,7 +728,7 @@ function Index() {
         <Section id="testimonials" label={facebookCommentsUi[lang].label} title={facebookCommentsUi[lang].title}>
           <div className="mb-10 flex flex-col items-center justify-between gap-5 border-b border-forest/10 pb-6 sm:flex-row">
             <div className="flex items-center gap-3">
-              <img src={logo.url} alt="" width={48} height={48} className="h-12 w-12 shrink-0 rounded-full border border-forest/10 object-cover" />
+              <img src={cdn(logo.url)} alt="" width={48} height={48} className="h-12 w-12 shrink-0 rounded-full border border-forest/10 object-cover" />
               <div><p className="text-sm font-bold text-forest" dir="ltr">Salaouandji School</p><p className="mt-1 text-xs leading-6 text-forest/65">{facebookCommentsUi[lang].source}</p></div>
             </div>
             <Button asChild variant="outline" className="h-auto max-w-full whitespace-normal py-3 text-sm"><a href={contact.social.facebook} target="_blank" rel="noopener noreferrer"><Facebook className="shrink-0" />{facebookCommentsUi[lang].link}<ArrowUpRight className="shrink-0" /></a></Button>
@@ -827,7 +828,7 @@ function Index() {
       <footer className="border-t border-forest/10 bg-cream py-10 text-sm text-forest/70">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="grid gap-8 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-            <div className="min-w-0"><a href="#top" className="flex items-center gap-3 font-display font-bold text-forest"><img src={logo.url} alt="" width={44} height={44} className="h-11 w-11 rounded-full object-cover" /><span dir="ltr">SALAOUANDJI SCHOOL</span></a><p className="mt-4 max-w-md leading-7">{t.footerAbout}</p></div>
+            <div className="min-w-0"><a href="#top" className="flex items-center gap-3 font-display font-bold text-forest"><img src={cdn(logo.url)} alt="" width={44} height={44} className="h-11 w-11 rounded-full object-cover" /><span dir="ltr">SALAOUANDJI SCHOOL</span></a><p className="mt-4 max-w-md leading-7">{t.footerAbout}</p></div>
             <div><h3 className="mb-4 font-bold text-forest">{t.footerLinks}</h3><nav className="grid grid-cols-2 gap-3">{[...navs, ["#register", t.nav.register] as [string, string]].map(([href,label]) => <a key={href} href={href} className="hover:text-primary">{label}</a>)}</nav></div>
           </div>
           <p className="mt-8 border-t border-forest/10 pt-6 text-center text-xs">© {new Date().getFullYear()} Salaouandji School — {lang === "ar" ? "جميع الحقوق محفوظة" : lang === "fr" ? "Tous droits réservés" : "All rights reserved"}</p>

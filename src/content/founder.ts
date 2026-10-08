@@ -1,8 +1,9 @@
+import { cdn } from "@/lib/cdn";
 import founderPhoto from "@/assets/optimized/founder-certificate-presentation.jpg.asset.json";
 import type { L } from "@/content/site";
 
 export const founder = {
-  photo: founderPhoto.url,
+  photo: cdn(founderPhoto.url),
   photoAlt: { ar: "تقديم شهادة خلال لقاء بالمدرسة", fr: "Remise d’un certificat lors d’une rencontre à l’école", en: "Certificate presentation at a school gathering" } satisfies L,
   label: { ar: "صاحبة المؤسسة", fr: "La fondatrice", en: "The founder" } satisfies L,
   name: { ar: "الأستاذة صلوانجي هيبة منال", fr: "Mme Salaouandji Hiba Manal", en: "Ms Salaouandji Hiba Manal" } satisfies L,
