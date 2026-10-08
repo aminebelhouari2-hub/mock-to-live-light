@@ -3,6 +3,14 @@ import { getAcademicYear } from "@/content/academic-year";
 import { contact, supportCourses, teachingStages, primarySchedule, primaryScheduleSubjects, homepagePhotos, eventPhotos, nurseryPhotos, gallery, supportPhotos, activities, teachers, schoolVideos } from "@/content/site";
 
 describe("Varied school media", () => {
+  it("retains distinct certificates, classrooms and activities in their sections", () => {
+    const filenames = (photos: { src: string }[]) => photos.map(photo => photo.src.split("/").pop());
+    expect(filenames(eventPhotos)).toContain("certificate-ceremony.jpg");
+    expect(filenames(eventPhotos)).toContain("school-celebration.jpg");
+    expect(filenames(supportPhotos)).toEqual(["classroom-desks.jpg", "classroom-colour.jpg", "classroom-alphabet.jpg"]);
+    expect(filenames(nurseryPhotos)).toEqual(expect.arrayContaining(["nursery-letters.jpg", "nursery-numbers.jpg"]));
+    expect(filenames(gallery)).toEqual(expect.arrayContaining(["outing-horse-touch.jpg", "outing-stable.jpg"]));
+  });
   it("does not repeat photos across school sections", () => {
     const sources = [...homepagePhotos, ...eventPhotos, ...nurseryPhotos, ...gallery, ...supportPhotos].map(photo => photo.src);
     sources.push(...activities.map(activity => activity.image), ...teachers.flatMap(teacher => teacher.photo ? [teacher.photo] : []));
