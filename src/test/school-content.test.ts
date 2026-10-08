@@ -18,21 +18,21 @@ describe("Academic year starts in September", () => {
 });
 
 describe("Requested support levels", () => {
-  it("offers the exact five 3AP subjects", () => {
-    expect(supportCourses.find(course => course.shortLevel === "3AP")).toMatchObject({
-      level: "الثالثة ابتدائي",
+  it("offers the exact five AP subjects", () => {
+    expect(supportCourses.find(course => course.shortLevel === "AP")).toMatchObject({
+      level: "المستوى الابتدائي",
       subjects: ["اللغة العربية", "الرياضيات", "اللغة الفرنسية", "اللغة الإنجليزية", "التربية الإسلامية"],
     });
   });
-  it("offers the exact seven 3AM subjects", () => {
-    expect(supportCourses.find(course => course.shortLevel === "3AM")).toMatchObject({
-      level: "الثالثة متوسط",
+  it("offers the exact seven AM subjects", () => {
+    expect(supportCourses.find(course => course.shortLevel === "AM")).toMatchObject({
+      level: "المستوى المتوسط",
       subjects: ["اللغة العربية", "الرياضيات", "اللغة الفرنسية", "اللغة الإنجليزية", "العلوم الفيزيائية", "علوم الطبيعة والحياة", "التاريخ والجغرافيا"],
     });
   });
-  it("offers the exact eight 3AS subjects", () => {
-    expect(supportCourses.find(course => course.shortLevel === "3AS")).toMatchObject({
-      level: "الثالثة ثانوي",
+  it("offers the exact eight AS subjects", () => {
+    expect(supportCourses.find(course => course.shortLevel === "AS")).toMatchObject({
+      level: "المستوى الثانوي",
       subjects: ["الرياضيات", "العلوم الطبيعية", "العلوم الفيزيائية", "اللغة العربية", "اللغة الفرنسية", "اللغة الإنجليزية", "الفلسفة", "التاريخ والجغرافيا"],
     });
   });
@@ -40,3 +40,6 @@ describe("Requested support levels", () => {
     expect(contact.whatsapp).toBe("213556057176");
   });
 });
+ it("uses the supplied official GPS destination", () => {
+   expect(contact.mapLink).toBe("https://maps.app.goo.gl/nqn6h7fU5Y6y9R2T7?g_st=ac");
+ });

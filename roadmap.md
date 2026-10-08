@@ -1,5 +1,5 @@
 # Requested updates
-- [ ] Correct existing page/content errors while preserving and restoring all school sections.
-- [ ] Add official social links, English translations and circular divider logos.
-- [ ] Centralize dynamic September academic year and support data; add support CTAs.
-- [ ] Verify academic boundaries, all support subjects, page interactions and three screen sizes.
+- [x] Preserve sections, multilingual content, social links and dynamic academic season.
+- [x] Replace placeholders with eight distinct real photos, distribute support and activity photos, and add an occasions carousel.
+- [x] Update general study levels and teacher titles; add activity SEO and logo dividers without inventing photo events.
+- [x] Set supplied GPS link and verify site links, images, carousel controls and mobile overflow. Public social destinations respond but profile content is login-restricted; live Maps rendering is not agent-tested.

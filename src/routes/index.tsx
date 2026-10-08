@@ -31,6 +31,7 @@ import {
   ArrowUpRight,
   type LucideIcon,
 } from "lucide-react";
+import { SchoolOccasions } from "@/components/school-occasions";
 import { Button } from "@/components/ui/button";
 import { getAcademicYear } from "@/content/academic-year";
 export { getAcademicYear } from "@/content/academic-year";
@@ -44,6 +45,9 @@ import {
   subjects,
   teachers,
   testimonials,
+  supportPhotos,
+  occasionTitle,
+  serviceSeo,
   supportCourses,
   supportUi,
   translateSupport,
@@ -58,14 +62,12 @@ export const Route = createFileRoute("/")({
     const academicYear = getAcademicYear();
     return ({
     meta: [
+      { name: "keywords", content: serviceSeo.map(item => item.keywords).join("، ") },
       {
         title:
           "Salaouandji School | صلوانجي سكول — مدرسة خاصة بسيدي سعيد، تلمسان",
       },
-      {
-        name: "description",
-        content: `صلوانجي سكول مدرسة خاصة في سيدي سعيد، تلمسان: أقسام تحضيرية، دروس دعم للثالثة ابتدائي والمتوسط والثانوي، ورشات لغة وأنشطة تربوية. التسجيل مفتوح للموسم ${academicYear}.`,
-      },
+      { name: "description", content: serviceSeo.map(item => item.description).join(" ") + ` التسجيل للموسم ${academicYear}.` },
       {
         property: "og:title",
         content: "Salaouandji School | صلوانجي سكول — تلمسان",
@@ -132,6 +134,10 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+function LogoDivider() {
+  return <div aria-hidden="true" className="overflow-hidden border-y border-primary/25 bg-forest py-3"><div className="marquee-track">{Array.from({ length: 10 }, (_, i) => <span key={i} className="flex items-center gap-10 whitespace-nowrap text-xs font-semibold text-cream">SALAOUANDJI SCHOOL<img src={logo.url} alt="" width={36} height={36} className="h-9 w-9 rounded-full object-cover" /></span>)}</div></div>;
+}
+
 function Section({
   id,
   label,
@@ -146,6 +152,8 @@ function Section({
   className?: string;
 }) {
   return (
+    <>
+    <LogoDivider />
     <section id={id} className={`py-20 lg:py-28 ${className}`}>
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="reveal mx-auto mb-14 max-w-2xl text-center">
@@ -157,6 +165,7 @@ function Section({
         {children}
       </div>
     </section>
+    </>
   );
 }
 
@@ -422,7 +431,7 @@ function Index() {
               <div className="absolute -inset-3 -z-10 rotate-[-3deg] rounded-[2.5rem] bg-primary/90" />
               <img
                 src={images.hero}
-                alt={t.sample}
+                alt={lang === "ar" ? "قاعة الدراسة في المدرسة" : lang === "fr" ? "Salle de classe de l’école" : "School classroom"}
                 width={1600}
                 height={1104}
                 fetchPriority="high"
@@ -523,6 +532,7 @@ function Index() {
           </div>
         </Section>
 
+        <LogoDivider />
         {/* Support Courses */}
         <section id="support" className="relative bg-shell py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
@@ -538,7 +548,9 @@ function Index() {
               {supportCourses.map((course, index) => {
                 const LevelIcon: LucideIcon = [BookOpen, School, GraduationCap][index] ?? BookOpen;
                 return (
-                  <article key={course.shortLevel} className="lift reveal flex min-w-0 flex-col rounded-lg border border-forest/10 border-t-4 border-t-primary bg-card p-6 shadow-soft sm:p-7">
+                  <article key={course.shortLevel} className="lift reveal flex min-w-0 flex-col rounded-lg border border-forest/10 border-t-4 border-t-primary bg-card shadow-soft overflow-hidden">
+                    <img src={supportPhotos[index]?.src} alt={supportPhotos[index]?.alt[lang]} loading="lazy" width={640} height={480} className="aspect-[4/3] w-full object-cover" />
+                    <div className="flex flex-1 flex-col p-6 sm:p-7">
                     <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
                       <span className="w-fit rounded-full border border-primary/25 bg-peach px-4 py-1.5 font-display text-sm font-bold text-forest" dir="ltr">{course.shortLevel}</span>
                       <LevelIcon className="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
@@ -552,6 +564,7 @@ function Index() {
                     <Button asChild className="mt-auto h-auto w-full whitespace-normal py-3.5 font-bold">
                       <a href={wa} target="_blank" rel="noopener noreferrer"><MessageCircle />{st.cta}<ArrowUpRight /></a>
                     </Button>
+                    </div>
                   </article>
                 );
               })}
@@ -561,11 +574,11 @@ function Index() {
 
         {/* Teachers */}
         <Section id="teachers" label={t.teachersLabel} title={t.teachersTitle}>
-          <p className="mb-8 text-center text-sm text-forest/70">{t.teachersNote}</p>
+          {t.teachersNote && <p className="mb-8 text-center text-sm text-forest/70">{t.teachersNote}</p>}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {teachers.map((m) => (
               <div
-                key={m.role.ar}
+                key={m.name.ar}
                 className="reveal group overflow-hidden rounded-3xl border border-forest/10 bg-card shadow-soft"
               >
                 <div className="aspect-square overflow-hidden bg-sand">
@@ -588,7 +601,7 @@ function Index() {
                 key={act.title.ar}
                 className="reveal rounded-3xl border border-forest/10 bg-card p-6 shadow-soft"
               >
-                <img src={act.image} alt={p(act.title)} loading="lazy" width={640} height={480} className="mb-5 aspect-[4/3] w-full rounded-lg object-cover" />
+                <img src={act.image} alt={lang === "ar" ? (act.icon === "kids" ? "نشاط ترفيهي للأطفال" : act.icon === "workshop" ? "ألعاب تعليمية" : act.icon === "review" || act.icon === "exam" ? "حصة دروس الدعم" : "قاعة التعلّم") : (act.icon === "kids" ? "Children’s celebration" : act.icon === "workshop" ? "Learning games" : act.icon === "review" || act.icon === "exam" ? "Support lesson" : "Learning classroom")} loading="lazy" width={640} height={480} className="mb-5 aspect-[4/3] w-full rounded-lg object-cover" />
                 <h3 className="mb-2 text-xl font-bold text-forest">{p(act.title)}</h3>
                 <p className="text-sm leading-relaxed text-forest/70">{p(act.desc)}</p>
               </div>
@@ -598,7 +611,7 @@ function Index() {
 
         {/* Gallery */}
         <Section id="gallery" label={t.galleryLabel} title={t.galleryTitle}>
-          <p className="mb-8 text-center text-sm text-forest/70">{t.galleryNote}</p>
+          {t.galleryNote && <p className="mb-8 text-center text-sm text-forest/70">{t.galleryNote}</p>}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {gallery.map((img, index) => (
               <Button variant="ghost"
@@ -660,6 +673,8 @@ function Index() {
           </div>
         )}
 
+        <Section id="occasions" label={t.galleryLabel} title={p(occasionTitle)} className="bg-shell"><SchoolOccasions lang={lang} /></Section>
+
         {/* Schedule */}
         <Section id="schedule" label={t.scheduleLabel} title={t.scheduleTitle} className="bg-shell">
           <p className="mb-8 text-center text-sm text-forest/70">{t.scheduleNote}</p>
@@ -678,6 +693,7 @@ function Index() {
           <div className="grid gap-6 md:grid-cols-3">{testimonials.map(item => <figure key={item.author.ar} className="reveal rounded-lg border border-forest/10 bg-card p-7 shadow-soft"><MessageCircle className="mb-5 h-7 w-7 text-primary" aria-hidden="true" /><blockquote className="mb-6 text-base leading-8 text-forest/75">{p(item.quote)}</blockquote><figcaption className="text-sm font-bold text-forest">{p(item.author)}</figcaption></figure>)}</div>
         </Section>
 
+        <LogoDivider />
         {/* Registration */}
         <section id="register" className="bg-shell py-20 lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
@@ -705,6 +721,7 @@ function Index() {
           </div>
         </section>
 
+        <LogoDivider />
         {/* Contact */}
         <section id="contact" className="bg-forest py-20 text-cream lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
