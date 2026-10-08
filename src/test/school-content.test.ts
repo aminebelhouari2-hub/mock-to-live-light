@@ -43,6 +43,9 @@ describe("Requested support levels", () => {
  it("uses the supplied official GPS destination", () => {
    expect(contact.mapLink).toBe("https://maps.app.goo.gl/nqn6h7fU5Y6y9R2T7?g_st=ac");
  });
+ it("targets the school pin from the official link rather than the neighbourhood", () => {
+   expect(contact.mapQuery).toBe("VMQP+G2P SALAOUANDJI SCHOOL, Tlemcen");
+ });
 
 describe("Subject teachers across the three school stages", () => {
   it.each([

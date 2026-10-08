@@ -31,6 +31,7 @@ import {
   ArrowUpRight,
   type LucideIcon,
 } from "lucide-react";
+import { SchoolCarousel } from "@/components/school-carousel";
 import { SchoolOccasions } from "@/components/school-occasions";
 import { Button } from "@/components/ui/button";
 import { getAcademicYear } from "@/content/academic-year";
@@ -40,7 +41,6 @@ import {
   activities,
   contact,
   gallery,
-  images,
   primarySchedule,
   primaryScheduleSubjects,
   primaryScheduleUi,
@@ -432,33 +432,8 @@ function Index() {
               </ul>
             </div>
 
-            <div className="reveal relative mx-auto w-full max-w-xl">
-              <div className="absolute -inset-3 -z-10 rotate-[-3deg] rounded-[2.5rem] bg-primary/90" />
-              <img
-                src={images.hero}
-                alt={lang === "ar" ? "قاعة الدراسة في المدرسة" : lang === "fr" ? "Salle de classe de l’école" : "School classroom"}
-                width={1600}
-                height={1104}
-                fetchPriority="high"
-                className="aspect-[4/5] w-full rounded-[2rem] object-cover shadow-soft sm:aspect-[5/4]"
-              />
-              <div className="glass absolute -bottom-6 start-4 flex items-center gap-3 rounded-2xl p-3 pe-5 shadow-soft sm:start-[-1.5rem]">
-                <img
-                  src={logo.url}
-                  alt=""
-                  width={48}
-                  height={48}
-                  className="h-12 w-12 shrink-0 rounded-full object-cover"
-                />
-                <div>
-                  <div className="text-xs text-forest/60">
-                    {t.addressLabel}
-                  </div>
-                  <div className="text-sm font-bold text-forest">
-                    Sidi Saïd, Tlemcen
-                  </div>
-                </div>
-              </div>
+            <div className="reveal mx-auto w-full min-w-0 max-w-xl">
+              <SchoolOccasions lang={lang} hero />
             </div>
           </div>
         </section>
@@ -500,7 +475,7 @@ function Index() {
                 return (
                   <div
                     key={x.t}
-                    className="reveal rounded-3xl border border-cream/10 bg-cream/5 p-6 backdrop-blur"
+                    className="rounded-lg border border-cream/10 bg-cream/5 p-6 backdrop-blur"
                   >
                     <I className="mb-4 h-7 w-7 text-primary" />
                     <h3 className="mb-2 text-lg font-semibold">{x.t}</h3>
@@ -514,24 +489,24 @@ function Index() {
 
         {/* Subjects */}
         <Section id="subjects" label={t.subjectsLabel} title={teachingUi[lang].subjectsTitle}>
-          <div className="mb-12 grid gap-6 lg:grid-cols-3">
+          <SchoolCarousel lang={lang} label={teachingUi[lang].subjectsTitle} className="mb-8">
             {teachingStages.map(stage => (
-              <article key={stage.shortLevel} className="reveal min-w-0 rounded-lg border border-forest/10 bg-card p-6 shadow-soft">
+              <article key={stage.shortLevel} className="min-w-0 rounded-lg border border-forest/10 bg-card p-6 shadow-soft">
                 <h3 className="mb-5 text-xl font-bold text-forest">{translateSupport(stage.level, lang)}</h3>
                 <ul className="space-y-3">
                   {stage.subjects.map(({ subject }) => <li key={subject} className="flex items-start gap-3 text-sm leading-7 text-forest/80"><BookOpen className="mt-1 h-5 w-5 shrink-0 text-primary" aria-hidden="true" /><span>{translateSupport(subject, lang)}</span></li>)}
                 </ul>
               </article>
             ))}
-          </div>
+          </SchoolCarousel>
           <h3 className="mb-6 text-center text-xl font-bold text-forest">{teachingUi[lang].preparatory}</h3>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <SchoolCarousel lang={lang} label={teachingUi[lang].preparatory} className="mb-8">
             {subjects.map((s) => {
               const I = ICONS[s.icon];
               return (
                 <article
                   key={s.icon}
-                  className="lift reveal group rounded-3xl border border-forest/10 bg-card p-7 shadow-soft"
+                  className="lift group rounded-3xl border border-forest/10 bg-card p-7 shadow-soft"
                 >
                   <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-peach text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
                     <I className="h-7 w-7" />
@@ -545,7 +520,7 @@ function Index() {
                 </article>
               );
             })}
-          </div>
+          </SchoolCarousel>
         </Section>
 
         <LogoDivider />
@@ -560,11 +535,11 @@ function Index() {
               </div>
               <p className="max-w-xl text-base leading-8 text-forest/75">{st.description}</p>
             </div>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <SchoolCarousel lang={lang} label={st.title} className="mb-8">
               {supportCourses.map((course, index) => {
                 const LevelIcon: LucideIcon = [BookOpen, School, GraduationCap][index] ?? BookOpen;
                 return (
-                  <article key={course.shortLevel} className="lift reveal flex min-w-0 flex-col rounded-lg border border-forest/10 border-t-4 border-t-primary bg-card shadow-soft overflow-hidden">
+                  <article key={course.shortLevel} className="lift flex min-w-0 flex-col rounded-lg border border-forest/10 border-t-4 border-t-primary bg-card shadow-soft overflow-hidden">
                     <img src={supportPhotos[index]?.src} alt={supportPhotos[index]?.alt[lang]} loading="lazy" width={640} height={480} className="aspect-[4/3] w-full object-cover" />
                     <div className="flex flex-1 flex-col p-6 sm:p-7">
                     <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
@@ -584,16 +559,16 @@ function Index() {
                   </article>
                 );
               })}
-            </div>
+            </SchoolCarousel>
           </div>
         </section>
 
         {/* Teachers */}
         <Section id="teachers" label={t.teachersLabel} title={teachingUi[lang].teachersTitle}>
           {t.teachersNote && <p className="mb-8 text-center text-sm text-forest/70">{t.teachersNote}</p>}
-          <div className="mb-10 grid gap-6 lg:grid-cols-3">
+          <SchoolCarousel lang={lang} label={teachingUi[lang].teachersTitle} className="mb-8">
             {teachingStages.map(stage => (
-              <div key={stage.shortLevel} className="reveal min-w-0">
+              <div key={stage.shortLevel} className="min-w-0">
                 <h3 className="mb-5 border-b border-primary/25 pb-4 text-xl font-bold text-forest">{translateSupport(stage.level, lang)}</h3>
                 <div className="grid gap-3">
                   {stage.subjects.map(({ subject, teacher }) => (
@@ -605,7 +580,7 @@ function Index() {
                 </div>
               </div>
             ))}
-          </div>
+          </SchoolCarousel>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {teachers.filter(m => m.name.ar === "أستاذ القسم التحضيري").map((m) => (
               <div
@@ -626,30 +601,30 @@ function Index() {
 
         {/* Activities */}
         <Section id="activities" label={t.activitiesLabel} title={t.activitiesTitle} className="bg-sand/40">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <SchoolCarousel lang={lang} label={t.activitiesTitle} className="mb-8">
             {activities.map((act) => (
               <div
                 key={act.title.ar}
-                className="reveal rounded-3xl border border-forest/10 bg-card p-6 shadow-soft"
+                className="rounded-lg border border-forest/10 bg-card p-6 shadow-soft"
               >
                 <img src={act.image} alt={lang === "ar" ? (act.icon === "kids" ? "نشاط ترفيهي للأطفال" : act.icon === "workshop" ? "ألعاب تعليمية" : act.icon === "review" || act.icon === "exam" ? "حصة دروس الدعم" : "قاعة التعلّم") : (act.icon === "kids" ? "Children’s celebration" : act.icon === "workshop" ? "Learning games" : act.icon === "review" || act.icon === "exam" ? "Support lesson" : "Learning classroom")} loading="lazy" width={640} height={480} className="mb-5 aspect-[4/3] w-full rounded-lg object-cover" />
                 <h3 className="mb-2 text-xl font-bold text-forest">{p(act.title)}</h3>
                 <p className="text-sm leading-relaxed text-forest/70">{p(act.desc)}</p>
               </div>
             ))}
-          </div>
+          </SchoolCarousel>
         </Section>
 
         {/* Gallery */}
         <Section id="gallery" label={t.galleryLabel} title={t.galleryTitle}>
           {t.galleryNote && <p className="mb-8 text-center text-sm text-forest/70">{t.galleryNote}</p>}
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <SchoolCarousel lang={lang} label={t.galleryTitle} className="mb-8">
             {gallery.map((img, index) => (
               <Button variant="ghost"
                 key={index}
                 aria-label={p(img.alt)}
                 onClick={() => setLb(index)}
-                className="reveal group relative h-auto w-full aspect-[4/3] cursor-pointer overflow-hidden rounded-lg bg-sand p-0"
+                className="group relative h-auto w-full aspect-[4/3] cursor-pointer overflow-hidden rounded-lg bg-sand p-0"
               >
                 <img
                   src={img.src}
@@ -663,7 +638,7 @@ function Index() {
                 </p>
               </Button>
             ))}
-          </div>
+          </SchoolCarousel>
         </Section>
 
         {/* Lightbox Modal */}
@@ -715,7 +690,7 @@ function Index() {
               <tbody>{primarySchedule.map(row => <tr key={row.year} className="border-t border-forest/10"><th scope="row" className="p-4 text-start font-bold text-forest">{p(row.label)}</th>{row.lessons.map((lesson, i) => <td key={i} className="p-4">{lesson ? <div className="flex flex-wrap items-center gap-2"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></div> : "—"}</td>)}</tr>)}</tbody>
             </table>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 md:hidden">{primarySchedule.map(row => <article key={row.year} className="min-w-0 rounded-lg border border-forest/10 bg-card p-5"><h3 className="mb-4 font-bold text-forest">{p(row.label)}</h3><ul className="divide-y divide-forest/10">{primaryScheduleSubjects.map((subject, i) => { const lesson = row.lessons[i]; return <li key={subject} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"><span>{translateSupport(subject, lang)}</span>{lesson ? <span className="flex items-center gap-2 text-forest/75"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></span> : <span className="text-forest/65">—</span>}</li>; })}</ul></article>)}</div>
+          <SchoolCarousel lang={lang} label={primaryScheduleUi[lang].title} className="md:hidden">{primarySchedule.map(row => <article key={row.year} className="min-w-0 rounded-lg border border-forest/10 bg-card p-5"><h3 className="mb-4 font-bold text-forest">{p(row.label)}</h3><ul className="divide-y divide-forest/10">{primaryScheduleSubjects.map((subject, i) => { const lesson = row.lessons[i]; return <li key={subject} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"><span>{translateSupport(subject, lang)}</span>{lesson ? <span className="flex items-center gap-2 text-forest/75"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></span> : <span className="text-forest/65">—</span>}</li>; })}</ul></article>)}</SchoolCarousel>
         </Section>
 
         {/* Testimonials */}
@@ -727,9 +702,9 @@ function Index() {
             </div>
             <Button asChild variant="outline" className="h-auto max-w-full whitespace-normal py-3 text-sm"><a href={contact.social.facebook} target="_blank" rel="noopener noreferrer"><Facebook className="shrink-0" />{facebookCommentsUi[lang].link}<ArrowUpRight className="shrink-0" /></a></Button>
           </div>
-          <div className="grid items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <SchoolCarousel lang={lang} label={facebookCommentsUi[lang].title} className="mb-8">
             {testimonials.map((item, index) => (
-              <figure key={item.author} className="reveal min-w-0 rounded-lg border border-forest/10 bg-card p-5 shadow-soft transition duration-300 motion-safe:hover:-translate-y-1 sm:p-6">
+              <figure key={item.author} className="min-w-0 rounded-lg border border-forest/10 bg-card p-5 shadow-soft transition duration-300 motion-safe:hover:-translate-y-1 sm:p-6">
                 <figcaption className="mb-5 flex items-center gap-3">
                   <span aria-hidden="true" className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xs font-bold ${index % 2 === 0 ? "bg-peach text-forest" : "bg-sand text-forest"}`}>{item.initials}</span>
                   <div className="min-w-0 flex-1"><p dir="ltr" className="text-start text-sm font-bold text-forest">{item.author}</p><p className="mt-1 flex items-center gap-1.5 text-xs text-forest/60"><Facebook className="h-3 w-3" aria-hidden="true" />Facebook</p></div>
@@ -738,14 +713,14 @@ function Index() {
                 <blockquote lang={item.lang} dir={item.lang === "ar" ? "rtl" : "ltr"} className="rounded-lg bg-shell p-4 text-start text-sm leading-8 text-forest/85 [overflow-wrap:anywhere]">{item.quote}</blockquote>
               </figure>
             ))}
-          </div>
+          </SchoolCarousel>
         </Section>
 
         <LogoDivider />
         {/* Registration */}
         <section id="register" className="bg-shell py-20 lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
-            <div className="reveal min-w-0">
+            <div className="min-w-0">
               <Eyebrow>{t.regLabel}</Eyebrow>
               <h2 className="text-3xl font-bold leading-snug text-forest sm:text-4xl">{seasonText(t.regTitle)}</h2>
               <p className="mb-8 mt-5 text-base leading-8 text-forest/75">{t.regText}</p>
@@ -773,7 +748,7 @@ function Index() {
         {/* Contact */}
         <section id="contact" className="bg-forest py-20 text-cream lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
-            <div className="reveal min-w-0">
+            <div className="min-w-0">
               <Eyebrow>{t.contactLabel}</Eyebrow>
               <h2 className="mb-8 text-3xl font-bold leading-snug sm:text-4xl">{t.contactTitle}</h2>
               <address className="space-y-6 not-italic">
@@ -788,7 +763,7 @@ function Index() {
                 <Button asChild variant="ghost" size="icon" className="text-cream hover:bg-cream/10 hover:text-primary"><a href={wa} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><MessageCircle /></a></Button>
               </div>
             </div>
-            <div className="reveal min-w-0">
+            <div className="min-w-0">
               <iframe src={mapSrc} title={t.contactLabel} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-80 w-full rounded-lg border border-cream/20 bg-shell" />
               <p className="mt-4 text-xs leading-6 text-cream/70">{t.mapNote}</p>
               <Button asChild variant="ghost" className="mt-2 text-cream hover:bg-cream/10 hover:text-primary"><a href={mapHref} target="_blank" rel="noopener noreferrer"><MapPin />{t.openMap}<ArrowUpRight /></a></Button>

@@ -1,4 +1,6 @@
 # Requested updates
+- [x] Convert repeated section content to automatic horizontal carousels and feature uploaded certificates, honours and celebrations in the homepage slideshow. Verified autoplay, pause, lightbox, mobile layout and 20 passing tests.
+- [x] Replace the area map query with the exact school Plus Code and name obtained from the supplied link redirect. Retained existing Google embed after connector setup was declined; live map rendering must be verified by the user on the published site.
 - [x] Replace illustrative testimonials with six supplied Facebook comment excerpts; verified desktop/mobile presentation, page link, no overflow, and 19 passing tests.
 - [x] Group subjects and subject-specific teacher roles by primary, middle and secondary stages; preserve preparatory content.
 - [x] Replace the displayed timetable with the supplied primary schedule for years one through five; leave unspecified slots without invented times. Verified with 19 passing tests and desktop/mobile checks.
