@@ -1,4 +1,6 @@
 # Requested updates
+- [x] Group subjects and subject-specific teacher roles by primary, middle and secondary stages; preserve preparatory content.
+- [x] Replace the displayed timetable with the supplied primary schedule for years one through five; leave unspecified slots without invented times. Verified with 19 passing tests and desktop/mobile checks.
 - [x] Preserve sections, multilingual content, social links and dynamic academic season.
 - [x] Replace placeholders with eight distinct real photos, distribute support and activity photos, and add an occasions carousel.
 - [x] Update general study levels and teacher titles; add activity SEO and logo dividers without inventing photo events.
