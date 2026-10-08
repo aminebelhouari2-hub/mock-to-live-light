@@ -10,36 +10,37 @@ import actEnglish from "@/assets/act-english.jpg";
 import actWorkshop from "@/assets/act-workshop.jpg";
 import heroImg from "@/assets/hero.jpg";
 
-export type Lang = "ar" | "fr";
-export type L = { ar: string; fr: string };
+export type Lang = "ar" | "fr" | "en";
+export type L = { ar: string; fr: string; en: string };
 
 export const contact = {
   phoneDisplay: "0556 05 71 76",
   phoneTel: "+213556057176",
   whatsapp: "213556057176",
   email: "hibasalaouandji@gmail.com",
-  address: { ar: "سيدي سعيد، تلمسان — مقابل العيادة البيطرية", fr: "Sidi Saïd, Tlemcen — en face de la clinique vétérinaire" },
+  address: { ar: "سيدي سعيد، تلمسان — مقابل العيادة البيطرية", fr: "Sidi Saïd, Tlemcen — en face de la clinique vétérinaire", en: "Sidi Saïd, Tlemcen — opposite the veterinary clinic" },
   // MAP: replace mapQuery with exact "lat,lng" (e.g. "34.88,-1.31") once the precise location is known.
   mapQuery: "Sidi Said, Tlemcen, Algeria",
   // Optional: paste the exact Google Maps share link here.
   mapLink: "",
   social: {
-    facebook: "https://www.facebook.com/search/top?q=Salaouandji%20School%20Tlemcen", // replace with the official page URL
-    instagram: "", // add when available
+    facebook: "https://www.facebook.com/share/1Ewc71Ywjo/",
+    instagram: "https://www.instagram.com/salaouandji_school?stkn=djdyMnVkMWozOWNu",
+    tiktok: "https://www.tiktok.com/@salaouandji13?_r=1&_t=ZN-9AMzZKIlB26",
   },
   waMessage: {
     ar: "مرحبًا، أرغب في الاستفسار عن التسجيل في صلوانجي سكول",
-    fr: "Bonjour, je souhaite me renseigner sur l'inscription à Salaouandji School",
+    fr: "Bonjour, je souhaite me renseigner sur l'inscription à Salaouandji School", en: "Hello, I would like to ask about registration at Salaouandji School",
   },
 };
 
 export const images = { hero: heroImg };
 
-export const ui = {
+const baseUi = {
   ar: {
     tagline: "مدرسة خاصة — سيدي سعيد، تلمسان",
     nav: { about: "من نحن", subjects: "المواد", teachers: "الأساتذة", activities: "الأنشطة", gallery: "المعرض", schedule: "البرنامج", register: "التسجيل", contact: "تواصل" },
-    heroBadge: "التسجيل مفتوح — الموسم الدراسي 2025/2026",
+    heroBadge: "التسجيل مفتوح — الموسم الدراسي {academicYear}",
     heroTitle: ["تعلّم، تطوّر،", "وابدأ رحلتك نحو النجاح"],
     heroText: "مدرسة خاصة في حي سيدي سعيد بتلمسان. نرافق الأطفال في الأقسام التحضيرية بمنهج يراعي نموّهم الذهني والحركي والعاطفي، مع ورشات في اللغة الإنجليزية وأنشطة تربوية متنوّعة.",
     ctaRegister: "سجّل طفلك الآن",
@@ -61,7 +62,7 @@ export const ui = {
     scheduleLabel: "البرنامج الأسبوعي", scheduleTitle: "أسبوع منظّم ومتوازن", scheduleNote: "برنامج نموذجي للتوضيح — يُعلن البرنامج الرسمي عند الدخول.",
     time: "التوقيت",
     testimonialsLabel: "آراء الأولياء", testimonialsTitle: "ماذا يقول الأولياء", testimonialsNote: "نماذج توضيحية — ستُنشر شهادات الأولياء الحقيقية بعد موافقتهم.",
-    regLabel: "التسجيل", regTitle: "التسجيل مفتوح للموسم الدراسي 2025/2026",
+    regLabel: "التسجيل", regTitle: "التسجيل مفتوح للموسم الدراسي {academicYear}",
     regText: "الأماكن في الأقسام التحضيرية محدودة. تواصل معنا اليوم لحجز مكان طفلك والتعرّف على المدرسة عن قرب.",
     regSteps: [
       { t: "تواصل معنا", d: "عبر واتساب أو الهاتف." },
@@ -80,7 +81,7 @@ export const ui = {
   fr: {
     tagline: "École privée — Sidi Saïd, Tlemcen",
     nav: { about: "À propos", subjects: "Matières", teachers: "Enseignants", activities: "Activités", gallery: "Galerie", schedule: "Emploi du temps", register: "Inscription", contact: "Contact" },
-    heroBadge: "Inscriptions ouvertes — Année 2025/2026",
+    heroBadge: "Inscriptions ouvertes — Année {academicYear}",
     heroTitle: ["Apprends, progresse,", "et commence ton voyage vers la réussite"],
     heroText: "École privée à Sidi Saïd, Tlemcen. Nous accompagnons les enfants en classes préparatoires avec un programme respectant leur développement intellectuel, moteur et émotionnel, avec des ateliers d'anglais et des activités éducatives variées.",
     ctaRegister: "Inscrire mon enfant",
@@ -102,7 +103,7 @@ export const ui = {
     scheduleLabel: "Emploi du temps", scheduleTitle: "Une semaine organisée et équilibrée", scheduleNote: "Programme type à titre indicatif — le programme officiel sera communiqué à la rentrée.",
     time: "Horaire",
     testimonialsLabel: "Avis des parents", testimonialsTitle: "Ce que disent les parents", testimonialsNote: "Exemples d'illustration — les témoignages réels seront publiés avec l'accord des parents.",
-    regLabel: "Inscription", regTitle: "Inscriptions ouvertes — année 2025/2026",
+    regLabel: "Inscription", regTitle: "Inscriptions ouvertes — année {academicYear}",
     regText: "Les places en classes préparatoires sont limitées. Contactez-nous dès aujourd'hui pour réserver la place de votre enfant et découvrir l'école.",
     regSteps: [
       { t: "Contactez-nous", d: "Par WhatsApp ou téléphone." },
@@ -123,46 +124,46 @@ export const ui = {
 export type IconKey = "letters" | "numbers" | "english" | "arts" | "stories" | "music" | "review" | "workshop" | "science" | "kids" | "exam" | "games";
 
 export const subjects: { icon: IconKey; title: L; desc: L }[] = [
-  { icon: "letters", title: { ar: "الحروف والقراءة", fr: "Lettres & lecture" }, desc: { ar: "التعرّف على الحروف وتهيئة الطفل للقراءة.", fr: "Découverte des lettres et préparation à la lecture." } },
-  { icon: "numbers", title: { ar: "الأرقام والحساب", fr: "Nombres & calcul" }, desc: { ar: "الأرقام والعدّ بأسلوب حسّي ممتع.", fr: "Nombres et comptage par la manipulation." } },
-  { icon: "english", title: { ar: "اللغة الإنجليزية", fr: "Anglais" }, desc: { ar: "ورشات تفاعلية للحروف والكلمات الأولى والنطق.", fr: "Ateliers interactifs : lettres, premiers mots, prononciation." } },
-  { icon: "arts", title: { ar: "الرسم والفنون", fr: "Dessin & arts" }, desc: { ar: "تنمية الخيال والمهارات الحركية الدقيقة.", fr: "Imagination et motricité fine." } },
-  { icon: "stories", title: { ar: "القصص والحكايات", fr: "Contes & histoires" }, desc: { ar: "جلسات قراءة تنمّي حب الاستطلاع.", fr: "Séances de lecture qui éveillent la curiosité." } },
-  { icon: "music", title: { ar: "الموسيقى والإيقاع", fr: "Musique & rythme" }, desc: { ar: "أنشطة صوتية وحركية ممتعة.", fr: "Activités sonores et motrices ludiques." } },
+  { icon: "letters", title: { ar: "الحروف والقراءة", fr: "Lettres & lecture", en: "Letters & reading" }, desc: { ar: "التعرّف على الحروف وتهيئة الطفل للقراءة.", fr: "Découverte des lettres et préparation à la lecture.", en: "Discovering letters and preparing to read." } },
+  { icon: "numbers", title: { ar: "الأرقام والحساب", fr: "Nombres & calcul", en: "Numbers & maths" }, desc: { ar: "الأرقام والعدّ بأسلوب حسّي ممتع.", fr: "Nombres et comptage par la manipulation.", en: "Learning numbers and counting through hands-on activities." } },
+  { icon: "english", title: { ar: "اللغة الإنجليزية", fr: "Anglais", en: "English" }, desc: { ar: "ورشات تفاعلية للحروف والكلمات الأولى والنطق.", fr: "Ateliers interactifs : lettres, premiers mots, prononciation.", en: "Interactive workshops: letters, first words and pronunciation." } },
+  { icon: "arts", title: { ar: "الرسم والفنون", fr: "Dessin & arts", en: "Drawing & arts" }, desc: { ar: "تنمية الخيال والمهارات الحركية الدقيقة.", fr: "Imagination et motricité fine.", en: "Developing imagination and fine motor skills." } },
+  { icon: "stories", title: { ar: "القصص والحكايات", fr: "Contes & histoires", en: "Stories & tales" }, desc: { ar: "جلسات قراءة تنمّي حب الاستطلاع.", fr: "Séances de lecture qui éveillent la curiosité.", en: "Reading sessions that spark curiosity." } },
+  { icon: "music", title: { ar: "الموسيقى والإيقاع", fr: "Musique & rythme", en: "Music & rhythm" }, desc: { ar: "أنشطة صوتية وحركية ممتعة.", fr: "Activités sonores et motrices ludiques.", en: "Playful sound and movement activities." } },
 ];
 
 // Replace name with the real teacher name; set photo to an imported image when available.
 export const teachers: { name: L; role: L; photo?: string }[] = [
-  { name: { ar: "الاسم قريبًا", fr: "Nom à venir" }, role: { ar: "أستاذة القسم التحضيري", fr: "Enseignante — classe préparatoire" } },
-  { name: { ar: "الاسم قريبًا", fr: "Nom à venir" }, role: { ar: "أستاذة اللغة الإنجليزية", fr: "Enseignante d'anglais" } },
-  { name: { ar: "الاسم قريبًا", fr: "Nom à venir" }, role: { ar: "منشّطة الأنشطة الفنية", fr: "Animatrice — activités artistiques" } },
-  { name: { ar: "الاسم قريبًا", fr: "Nom à venir" }, role: { ar: "مرافقة تربوية", fr: "Accompagnatrice pédagogique" } },
+  { name: { ar: "الاسم قريبًا", fr: "Nom à venir", en: "Name coming soon" }, role: { ar: "أستاذة القسم التحضيري", fr: "Enseignante — classe préparatoire", en: "Preparatory class teacher" } },
+  { name: { ar: "الاسم قريبًا", fr: "Nom à venir", en: "Name coming soon" }, role: { ar: "أستاذة اللغة الإنجليزية", fr: "Enseignante d'anglais", en: "English teacher" } },
+  { name: { ar: "الاسم قريبًا", fr: "Nom à venir", en: "Name coming soon" }, role: { ar: "منشّطة الأنشطة الفنية", fr: "Animatrice — activités artistiques", en: "Art activities educator" } },
+  { name: { ar: "الاسم قريبًا", fr: "Nom à venir", en: "Name coming soon" }, role: { ar: "مرافقة تربوية", fr: "Accompagnatrice pédagogique", en: "Educational support educator" } },
 ];
 
 export const activities: { icon: IconKey; image: string; title: L; desc: L }[] = [
-  { icon: "review", image: actStudy, title: { ar: "المراجعة والدعم", fr: "Révision & soutien" }, desc: { ar: "حصص مراجعة منظّمة لترسيخ المكتسبات.", fr: "Séances de révision pour consolider les acquis." } },
-  { icon: "workshop", image: actWorkshop, title: { ar: "ورشات تعليمية", fr: "Ateliers éducatifs" }, desc: { ar: "تعلّم بالممارسة عبر الألعاب التربوية والتركيب.", fr: "Apprendre en manipulant : jeux éducatifs et construction." } },
-  { icon: "english", image: actEnglish, title: { ar: "الإنجليزية والنطق", fr: "Anglais & prononciation" }, desc: { ar: "كلمات أولى ونطق سليم في جوّ تفاعلي.", fr: "Premiers mots et bonne prononciation, en interaction." } },
-  { icon: "science", image: actScience, title: { ar: "العلوم والتجارب", fr: "Sciences & expériences" }, desc: { ar: "تجارب بسيطة تنمّي الفضول وروح الاكتشاف.", fr: "Des expériences simples qui nourrissent la curiosité." } },
-  { icon: "kids", image: actKids, title: { ar: "أنشطة الأطفال", fr: "Activités enfants" }, desc: { ar: "الرسم، القصص والموسيقى في جوّ من المرح.", fr: "Dessin, contes et musique dans la bonne humeur." } },
-  { icon: "exam", image: actStudy, title: { ar: "التحضير للامتحانات", fr: "Préparation aux examens" }, desc: { ar: "تمارين منهجية لبناء الثقة قبل الامتحان.", fr: "Exercices méthodiques pour aborder l'examen en confiance." } },
+  { icon: "review", image: actStudy, title: { ar: "المراجعة والدعم", fr: "Révision & soutien", en: "Revision & support" }, desc: { ar: "حصص مراجعة منظّمة لترسيخ المكتسبات.", fr: "Séances de révision pour consolider les acquis.", en: "Structured revision to consolidate learning." } },
+  { icon: "workshop", image: actWorkshop, title: { ar: "ورشات تعليمية", fr: "Ateliers éducatifs", en: "Educational workshops" }, desc: { ar: "تعلّم بالممارسة عبر الألعاب التربوية والتركيب.", fr: "Apprendre en manipulant : jeux éducatifs et construction.", en: "Hands-on learning through educational games and building." } },
+  { icon: "english", image: actEnglish, title: { ar: "الإنجليزية والنطق", fr: "Anglais & prononciation", en: "English & pronunciation" }, desc: { ar: "كلمات أولى ونطق سليم في جوّ تفاعلي.", fr: "Premiers mots et bonne prononciation, en interaction.", en: "First words and clear pronunciation through interaction." } },
+  { icon: "science", image: actScience, title: { ar: "العلوم والتجارب", fr: "Sciences & expériences", en: "Science & experiments" }, desc: { ar: "تجارب بسيطة تنمّي الفضول وروح الاكتشاف.", fr: "Des expériences simples qui nourrissent la curiosité.", en: "Simple experiments that nurture curiosity." } },
+  { icon: "kids", image: actKids, title: { ar: "أنشطة الأطفال", fr: "Activités enfants", en: "Children’s activities" }, desc: { ar: "الرسم، القصص والموسيقى في جوّ من المرح.", fr: "Dessin, contes et musique dans la bonne humeur.", en: "Drawing, stories and music in a cheerful atmosphere." } },
+  { icon: "exam", image: actStudy, title: { ar: "التحضير للامتحانات", fr: "Préparation aux examens", en: "Exam preparation" }, desc: { ar: "تمارين منهجية لبناء الثقة قبل الامتحان.", fr: "Exercices méthodiques pour aborder l'examen en confiance.", en: "Methodical practice to approach exams with confidence." } },
 ];
 
 // Placeholder images — replace with real school photos (import them at the top of this file).
 export const gallery: { src: string; alt: L }[] = [
-  { src: actScience, alt: { ar: "أطفال يجرون تجربة علمية", fr: "Enfants réalisant une expérience" } },
-  { src: actEnglish, alt: { ar: "حصة لغة إنجليزية", fr: "Cours d'anglais" } },
-  { src: actKids, alt: { ar: "أطفال يرسمون", fr: "Enfants qui dessinent" } },
-  { src: actWorkshop, alt: { ar: "ورشة ألعاب تربوية", fr: "Atelier de jeux éducatifs" } },
-  { src: heroImg, alt: { ar: "فضاء مكتبة ومطالعة", fr: "Espace bibliothèque" } },
-  { src: actStudy, alt: { ar: "جلسة مراجعة", fr: "Séance de révision" } },
+  { src: actScience, alt: { ar: "أطفال يجرون تجربة علمية", fr: "Enfants réalisant une expérience", en: "Children carrying out an experiment" } },
+  { src: actEnglish, alt: { ar: "حصة لغة إنجليزية", fr: "Cours d'anglais", en: "English lesson" } },
+  { src: actKids, alt: { ar: "أطفال يرسمون", fr: "Enfants qui dessinent", en: "Children drawing" } },
+  { src: actWorkshop, alt: { ar: "ورشة ألعاب تربوية", fr: "Atelier de jeux éducatifs", en: "Educational games workshop" } },
+  { src: heroImg, alt: { ar: "فضاء مكتبة ومطالعة", fr: "Espace bibliothèque", en: "Library and reading space" } },
+  { src: actStudy, alt: { ar: "جلسة مراجعة", fr: "Séance de révision", en: "Revision session" } },
 ];
 
 // Weekly schedule (sample). Each row = one time slot; each cell = subject key for that day (or "" for free).
 export const schedule = {
   days: [
-    { ar: "الأحد", fr: "Dimanche" }, { ar: "الإثنين", fr: "Lundi" }, { ar: "الثلاثاء", fr: "Mardi" },
-    { ar: "الأربعاء", fr: "Mercredi" }, { ar: "الخميس", fr: "Jeudi" },
+    { ar: "الأحد", fr: "Dimanche", en: "Sunday" }, { ar: "الإثنين", fr: "Lundi", en: "Monday" }, { ar: "الثلاثاء", fr: "Mardi", en: "Tuesday" },
+    { ar: "الأربعاء", fr: "Mercredi", en: "Wednesday" }, { ar: "الخميس", fr: "Jeudi", en: "Thursday" },
   ],
   slots: [
     { time: "08:30 – 09:30", cells: ["letters", "numbers", "letters", "numbers", "letters"] },
@@ -170,19 +171,85 @@ export const schedule = {
     { time: "11:00 – 12:00", cells: ["stories", "music", "games", "arts", "music"] },
   ] as { time: string; cells: string[] }[],
   labels: {
-    letters: { ar: "الحروف", fr: "Lettres" },
-    numbers: { ar: "الأرقام", fr: "Nombres" },
-    english: { ar: "الإنجليزية", fr: "Anglais" },
-    arts: { ar: "الرسم", fr: "Dessin" },
-    stories: { ar: "القصص", fr: "Contes" },
-    music: { ar: "الموسيقى", fr: "Musique" },
-    games: { ar: "ألعاب تربوية", fr: "Jeux éducatifs" },
+    letters: { ar: "الحروف", fr: "Lettres", en: "Letters" },
+    numbers: { ar: "الأرقام", fr: "Nombres", en: "Numbers" },
+    english: { ar: "الإنجليزية", fr: "Anglais", en: "English" },
+    arts: { ar: "الرسم", fr: "Dessin", en: "Drawing" },
+    stories: { ar: "القصص", fr: "Contes", en: "Stories" },
+    music: { ar: "الموسيقى", fr: "Musique", en: "Music" },
+    games: { ar: "ألعاب تربوية", fr: "Jeux éducatifs", en: "Educational games" },
   } as Record<string, L>,
 };
 
 // Illustrative testimonials — replace with real, approved parent quotes.
 export const testimonials: { quote: L; author: L }[] = [
-  { quote: { ar: "مكان لشهادة وليّ أمر حقيقية بعد موافقته على النشر.", fr: "Emplacement pour un témoignage réel d'un parent, après son accord." }, author: { ar: "وليّ أمر — نموذج", fr: "Parent — exemple" } },
-  { quote: { ar: "يمكن هنا عرض رأي عائلة حول تجربة طفلها في القسم التحضيري.", fr: "Ici, l'avis d'une famille sur l'expérience de son enfant en classe préparatoire." }, author: { ar: "وليّة أمر — نموذج", fr: "Maman — exemple" } },
-  { quote: { ar: "مساحة لشهادة حول ورشات اللغة الإنجليزية والأنشطة.", fr: "Espace pour un avis sur les ateliers d'anglais et les activités." }, author: { ar: "وليّ أمر — نموذج", fr: "Papa — exemple" } },
+  { quote: { ar: "مكان لشهادة وليّ أمر حقيقية بعد موافقته على النشر.", fr: "Emplacement pour un témoignage réel d'un parent, après son accord.", en: "Space for a real parent testimonial, published with permission." }, author: { ar: "وليّ أمر — نموذج", fr: "Parent — exemple", en: "Parent — sample" } },
+  { quote: { ar: "يمكن هنا عرض رأي عائلة حول تجربة طفلها في القسم التحضيري.", fr: "Ici, l'avis d'une famille sur l'expérience de son enfant en classe préparatoire.", en: "Space for a family’s experience of their child’s preparatory class." }, author: { ar: "وليّة أمر — نموذج", fr: "Maman — exemple", en: "Mother — sample" } },
+  { quote: { ar: "مساحة لشهادة حول ورشات اللغة الإنجليزية والأنشطة.", fr: "Espace pour un avis sur les ateliers d'anglais et les activités.", en: "Space for feedback on English workshops and activities." }, author: { ar: "وليّ أمر — نموذج", fr: "Papa — exemple", en: "Father — sample" } },
 ];
+
+
+export const ui = {
+  ...baseUi,
+  en: {
+    tagline: "Private school — Sidi Saïd, Tlemcen",
+    nav: { about: "About", subjects: "Subjects", teachers: "Teachers", activities: "Activities", gallery: "Gallery", schedule: "Schedule", register: "Register", contact: "Contact" },
+    heroBadge: "Registration open — Academic year {academicYear}",
+    heroTitle: ["Learn, grow,", "and begin your journey to success"],
+    heroText: "A private school in Sidi Saïd, Tlemcen. Our preparatory classes respect children’s intellectual, physical and emotional development, with English workshops and varied educational activities.",
+    ctaRegister: "Register my child", ctaWhatsapp: "Message us on WhatsApp",
+    heroPoints: ["Preparatory classes", "English workshops", "Educational activities"],
+    aboutLabel: "About us", aboutTitle: "A safe space, a balanced programme, and continuous support for every child",
+    aboutP1: "Salaouandji School is a private school in Sidi Saïd, Tlemcen. We welcome children in preparatory classes with a programme that respects their intellectual, physical and emotional development.",
+    aboutP2: "A dedicated educational team supports each child in a welcoming environment that brings together learning, play and discovery.",
+    pillars: [{ t: "A safe environment", d: "A calm, organised space where children feel at ease." }, { t: "Balanced learning", d: "Learning that supports intellectual, physical and emotional development." }, { t: "Connected with families", d: "Regular follow-up and direct communication with parents." }],
+    subjectsLabel: "Subjects & lessons", subjectsTitle: "What your child learns with us",
+    teachersLabel: "Educational team", teachersTitle: "Teachers who support your child, step by step", teachersNote: "Our team’s names and photos will be published soon.",
+    activitiesLabel: "Activities", activitiesTitle: "Activities that make a difference every week",
+    galleryLabel: "Photo gallery", galleryTitle: "Moments of learning", galleryNote: "Temporary illustrative images — school photos will follow soon.",
+    scheduleLabel: "Weekly schedule", scheduleTitle: "An organised, balanced week", scheduleNote: "Illustrative timetable — the official schedule will be announced at the start of term.", time: "Time",
+    testimonialsLabel: "Parents’ voices", testimonialsTitle: "What parents say", testimonialsNote: "Illustrative samples — real testimonials will be published with parents’ permission.",
+    regLabel: "Registration", regTitle: "Registration open — Academic year {academicYear}",
+    regText: "Places in preparatory classes are limited. Contact us to enquire about a place for your child and visit the school.",
+    regSteps: [{ t: "Contact us", d: "Via WhatsApp or phone." }, { t: "Visit the school", d: "Meet the team and discover the space." }, { t: "Confirm registration", d: "Reserve your child’s place for the school year." }],
+    regCall: "Call us", contactLabel: "Contact & location", contactTitle: "We look forward to welcoming you",
+    addressLabel: "Address", phoneLabel: "Phone", emailLabel: "Email", openMap: "Open in Maps", mapNote: "The map shows the Sidi Saïd area — the precise location will be confirmed soon.",
+    footerAbout: "Private school in Sidi Saïd, Tlemcen — preparatory classes, English workshops and educational activities.", footerLinks: "Links", footerContact: "Contact us", follow: "Follow us",
+    rights: "Salaouandji School — All rights reserved", sample: "Illustrative image", menu: "Menu", close: "Close", prev: "Previous", next: "Next"
+  }
+};
+
+export const supportCourses = [
+  { level: "الثالثة ابتدائي", shortLevel: "3AP", description: "دروس دعم ومراجعة لمختلف المواد الأساسية.", subjects: ["اللغة العربية", "الرياضيات", "اللغة الفرنسية", "اللغة الإنجليزية", "التربية الإسلامية"] },
+  { level: "الثالثة متوسط", shortLevel: "3AM", description: "مرافقة التلميذ للتحضير الجيد والرفع من المستوى.", subjects: ["اللغة العربية", "الرياضيات", "اللغة الفرنسية", "اللغة الإنجليزية", "العلوم الفيزيائية", "علوم الطبيعة والحياة", "التاريخ والجغرافيا"] },
+  { level: "الثالثة ثانوي", shortLevel: "3AS", description: "تحضير منهجي ومرافقة موجهة نحو شهادة البكالوريا.", subjects: ["الرياضيات", "العلوم الطبيعية", "العلوم الفيزيائية", "اللغة العربية", "اللغة الفرنسية", "اللغة الإنجليزية", "الفلسفة", "التاريخ والجغرافيا"] }
+];
+
+export const supportUi: Record<Lang, { title: string; description: string; year: string; subjects: string; cta: string; name: string; phone: string; level: string }> = {
+  ar: { title: "دروس الدعم", description: "مرافقة تربوية منظمة تساعد التلميذ على فهم الدروس، سدّ الثغرات وتحسين مستواه طوال السنة الدراسية.", year: "السنة الدراسية", subjects: "المواد المتوفرة", cta: "التسجيل والاستفسار", name: "اسم ولي الأمر", phone: "رقم الهاتف", level: "المستوى الدراسي" },
+  fr: { title: "Cours de soutien", description: "Un accompagnement pédagogique structuré pour comprendre les cours, combler les lacunes et progresser tout au long de l’année scolaire.", year: "Année scolaire", subjects: "Matières disponibles", cta: "Inscription et renseignements", name: "Nom du parent", phone: "Numéro de téléphone", level: "Niveau scolaire" },
+  en: { title: "Support classes", description: "Structured educational support to understand lessons, close learning gaps and improve throughout the academic year.", year: "Academic year", subjects: "Available subjects", cta: "Registration & enquiries", name: "Parent’s name", phone: "Phone number", level: "School level" }
+};
+
+const supportTranslations: Record<string, L> = {
+  "الثالثة ابتدائي": {"ar": "الثالثة ابتدائي", "fr": "Troisième année primaire", "en": "Third year of primary school"},
+  "الثالثة متوسط": {"ar": "الثالثة متوسط", "fr": "Troisième année moyenne", "en": "Third year of middle school"},
+  "الثالثة ثانوي": {"ar": "الثالثة ثانوي", "fr": "Troisième année secondaire", "en": "Third year of secondary school"},
+  "دروس دعم ومراجعة لمختلف المواد الأساسية.": {"ar": "دروس دعم ومراجعة لمختلف المواد الأساسية.", "fr": "Soutien et révision des matières fondamentales.", "en": "Support and revision across core subjects."},
+  "مرافقة التلميذ للتحضير الجيد والرفع من المستوى.": {"ar": "مرافقة التلميذ للتحضير الجيد والرفع من المستوى.", "fr": "Un accompagnement pour bien se préparer et progresser.", "en": "Guided preparation to strengthen understanding and progress."},
+  "تحضير منهجي ومرافقة موجهة نحو شهادة البكالوريا.": {"ar": "تحضير منهجي ومرافقة موجهة نحو شهادة البكالوريا.", "fr": "Une préparation méthodique et un accompagnement vers le baccalauréat.", "en": "Methodical preparation and guidance towards the baccalaureate."},
+  "اللغة العربية": {"ar": "اللغة العربية", "fr": "Arabe", "en": "Arabic"},
+  "الرياضيات": {"ar": "الرياضيات", "fr": "Mathématiques", "en": "Mathematics"},
+  "اللغة الفرنسية": {"ar": "اللغة الفرنسية", "fr": "Français", "en": "French"},
+  "اللغة الإنجليزية": {"ar": "اللغة الإنجليزية", "fr": "Anglais", "en": "English"},
+  "التربية الإسلامية": {"ar": "التربية الإسلامية", "fr": "Éducation islamique", "en": "Islamic education"},
+  "العلوم الفيزيائية": {"ar": "العلوم الفيزيائية", "fr": "Sciences physiques", "en": "Physical sciences"},
+  "علوم الطبيعة والحياة": {"ar": "علوم الطبيعة والحياة", "fr": "Sciences de la nature et de la vie", "en": "Natural and life sciences"},
+  "العلوم الطبيعية": {"ar": "العلوم الطبيعية", "fr": "Sciences naturelles", "en": "Natural sciences"},
+  "التاريخ والجغرافيا": {"ar": "التاريخ والجغرافيا", "fr": "Histoire et géographie", "en": "History & geography"},
+  "الفلسفة": {"ar": "الفلسفة", "fr": "Philosophie", "en": "Philosophy"},
+};
+
+export function translateSupport(text: string, lang: Lang): string {
+  return supportTranslations[text]?.[lang] ?? text;
+}
