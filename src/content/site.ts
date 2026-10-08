@@ -15,16 +15,24 @@ import childrenCertificates from "@/assets/children-certificates.jpg.asset.json"
 import birthdayTable from "@/assets/birthday-table.jpg.asset.json";
 import birthdayCelebration from "@/assets/birthday-celebration.jpg.asset.json";
 import schoolHonours from "@/assets/school-honours.jpg.asset.json";
-import certificateCeremony from "@/assets/certificate-ceremony.jpg.asset.json";
 import schoolOuting from "@/assets/school-outing.jpg.asset.json";
 import creativeWorkshop from "@/assets/creative-workshop.jpg.asset.json";
 import childrenLearning from "@/assets/children-learning.jpg.asset.json";
-import horseVisit from "@/assets/horse-visit.jpg.asset.json";
+import outingRest from "@/assets/outing-rest.jpg.asset.json";
+import outingHorseGroup from "@/assets/outing-horse-group.jpg.asset.json";
+import nurserySwing from "@/assets/nursery-swing.jpg.asset.json";
+import nurseryPlayground from "@/assets/nursery-playground.jpg.asset.json";
+import nurseryPuzzle from "@/assets/nursery-puzzle.jpg.asset.json";
+import nurseryEducator from "@/assets/nursery-educator.jpg.asset.json";
+import nurseryShapes from "@/assets/nursery-shapes.jpg.asset.json";
+import nurseryCounting from "@/assets/nursery-counting.jpg.asset.json";
+import videoTwo from "@/assets/school-video-2.webm.asset.json";
+import videoFour from "@/assets/school-video-4.webm.asset.json";
 const actScience = classroomAlphabet.url;
-const actKids = birthdayCelebration.url;
+const actKids = nurserySwing.url;
 const actStudy = supportLesson.url;
 const actEnglish = childrenLearning.url;
-const actWorkshop = creativeWorkshop.url;
+const actWorkshop = nurseryPuzzle.url;
 const heroImg = classroomDesks.url;
 
 export type Lang = "ar" | "fr" | "en";
@@ -154,7 +162,7 @@ export const teachers: { name: L; role: L; photo?: string }[] = [
   { name: { ar: "أستاذ الرياضيات", fr: "Enseignant de mathématiques", en: "Mathematics teacher" }, role: { ar: "دروس الدعم المدرسي", fr: "Soutien scolaire", en: "School support" } },
   { name: { ar: "أستاذ الفيزياء", fr: "Enseignant de physique", en: "Physics teacher" }, role: { ar: "دروس الدعم المدرسي", fr: "Soutien scolaire", en: "School support" } },
   { name: { ar: "أستاذ اللغة الإنجليزية", fr: "Enseignant d’anglais", en: "English teacher" }, role: { ar: "اللغة والنطق", fr: "Langue et prononciation", en: "Language and pronunciation" } },
-  { name: { ar: "مربية روضة", fr: "Éducatrice de maternelle", en: "Kindergarten educator" }, role: { ar: "التعلّم والأنشطة التربوية", fr: "Apprentissage et activités éducatives", en: "Learning and educational activities" } },
+  { name: { ar: "مربية روضة", fr: "Éducatrice de maternelle", en: "Kindergarten educator" }, role: { ar: "التعلّم والأنشطة التربوية", fr: "Apprentissage et activités éducatives", en: "Learning and educational activities" }, photo: nurseryEducator.url },
 ];
 
 export const activities: { icon: IconKey; image: string; title: L; desc: L }[] = [
@@ -163,36 +171,38 @@ export const activities: { icon: IconKey; image: string; title: L; desc: L }[] =
   { icon: "english", image: actEnglish, title: { ar: "الإنجليزية والنطق", fr: "Anglais & prononciation", en: "English & pronunciation" }, desc: { ar: "كلمات أولى ونطق سليم في جوّ تفاعلي.", fr: "Premiers mots et bonne prononciation, en interaction.", en: "First words and clear pronunciation through interaction." } },
   { icon: "science", image: actScience, title: { ar: "العلوم والتجارب", fr: "Sciences & expériences", en: "Science & experiments" }, desc: { ar: "تجارب بسيطة تنمّي الفضول وروح الاكتشاف.", fr: "Des expériences simples qui nourrissent la curiosité.", en: "Simple experiments that nurture curiosity." } },
   { icon: "kids", image: actKids, title: { ar: "أنشطة الأطفال", fr: "Activités enfants", en: "Children’s activities" }, desc: { ar: "الرسم، القصص والموسيقى في جوّ من المرح.", fr: "Dessin, contes et musique dans la bonne humeur.", en: "Drawing, stories and music in a cheerful atmosphere." } },
-  { icon: "exam", image: actStudy, title: { ar: "التحضير للامتحانات", fr: "Préparation aux examens", en: "Exam preparation" }, desc: { ar: "تمارين منهجية لبناء الثقة قبل الامتحان.", fr: "Exercices méthodiques pour aborder l'examen en confiance.", en: "Methodical practice to approach exams with confidence." } },
+  { icon: "exam", image: supportWorkshop.url, title: { ar: "التحضير للامتحانات", fr: "Préparation aux examens", en: "Exam preparation" }, desc: { ar: "تمارين منهجية لبناء الثقة قبل الامتحان.", fr: "Exercices méthodiques pour aborder l'examen en confiance.", en: "Methodical practice to approach exams with confidence." } },
 ];
 
 export type SchoolPhoto = { src: string; alt: L };
+export const schoolVideos = [videoTwo, videoFour].map(video => ({ src: video.url }));
+export const schoolVideosTitle: L = { ar: "لحظات من المدرسة بالفيديو", fr: "L’école en vidéo", en: "School moments on video" };
+export const nurseryPhotos: SchoolPhoto[] = [
+  { src: nurseryShapes.url, alt: { ar: "التعلّم بالأشكال والألوان", fr: "Apprentissage des formes et couleurs", en: "Learning shapes and colours" } },
+  { src: nurseryCounting.url, alt: { ar: "التعلّم بألعاب العدّ", fr: "Jeux de comptage", en: "Learning with counting games" } },
+  { src: nurseryPlayground.url, alt: { ar: "فضاء ألعاب الروضة", fr: "Espace de jeux de la maternelle", en: "Nursery play area" } },
+];
 export const gallery: SchoolPhoto[] = [
+  { src: outingHorseGroup.url, alt: { ar: "الأطفال بجانب حصان في الإسطبل", fr: "Enfants près d’un cheval à l’écurie", en: "Children beside a horse at the stable" } },
+  { src: outingRest.url, alt: { ar: "استراحة الأطفال خلال الخرجة", fr: "Pause des enfants pendant la sortie", en: "Children resting during the outing" } },
   { src: schoolOuting.url, alt: { ar: "خرجة جماعية للأطفال", fr: "Sortie des enfants", en: "Children on a school outing" } },
-  { src: horseVisit.url, alt: { ar: "زيارة الأطفال للإسطبل", fr: "Visite de l’écurie", en: "Children visiting a stable" } },
   { src: creativeWorkshop.url, alt: { ar: "ورشة أعمال يدوية", fr: "Atelier créatif", en: "Creative classroom workshop" } },
-  { src: childrenLearning.url, alt: { ar: "أطفال في حصة تعليمية", fr: "Enfants en classe", en: "Children learning in class" } },
   { src: learningGames.url, alt: { ar: "ألعاب تعليمية للأطفال", fr: "Jeux éducatifs pour enfants", en: "Children’s learning games" } },
-  { src: schoolCelebration.url, alt: { ar: "نشاط ترفيهي للأطفال", fr: "Animation pour enfants", en: "Children’s celebration" } },
   { src: classroomColour.url, alt: { ar: "قاعة التعلّم", fr: "Salle d’apprentissage", en: "Learning classroom" } },
-  { src: classroomAlphabet.url, alt: { ar: "قاعة الحروف", fr: "Salle des lettres", en: "Alphabet classroom" } },
-  { src: classroomDesks.url, alt: { ar: "قاعة دروس الدعم", fr: "Salle de soutien scolaire", en: "Support classroom" } },
 ];
 export const supportPhotos: SchoolPhoto[] = [
-  { src: supportWorkshop.url, alt: { ar: "ورشة دروس الدعم", fr: "Atelier de soutien", en: "Support workshop" } },
-  { src: supportLesson.url, alt: { ar: "حصة دروس الدعم", fr: "Cours de soutien", en: "Support lesson" } },
-  { src: classroomDesks.url, alt: { ar: "قاعة الدراسة", fr: "Salle de classe", en: "School classroom" } },
+  { src: classroomDesks.url, alt: { ar: "قاعة دروس الدعم", fr: "Salle de soutien", en: "Support classroom" } },
 ];
 // Uploaded certificates, honours and celebrations; no inferred identities or dates.
 export const occasionPhotos: SchoolPhoto[] = [
   { src: childrenCertificates.url, alt: { ar: "أطفال يحملون شهادات تقدير", fr: "Enfants avec leurs certificats", en: "Children holding certificates" } },
   { src: schoolHonours.url, alt: { ar: "لقاء تكريم وتوزيع شهادات", fr: "Rencontre de remise de certificats", en: "Recognition and certificate presentation" } },
-  { src: certificateCeremony.url, alt: { ar: "صورة جماعية مع الشهادات", fr: "Photo de groupe avec les certificats", en: "Group photo with certificates" } },
   { src: birthdayCelebration.url, alt: { ar: "احتفال الأطفال بالمدرسة", fr: "Fête des enfants à l’école", en: "Children celebrating at school" } },
   { src: birthdayTable.url, alt: { ar: "الأطفال حول مائدة الاحتفال", fr: "Enfants autour de la table de fête", en: "Children around the celebration table" } },
-  { src: schoolCelebration.url, alt: { ar: "لقاء ترفيهي للأطفال", fr: "Animation pour enfants", en: "Children’s festive gathering" } },
   { src: schoolOffice.url, alt: { ar: "مكتب الإدارة والشهادات", fr: "Bureau et certificats", en: "Office and certificates" } },
 ];
+export const homepagePhotos = occasionPhotos.filter(photo => [childrenCertificates.url, birthdayCelebration.url].includes(photo.src));
+export const eventPhotos = occasionPhotos.filter(photo => !homepagePhotos.some(home => home.src === photo.src));
 export const occasionTitle: L = { ar: "مناسبات وحياة المدرسة", fr: "Événements et vie de l’école", en: "Occasions and school life" };
 export const serviceSeo = [
   { keywords: "روضة، أقسام تحضيرية، تلمسان", description: "روضة وأقسام تحضيرية في سيدي سعيد، تلمسان، للتعلّم والأنشطة التربوية." },
