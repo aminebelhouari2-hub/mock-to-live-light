@@ -3,12 +3,20 @@
 // Edit names, subjects, activities, schedule, photos and contact here.
 // Every text is { ar, fr }. Arabic is the primary language.
 // ============================================================
-import actScience from "@/assets/act-science.jpg";
-import actKids from "@/assets/act-kids.jpg";
-import actStudy from "@/assets/act-study.jpg";
-import actEnglish from "@/assets/act-english.jpg";
-import actWorkshop from "@/assets/act-workshop.jpg";
-import heroImg from "@/assets/hero.jpg";
+import classroomColour from "@/assets/classroom-colour.jpg.asset.json";
+import schoolOffice from "@/assets/school-office.jpg.asset.json";
+import classroomAlphabet from "@/assets/classroom-alphabet.jpg.asset.json";
+import learningGames from "@/assets/learning-games.jpg.asset.json";
+import classroomDesks from "@/assets/classroom-desks.jpg.asset.json";
+import supportWorkshop from "@/assets/support-workshop.jpg.asset.json";
+import schoolCelebration from "@/assets/school-celebration.jpg.asset.json";
+import supportLesson from "@/assets/support-lesson.jpg.asset.json";
+const actScience = classroomAlphabet.url;
+const actKids = schoolCelebration.url;
+const actStudy = supportLesson.url;
+const actEnglish = classroomAlphabet.url;
+const actWorkshop = learningGames.url;
+const heroImg = classroomDesks.url;
 
 export type Lang = "ar" | "fr" | "en";
 export type L = { ar: string; fr: string; en: string };
@@ -22,7 +30,7 @@ export const contact = {
   // MAP: replace mapQuery with exact "lat,lng" (e.g. "34.88,-1.31") once the precise location is known.
   mapQuery: "Sidi Said, Tlemcen, Algeria",
   // Optional: paste the exact Google Maps share link here.
-  mapLink: "",
+  mapLink: "https://maps.app.goo.gl/nqn6h7fU5Y6y9R2T7?g_st=ac",
   social: {
     facebook: "https://www.facebook.com/share/1Ewc71Ywjo/",
     instagram: "https://www.instagram.com/salaouandji_school?stkn=djdyMnVkMWozOWNu",
@@ -56,9 +64,9 @@ const baseUi = {
       { t: "تواصل مع الأولياء", d: "متابعة مستمرة وتواصل مباشر مع العائلة." },
     ],
     subjectsLabel: "المواد والدروس", subjectsTitle: "ما يتعلّمه طفلك عندنا",
-    teachersLabel: "الفريق التربوي", teachersTitle: "أساتذة يرافقون طفلك خطوة بخطوة", teachersNote: "سيتم نشر أسماء وصور الفريق التربوي قريبًا.",
-    activitiesLabel: "الأنشطة", activitiesTitle: "أنشطة تصنع الفرق كل أسبوع",
-    galleryLabel: "معرض الصور", galleryTitle: "لمحات من أجواء التعلّم", galleryNote: "صور توضيحية مؤقتة — ستُستبدل بصور المدرسة قريبًا.",
+    teachersLabel: "الفريق التربوي", teachersTitle: "أساتذة يرافقون طفلك خطوة بخطوة", teachersNote: "",
+    activitiesLabel: "الأنشطة", activitiesTitle: "أنشطة الأسبوع",
+    galleryLabel: "معرض الصور", galleryTitle: "محطات من أجواء التعلم", galleryNote: "",
     scheduleLabel: "البرنامج الأسبوعي", scheduleTitle: "أسبوع منظّم ومتوازن", scheduleNote: "برنامج نموذجي للتوضيح — يُعلن البرنامج الرسمي عند الدخول.",
     time: "التوقيت",
     testimonialsLabel: "آراء الأولياء", testimonialsTitle: "ماذا يقول الأولياء", testimonialsNote: "نماذج توضيحية — ستُنشر شهادات الأولياء الحقيقية بعد موافقتهم.",
@@ -97,9 +105,9 @@ const baseUi = {
       { t: "Lien avec les parents", d: "Un suivi régulier et une communication directe." },
     ],
     subjectsLabel: "Matières & cours", subjectsTitle: "Ce que votre enfant apprend chez nous",
-    teachersLabel: "Équipe pédagogique", teachersTitle: "Des enseignants qui accompagnent votre enfant", teachersNote: "Les noms et photos de l'équipe seront publiés prochainement.",
+    teachersLabel: "Équipe pédagogique", teachersTitle: "Des enseignants qui accompagnent votre enfant", teachersNote: "",
     activitiesLabel: "Activités", activitiesTitle: "Des activités qui font la différence",
-    galleryLabel: "Galerie", galleryTitle: "Instants d'apprentissage", galleryNote: "Images d'illustration temporaires — bientôt remplacées par des photos de l'école.",
+    galleryLabel: "Galerie", galleryTitle: "Instants d'apprentissage", galleryNote: "",
     scheduleLabel: "Emploi du temps", scheduleTitle: "Une semaine organisée et équilibrée", scheduleNote: "Programme type à titre indicatif — le programme officiel sera communiqué à la rentrée.",
     time: "Horaire",
     testimonialsLabel: "Avis des parents", testimonialsTitle: "Ce que disent les parents", testimonialsNote: "Exemples d'illustration — les témoignages réels seront publiés avec l'accord des parents.",
@@ -132,12 +140,12 @@ export const subjects: { icon: IconKey; title: L; desc: L }[] = [
   { icon: "music", title: { ar: "الموسيقى والإيقاع", fr: "Musique & rythme", en: "Music & rhythm" }, desc: { ar: "أنشطة صوتية وحركية ممتعة.", fr: "Activités sonores et motrices ludiques.", en: "Playful sound and movement activities." } },
 ];
 
-// Replace name with the real teacher name; set photo to an imported image when available.
+// Generic role titles; no personal names or inferred staff identities.
 export const teachers: { name: L; role: L; photo?: string }[] = [
-  { name: { ar: "الاسم قريبًا", fr: "Nom à venir", en: "Name coming soon" }, role: { ar: "أستاذة القسم التحضيري", fr: "Enseignante — classe préparatoire", en: "Preparatory class teacher" } },
-  { name: { ar: "الاسم قريبًا", fr: "Nom à venir", en: "Name coming soon" }, role: { ar: "أستاذة اللغة الإنجليزية", fr: "Enseignante d'anglais", en: "English teacher" } },
-  { name: { ar: "الاسم قريبًا", fr: "Nom à venir", en: "Name coming soon" }, role: { ar: "منشّطة الأنشطة الفنية", fr: "Animatrice — activités artistiques", en: "Art activities educator" } },
-  { name: { ar: "الاسم قريبًا", fr: "Nom à venir", en: "Name coming soon" }, role: { ar: "مرافقة تربوية", fr: "Accompagnatrice pédagogique", en: "Educational support educator" } },
+  { name: { ar: "أستاذ الرياضيات", fr: "Enseignant de mathématiques", en: "Mathematics teacher" }, role: { ar: "دروس الدعم المدرسي", fr: "Soutien scolaire", en: "School support" } },
+  { name: { ar: "أستاذ الفيزياء", fr: "Enseignant de physique", en: "Physics teacher" }, role: { ar: "دروس الدعم المدرسي", fr: "Soutien scolaire", en: "School support" } },
+  { name: { ar: "أستاذ اللغة الإنجليزية", fr: "Enseignant d’anglais", en: "English teacher" }, role: { ar: "اللغة والنطق", fr: "Langue et prononciation", en: "Language and pronunciation" } },
+  { name: { ar: "أستاذ القسم التحضيري", fr: "Enseignant de classe préparatoire", en: "Preparatory class teacher" }, role: { ar: "التعلّم والأنشطة التربوية", fr: "Apprentissage et activités éducatives", en: "Learning and educational activities" } },
 ];
 
 export const activities: { icon: IconKey; image: string; title: L; desc: L }[] = [
@@ -149,14 +157,31 @@ export const activities: { icon: IconKey; image: string; title: L; desc: L }[] =
   { icon: "exam", image: actStudy, title: { ar: "التحضير للامتحانات", fr: "Préparation aux examens", en: "Exam preparation" }, desc: { ar: "تمارين منهجية لبناء الثقة قبل الامتحان.", fr: "Exercices méthodiques pour aborder l'examen en confiance.", en: "Methodical practice to approach exams with confidence." } },
 ];
 
-// Placeholder images — replace with real school photos (import them at the top of this file).
-export const gallery: { src: string; alt: L }[] = [
-  { src: actScience, alt: { ar: "أطفال يجرون تجربة علمية", fr: "Enfants réalisant une expérience", en: "Children carrying out an experiment" } },
-  { src: actEnglish, alt: { ar: "حصة لغة إنجليزية", fr: "Cours d'anglais", en: "English lesson" } },
-  { src: actKids, alt: { ar: "أطفال يرسمون", fr: "Enfants qui dessinent", en: "Children drawing" } },
-  { src: actWorkshop, alt: { ar: "ورشة ألعاب تربوية", fr: "Atelier de jeux éducatifs", en: "Educational games workshop" } },
-  { src: heroImg, alt: { ar: "فضاء مكتبة ومطالعة", fr: "Espace bibliothèque", en: "Library and reading space" } },
-  { src: actStudy, alt: { ar: "جلسة مراجعة", fr: "Séance de révision", en: "Revision session" } },
+export type SchoolPhoto = { src: string; alt: L };
+export const gallery: SchoolPhoto[] = [
+  { src: learningGames.url, alt: { ar: "ألعاب تعليمية للأطفال", fr: "Jeux éducatifs pour enfants", en: "Children’s learning games" } },
+  { src: schoolCelebration.url, alt: { ar: "نشاط ترفيهي للأطفال", fr: "Animation pour enfants", en: "Children’s celebration" } },
+  { src: classroomColour.url, alt: { ar: "قاعة التعلّم", fr: "Salle d’apprentissage", en: "Learning classroom" } },
+  { src: classroomAlphabet.url, alt: { ar: "قاعة الحروف", fr: "Salle des lettres", en: "Alphabet classroom" } },
+  { src: classroomDesks.url, alt: { ar: "قاعة دروس الدعم", fr: "Salle de soutien scolaire", en: "Support classroom" } },
+];
+export const supportPhotos: SchoolPhoto[] = [
+  { src: supportWorkshop.url, alt: { ar: "ورشة دروس الدعم", fr: "Atelier de soutien", en: "Support workshop" } },
+  { src: supportLesson.url, alt: { ar: "حصة دروس الدعم", fr: "Cours de soutien", en: "Support lesson" } },
+  { src: classroomDesks.url, alt: { ar: "قاعة الدراسة", fr: "Salle de classe", en: "School classroom" } },
+];
+// Only visible scenes are identified; no unprovided awards, birthdays or trips are claimed.
+export const occasionPhotos: SchoolPhoto[] = [
+  { src: schoolCelebration.url, alt: { ar: "لقاء ترفيهي للأطفال", fr: "Rencontre festive des enfants", en: "Children’s festive gathering" } },
+  { src: schoolOffice.url, alt: { ar: "مكتب الإدارة والشهادات", fr: "Bureau et certificats", en: "School office and certificates" } },
+  ...supportPhotos.slice(0, 2),
+  gallery[0],
+].filter((photo): photo is SchoolPhoto => photo !== undefined);
+export const occasionTitle: L = { ar: "مناسبات وحياة المدرسة", fr: "Événements et vie de l’école", en: "Occasions and school life" };
+export const serviceSeo = [
+  { keywords: "روضة، أقسام تحضيرية، تلمسان", description: "روضة وأقسام تحضيرية في سيدي سعيد، تلمسان، للتعلّم والأنشطة التربوية." },
+  { keywords: "دعم مدرسي، ابتدائي، متوسط، ثانوي", description: "دروس دعم مدرسي للمستوى الابتدائي والمتوسط والثانوي في سيدي سعيد، تلمسان." },
+  { keywords: "عيادة نفسية، سيدي سعيد، تلمسان", description: "تواصل مع إدارة المدرسة للاستفسار عن العيادة النفسية في سيدي سعيد، تلمسان." },
 ];
 
 // Weekly schedule (sample). Each row = one time slot; each cell = subject key for that day (or "" for free).
@@ -204,9 +229,9 @@ export const ui = {
     aboutP2: "A dedicated educational team supports each child in a welcoming environment that brings together learning, play and discovery.",
     pillars: [{ t: "A safe environment", d: "A calm, organised space where children feel at ease." }, { t: "Balanced learning", d: "Learning that supports intellectual, physical and emotional development." }, { t: "Connected with families", d: "Regular follow-up and direct communication with parents." }],
     subjectsLabel: "Subjects & lessons", subjectsTitle: "What your child learns with us",
-    teachersLabel: "Educational team", teachersTitle: "Teachers who support your child, step by step", teachersNote: "Our team’s names and photos will be published soon.",
+    teachersLabel: "Educational team", teachersTitle: "Teachers who support your child, step by step", teachersNote: "",
     activitiesLabel: "Activities", activitiesTitle: "Activities that make a difference every week",
-    galleryLabel: "Photo gallery", galleryTitle: "Moments of learning", galleryNote: "Temporary illustrative images — school photos will follow soon.",
+    galleryLabel: "Photo gallery", galleryTitle: "Moments of learning", galleryNote: "",
     scheduleLabel: "Weekly schedule", scheduleTitle: "An organised, balanced week", scheduleNote: "Illustrative timetable — the official schedule will be announced at the start of term.", time: "Time",
     testimonialsLabel: "Parents’ voices", testimonialsTitle: "What parents say", testimonialsNote: "Illustrative samples — real testimonials will be published with parents’ permission.",
     regLabel: "Registration", regTitle: "Registration open — Academic year {academicYear}",
@@ -220,9 +245,9 @@ export const ui = {
 };
 
 export const supportCourses = [
-  { level: "الثالثة ابتدائي", shortLevel: "3AP", description: "دروس دعم ومراجعة لمختلف المواد الأساسية.", subjects: ["اللغة العربية", "الرياضيات", "اللغة الفرنسية", "اللغة الإنجليزية", "التربية الإسلامية"] },
-  { level: "الثالثة متوسط", shortLevel: "3AM", description: "مرافقة التلميذ للتحضير الجيد والرفع من المستوى.", subjects: ["اللغة العربية", "الرياضيات", "اللغة الفرنسية", "اللغة الإنجليزية", "العلوم الفيزيائية", "علوم الطبيعة والحياة", "التاريخ والجغرافيا"] },
-  { level: "الثالثة ثانوي", shortLevel: "3AS", description: "تحضير منهجي ومرافقة موجهة نحو شهادة البكالوريا.", subjects: ["الرياضيات", "العلوم الطبيعية", "العلوم الفيزيائية", "اللغة العربية", "اللغة الفرنسية", "اللغة الإنجليزية", "الفلسفة", "التاريخ والجغرافيا"] }
+  { level: "المستوى الابتدائي", shortLevel: "AP", description: "دروس دعم ومراجعة لمختلف المواد الأساسية.", subjects: ["اللغة العربية", "الرياضيات", "اللغة الفرنسية", "اللغة الإنجليزية", "التربية الإسلامية"] },
+  { level: "المستوى المتوسط", shortLevel: "AM", description: "مرافقة التلميذ للتحضير الجيد والرفع من المستوى.", subjects: ["اللغة العربية", "الرياضيات", "اللغة الفرنسية", "اللغة الإنجليزية", "العلوم الفيزيائية", "علوم الطبيعة والحياة", "التاريخ والجغرافيا"] },
+  { level: "المستوى الثانوي", shortLevel: "AS", description: "تحضير منهجي ومرافقة موجهة نحو شهادة البكالوريا.", subjects: ["الرياضيات", "العلوم الطبيعية", "العلوم الفيزيائية", "اللغة العربية", "اللغة الفرنسية", "اللغة الإنجليزية", "الفلسفة", "التاريخ والجغرافيا"] }
 ];
 
 export const supportUi: Record<Lang, { title: string; description: string; year: string; subjects: string; cta: string; name: string; phone: string; level: string }> = {
@@ -232,9 +257,9 @@ export const supportUi: Record<Lang, { title: string; description: string; year:
 };
 
 const supportTranslations: Record<string, L> = {
-  "الثالثة ابتدائي": {"ar": "الثالثة ابتدائي", "fr": "Troisième année primaire", "en": "Third year of primary school"},
-  "الثالثة متوسط": {"ar": "الثالثة متوسط", "fr": "Troisième année moyenne", "en": "Third year of middle school"},
-  "الثالثة ثانوي": {"ar": "الثالثة ثانوي", "fr": "Troisième année secondaire", "en": "Third year of secondary school"},
+  "المستوى الابتدائي": {"ar": "المستوى الابتدائي", "fr": "Niveau primaire", "en": "Primary level"},
+  "المستوى المتوسط": {"ar": "المستوى المتوسط", "fr": "Niveau moyen", "en": "Middle level"},
+  "المستوى الثانوي": {"ar": "المستوى الثانوي", "fr": "Niveau secondaire", "en": "Secondary level"},
   "دروس دعم ومراجعة لمختلف المواد الأساسية.": {"ar": "دروس دعم ومراجعة لمختلف المواد الأساسية.", "fr": "Soutien et révision des matières fondamentales.", "en": "Support and revision across core subjects."},
   "مرافقة التلميذ للتحضير الجيد والرفع من المستوى.": {"ar": "مرافقة التلميذ للتحضير الجيد والرفع من المستوى.", "fr": "Un accompagnement pour bien se préparer et progresser.", "en": "Guided preparation to strengthen understanding and progress."},
   "تحضير منهجي ومرافقة موجهة نحو شهادة البكالوريا.": {"ar": "تحضير منهجي ومرافقة موجهة نحو شهادة البكالوريا.", "fr": "Une préparation méthodique et un accompagnement vers le baccalauréat.", "en": "Methodical preparation and guidance towards the baccalaureate."},
