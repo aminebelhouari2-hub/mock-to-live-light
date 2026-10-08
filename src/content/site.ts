@@ -20,11 +20,28 @@ import schoolOuting from "@/assets/school-outing.jpg.asset.json";
 import creativeWorkshop from "@/assets/creative-workshop.jpg.asset.json";
 import childrenLearning from "@/assets/children-learning.jpg.asset.json";
 import horseVisit from "@/assets/horse-visit.jpg.asset.json";
+import outingStable from "@/assets/outing-stable.jpg.asset.json";
+import outingHorseTouch from "@/assets/outing-horse-touch.jpg.asset.json";
+import outingRest from "@/assets/outing-rest.jpg.asset.json";
+import outingHorseGroup from "@/assets/outing-horse-group.jpg.asset.json";
+import nurserySwing from "@/assets/nursery-swing.jpg.asset.json";
+import nurseryPlayground from "@/assets/nursery-playground.jpg.asset.json";
+import nurseryPuzzle from "@/assets/nursery-puzzle.jpg.asset.json";
+import nurseryLetters from "@/assets/nursery-letters.jpg.asset.json";
+import nurseryNumbers from "@/assets/nursery-numbers.jpg.asset.json";
+import nurseryEducator from "@/assets/nursery-educator.jpg.asset.json";
+import nurseryShapes from "@/assets/nursery-shapes.jpg.asset.json";
+import nurseryCounting from "@/assets/nursery-counting.jpg.asset.json";
+import videoOne from "@/assets/school-video-1.webm.asset.json";
+import videoTwo from "@/assets/school-video-2.webm.asset.json";
+import videoThree from "@/assets/school-video-3.webm.asset.json";
+import videoFour from "@/assets/school-video-4.webm.asset.json";
+import videoFive from "@/assets/school-video-5.webm.asset.json";
 const actScience = classroomAlphabet.url;
-const actKids = birthdayCelebration.url;
+const actKids = nurserySwing.url;
 const actStudy = supportLesson.url;
 const actEnglish = childrenLearning.url;
-const actWorkshop = creativeWorkshop.url;
+const actWorkshop = nurseryPuzzle.url;
 const heroImg = classroomDesks.url;
 
 export type Lang = "ar" | "fr" | "en";
@@ -154,7 +171,7 @@ export const teachers: { name: L; role: L; photo?: string }[] = [
   { name: { ar: "أستاذ الرياضيات", fr: "Enseignant de mathématiques", en: "Mathematics teacher" }, role: { ar: "دروس الدعم المدرسي", fr: "Soutien scolaire", en: "School support" } },
   { name: { ar: "أستاذ الفيزياء", fr: "Enseignant de physique", en: "Physics teacher" }, role: { ar: "دروس الدعم المدرسي", fr: "Soutien scolaire", en: "School support" } },
   { name: { ar: "أستاذ اللغة الإنجليزية", fr: "Enseignant d’anglais", en: "English teacher" }, role: { ar: "اللغة والنطق", fr: "Langue et prononciation", en: "Language and pronunciation" } },
-  { name: { ar: "مربية روضة", fr: "Éducatrice de maternelle", en: "Kindergarten educator" }, role: { ar: "التعلّم والأنشطة التربوية", fr: "Apprentissage et activités éducatives", en: "Learning and educational activities" } },
+  { name: { ar: "مربية روضة", fr: "Éducatrice de maternelle", en: "Kindergarten educator" }, role: { ar: "التعلّم والأنشطة التربوية", fr: "Apprentissage et activités éducatives", en: "Learning and educational activities" }, photo: nurseryEducator.url },
 ];
 
 export const activities: { icon: IconKey; image: string; title: L; desc: L }[] = [
@@ -167,7 +184,24 @@ export const activities: { icon: IconKey; image: string; title: L; desc: L }[] =
 ];
 
 export type SchoolPhoto = { src: string; alt: L };
+export const schoolVideos = [videoOne, videoTwo, videoThree, videoFour, videoFive].map(video => ({ src: video.url }));
+export const schoolVideosTitle: L = { ar: "لحظات من المدرسة بالفيديو", fr: "L’école en vidéo", en: "School moments on video" };
+export const nurseryPhotos: SchoolPhoto[] = [
+  { src: nurseryShapes.url, alt: { ar: "التعلّم بالأشكال والألوان", fr: "Apprentissage des formes et couleurs", en: "Learning shapes and colours" } },
+  { src: nurseryCounting.url, alt: { ar: "التعلّم بألعاب العدّ", fr: "Jeux de comptage", en: "Learning with counting games" } },
+  { src: nurseryEducator.url, alt: { ar: "مرافقة الأطفال في نشاط تعليمي", fr: "Accompagnement des enfants en atelier", en: "Guided classroom activity" } },
+  { src: nurseryPuzzle.url, alt: { ar: "تركيب لعبة الخضروات", fr: "Puzzle des légumes", en: "Vegetable puzzle activity" } },
+  { src: nurseryLetters.url, alt: { ar: "التعلّم بألعاب الحروف", fr: "Jeux de lettres", en: "Learning with letter games" } },
+  { src: nurseryNumbers.url, alt: { ar: "ألعاب الأرقام والتركيب", fr: "Jeux de chiffres et puzzles", en: "Number games and puzzles" } },
+  { src: nurserySwing.url, alt: { ar: "طفلة على أرجوحة الروضة", fr: "Enfant sur une balançoire", en: "Child on the nursery swing" } },
+  { src: nurseryPlayground.url, alt: { ar: "فضاء ألعاب الروضة", fr: "Espace de jeux de la maternelle", en: "Nursery play area" } },
+];
 export const gallery: SchoolPhoto[] = [
+  { src: outingHorseGroup.url, alt: { ar: "الأطفال بجانب حصان في الإسطبل", fr: "Enfants près d’un cheval à l’écurie", en: "Children beside a horse at the stable" } },
+  { src: outingHorseTouch.url, alt: { ar: "طفلة تتعرّف على حصان", fr: "Enfant découvrant un cheval", en: "Child meeting a horse" } },
+  { src: outingRest.url, alt: { ar: "استراحة الأطفال خلال الخرجة", fr: "Pause des enfants pendant la sortie", en: "Children resting during the outing" } },
+  { src: outingStable.url, alt: { ar: "جولة الأطفال في الإسطبل", fr: "Découverte de l’écurie", en: "Children exploring the stable" } },
+  ...nurseryPhotos,
   { src: schoolOuting.url, alt: { ar: "خرجة جماعية للأطفال", fr: "Sortie des enfants", en: "Children on a school outing" } },
   { src: horseVisit.url, alt: { ar: "زيارة الأطفال للإسطبل", fr: "Visite de l’écurie", en: "Children visiting a stable" } },
   { src: creativeWorkshop.url, alt: { ar: "ورشة أعمال يدوية", fr: "Atelier créatif", en: "Creative classroom workshop" } },

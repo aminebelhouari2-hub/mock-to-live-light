@@ -1,4 +1,6 @@
 # Requested updates
+- [ ] Add the new outing, play and learning photos to their relevant carousels and verify image loading.
+- [ ] Add the uploaded videos with muted autoplay, playback controls and visibility-aware playback.
 - [x] Convert repeated section content to automatic horizontal carousels and feature uploaded certificates, honours and celebrations in the homepage slideshow. Verified autoplay, pause, lightbox, mobile layout and 20 passing tests.
 - [x] Replace the area map query with the exact school Plus Code and name obtained from the supplied link redirect. Retained existing Google embed after connector setup was declined; live map rendering must be verified by the user on the published site.
 - [x] Replace illustrative testimonials with six supplied Facebook comment excerpts; verified desktop/mobile presentation, page link, no overflow, and 19 passing tests.

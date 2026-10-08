@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { ui, type Lang } from "@/content/site";
 
-export function SchoolCarousel({ lang, label, children, single = false, className = "" }: {
-  lang: Lang; label: string; children: ReactNode; single?: boolean; className?: string;
+export function SchoolCarousel({ lang, label, children, single = false, autoAdvance = true, className = "" }: {
+  lang: Lang; label: string; children: ReactNode; single?: boolean; autoAdvance?: boolean; className?: string;
 }) {
   const slides = Children.toArray(children);
   const [api, setApi] = useState<CarouselApi>();
@@ -39,12 +39,12 @@ export function SchoolCarousel({ lang, label, children, single = false, classNam
     return () => { api.off("select", update); api.off("reInit", update); };
   }, [api]);
   useEffect(() => {
-    if (!api || paused || interacting || reducedMotion || !visible || count < 2) return;
+    if (!api || !autoAdvance || paused || interacting || reducedMotion || !visible || count < 2) return;
     const timer = window.setInterval(() => {
       if (!document.hidden) { if (api.canScrollNext()) api.scrollNext(); else api.scrollTo(0); }
     }, 4500);
     return () => window.clearInterval(timer);
-  }, [api, paused, interacting, reducedMotion, visible, count]);
+  }, [api, autoAdvance, paused, interacting, reducedMotion, visible, count]);
   const playLabel = lang === "ar" ? "تشغيل العرض" : lang === "fr" ? "Lire le diaporama" : "Play slideshow";
   const pauseLabel = lang === "ar" ? "إيقاف العرض" : lang === "fr" ? "Mettre en pause" : "Pause slideshow";
   return <Carousel ref={setRoot} key={lang} setApi={setApi} dir={lang === "ar" ? "rtl" : "ltr"}
@@ -58,7 +58,7 @@ export function SchoolCarousel({ lang, label, children, single = false, classNam
     <div className="mt-5 flex items-center justify-center gap-3" aria-live="off">
       <Button size="icon" variant="outline" title={ui[lang].prev} aria-label={ui[lang].prev} onClick={() => { if (api?.canScrollPrev()) api.scrollPrev(); else api?.scrollTo(count - 1); }}>{lang === "ar" ? <ChevronRight /> : <ChevronLeft />}</Button>
       <span className="min-w-12 text-center text-xs tabular-nums text-forest/70" dir="ltr">{selected + 1} / {count}</span>
-      {!reducedMotion && count > 1 && <Button size="icon" variant="outline" title={paused ? playLabel : pauseLabel} aria-label={paused ? playLabel : pauseLabel} aria-pressed={paused} onClick={() => setPaused(value => !value)}>{paused ? <Play /> : <Pause />}</Button>}
+      {!reducedMotion && autoAdvance && count > 1 && <Button size="icon" variant="outline" title={paused ? playLabel : pauseLabel} aria-label={paused ? playLabel : pauseLabel} aria-pressed={paused} onClick={() => setPaused(value => !value)}>{paused ? <Play /> : <Pause />}</Button>}
       <Button size="icon" variant="outline" title={ui[lang].next} aria-label={ui[lang].next} onClick={() => { if (api?.canScrollNext()) api.scrollNext(); else api?.scrollTo(0); }}>{lang === "ar" ? <ChevronLeft /> : <ChevronRight />}</Button>
     </div>
   </Carousel>;

@@ -33,6 +33,7 @@ import {
 } from "lucide-react";
 import { SchoolCarousel } from "@/components/school-carousel";
 import { SchoolOccasions } from "@/components/school-occasions";
+import { SchoolVideo } from "@/components/school-video";
 import { Button } from "@/components/ui/button";
 import { getAcademicYear } from "@/content/academic-year";
 export { getAcademicYear } from "@/content/academic-year";
@@ -41,6 +42,9 @@ import {
   activities,
   contact,
   gallery,
+  nurseryPhotos,
+  schoolVideos,
+  schoolVideosTitle,
   primarySchedule,
   primaryScheduleSubjects,
   primaryScheduleUi,
@@ -501,6 +505,9 @@ function Index() {
           </SchoolCarousel>
           <h3 className="mb-6 text-center text-xl font-bold text-forest">{teachingUi[lang].preparatory}</h3>
           <SchoolCarousel lang={lang} label={teachingUi[lang].preparatory} className="mb-8">
+            {nurseryPhotos.map(photo => <figure key={photo.src} className="overflow-hidden rounded-lg border border-forest/10 bg-card"><img src={photo.src} alt={p(photo.alt)} loading="lazy" width={768} height={1024} className="aspect-[4/3] w-full object-cover" /><figcaption className="p-4 text-sm font-semibold text-forest">{p(photo.alt)}</figcaption></figure>)}
+          </SchoolCarousel>
+          <SchoolCarousel lang={lang} label={teachingUi[lang].preparatory} className="mb-8">
             {subjects.map((s) => {
               const I = ICONS[s.icon];
               return (
@@ -642,6 +649,12 @@ function Index() {
         </Section>
 
         {/* Lightbox Modal */}
+        <Section id="videos" label={t.galleryLabel} title={p(schoolVideosTitle)}>
+          <SchoolCarousel lang={lang} label={p(schoolVideosTitle)} single autoAdvance={false}>
+            {schoolVideos.map((video, index) => <SchoolVideo key={video.src} src={video.src} label={`${p(schoolVideosTitle)} ${index + 1}`} />)}
+          </SchoolCarousel>
+        </Section>
+
         {lb !== null && activeImage && (
           <div role="dialog" aria-modal="true" aria-label={t.galleryLabel} className="fixed inset-0 z-50 flex items-center justify-center bg-forest/90 p-4 backdrop-blur-md">
             <Button variant="ghost"
