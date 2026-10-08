@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Keep multilingual school copy and support course arrays in local content modules so additions preserve a single editable source without database dependencies.
+- Keep the founder biography and its translated qualification groups in a dedicated local content module, shared by the visible profile and search metadata, so credentials have one editable source.
 - Derive stage-specific subject and teacher groups from support course content so all three sections stay consistent when subjects change.
 - Match support photos by explicit stage keys rather than array position so course reordering preserves editorial photo assignments.
 - Compute academic seasons through the shared September-boundary helper; refresh the displayed season while a page remains open so seasonal changes never require manual updates.
