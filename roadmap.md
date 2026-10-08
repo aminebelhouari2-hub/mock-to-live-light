@@ -1,4 +1,5 @@
 # Requested updates
+- [x] Assign supplied pupil photos to each support stage and preserve empty classroom photos elsewhere without reuse.
 - [x] Restore distinct classroom, certificate, celebration, nursery and outing photos to their relevant sections; fill all three support-stage photos and exclude only actual duplicates.
 - [x] Curate similar photos and videos: keep distinct classroom and swimming clips, one horse-group photo, varied nursery activities, and separate homepage/event selections without reused photos.
 - [x] Add curated outing, play and learning photos to their relevant carousels; verified image loading.
