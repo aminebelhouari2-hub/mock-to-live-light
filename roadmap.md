@@ -1,4 +1,5 @@
 # Requested updates
+- [ ] Curate similar photos and videos, removing repeated shots and keeping varied scenes in their relevant sections.
 - [ ] Add the new outing, play and learning photos to their relevant carousels and verify image loading.
 - [ ] Add the uploaded videos with muted autoplay, playback controls and visibility-aware playback.
 - [x] Convert repeated section content to automatic horizontal carousels and feature uploaded certificates, honours and celebrations in the homepage slideshow. Verified autoplay, pause, lightbox, mobile layout and 20 passing tests.
