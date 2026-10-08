@@ -11,11 +11,20 @@ import classroomDesks from "@/assets/classroom-desks.jpg.asset.json";
 import supportWorkshop from "@/assets/support-workshop.jpg.asset.json";
 import schoolCelebration from "@/assets/school-celebration.jpg.asset.json";
 import supportLesson from "@/assets/support-lesson.jpg.asset.json";
+import childrenCertificates from "@/assets/children-certificates.jpg.asset.json";
+import birthdayTable from "@/assets/birthday-table.jpg.asset.json";
+import birthdayCelebration from "@/assets/birthday-celebration.jpg.asset.json";
+import schoolHonours from "@/assets/school-honours.jpg.asset.json";
+import certificateCeremony from "@/assets/certificate-ceremony.jpg.asset.json";
+import schoolOuting from "@/assets/school-outing.jpg.asset.json";
+import creativeWorkshop from "@/assets/creative-workshop.jpg.asset.json";
+import childrenLearning from "@/assets/children-learning.jpg.asset.json";
+import horseVisit from "@/assets/horse-visit.jpg.asset.json";
 const actScience = classroomAlphabet.url;
-const actKids = schoolCelebration.url;
+const actKids = birthdayCelebration.url;
 const actStudy = supportLesson.url;
-const actEnglish = classroomAlphabet.url;
-const actWorkshop = learningGames.url;
+const actEnglish = childrenLearning.url;
+const actWorkshop = creativeWorkshop.url;
 const heroImg = classroomDesks.url;
 
 export type Lang = "ar" | "fr" | "en";
@@ -27,8 +36,8 @@ export const contact = {
   whatsapp: "213556057176",
   email: "hibasalaouandji@gmail.com",
   address: { ar: "سيدي سعيد، تلمسان — مقابل العيادة البيطرية", fr: "Sidi Saïd, Tlemcen — en face de la clinique vétérinaire", en: "Sidi Saïd, Tlemcen — opposite the veterinary clinic" },
-  // MAP: replace mapQuery with exact "lat,lng" (e.g. "34.88,-1.31") once the precise location is known.
-  mapQuery: "Sidi Said, Tlemcen, Algeria",
+  // Exact school Plus Code and name from the official share-link redirect.
+  mapQuery: "VMQP+G2P SALAOUANDJI SCHOOL, Tlemcen",
   // Optional: paste the exact Google Maps share link here.
   mapLink: "https://maps.app.goo.gl/nqn6h7fU5Y6y9R2T7?g_st=ac",
   social: {
@@ -80,7 +89,7 @@ const baseUi = {
     regCall: "اتصل بنا",
     contactLabel: "التواصل والموقع", contactTitle: "نسعد بزيارتك واستقبال أسئلتك",
     addressLabel: "العنوان", phoneLabel: "الهاتف", emailLabel: "البريد الإلكتروني",
-    openMap: "فتح في الخرائط", mapNote: "الخريطة تُظهر منطقة سيدي سعيد — سيتم تحديد الموقع الدقيق قريبًا.",
+    openMap: "فتح في الخرائط", mapNote: "موقع SALAOUANDJI SCHOOL حسب رابط المدرسة الرسمي.",
     footerAbout: "مدرسة خاصة في سيدي سعيد، تلمسان — أقسام تحضيرية، ورشات لغة إنجليزية وأنشطة تربوية للأطفال.",
     footerLinks: "روابط", footerContact: "اتصل بنا", follow: "تابعنا",
     rights: "© 2026 صلوانجي سكول — جميع الحقوق محفوظة",
@@ -121,7 +130,7 @@ const baseUi = {
     regCall: "Appelez-nous",
     contactLabel: "Contact & localisation", contactTitle: "Au plaisir de vous accueillir",
     addressLabel: "Adresse", phoneLabel: "Téléphone", emailLabel: "E-mail",
-    openMap: "Ouvrir dans Maps", mapNote: "La carte montre le quartier de Sidi Saïd — l'emplacement exact sera précisé bientôt.",
+    openMap: "Ouvrir dans Maps", mapNote: "Emplacement de SALAOUANDJI SCHOOL selon le lien officiel.",
     footerAbout: "École privée à Sidi Saïd, Tlemcen — classes préparatoires, ateliers d'anglais et activités éducatives.",
     footerLinks: "Liens", footerContact: "Contact", follow: "Suivez-nous",
     rights: "© 2026 Salaouandji School — Tous droits réservés",
@@ -159,6 +168,10 @@ export const activities: { icon: IconKey; image: string; title: L; desc: L }[] =
 
 export type SchoolPhoto = { src: string; alt: L };
 export const gallery: SchoolPhoto[] = [
+  { src: schoolOuting.url, alt: { ar: "خرجة جماعية للأطفال", fr: "Sortie des enfants", en: "Children on a school outing" } },
+  { src: horseVisit.url, alt: { ar: "زيارة الأطفال للإسطبل", fr: "Visite de l’écurie", en: "Children visiting a stable" } },
+  { src: creativeWorkshop.url, alt: { ar: "ورشة أعمال يدوية", fr: "Atelier créatif", en: "Creative classroom workshop" } },
+  { src: childrenLearning.url, alt: { ar: "أطفال في حصة تعليمية", fr: "Enfants en classe", en: "Children learning in class" } },
   { src: learningGames.url, alt: { ar: "ألعاب تعليمية للأطفال", fr: "Jeux éducatifs pour enfants", en: "Children’s learning games" } },
   { src: schoolCelebration.url, alt: { ar: "نشاط ترفيهي للأطفال", fr: "Animation pour enfants", en: "Children’s celebration" } },
   { src: classroomColour.url, alt: { ar: "قاعة التعلّم", fr: "Salle d’apprentissage", en: "Learning classroom" } },
@@ -170,13 +183,16 @@ export const supportPhotos: SchoolPhoto[] = [
   { src: supportLesson.url, alt: { ar: "حصة دروس الدعم", fr: "Cours de soutien", en: "Support lesson" } },
   { src: classroomDesks.url, alt: { ar: "قاعة الدراسة", fr: "Salle de classe", en: "School classroom" } },
 ];
-// Only visible scenes are identified; no unprovided awards, birthdays or trips are claimed.
+// Uploaded certificates, honours and celebrations; no inferred identities or dates.
 export const occasionPhotos: SchoolPhoto[] = [
-  { src: schoolCelebration.url, alt: { ar: "لقاء ترفيهي للأطفال", fr: "Rencontre festive des enfants", en: "Children’s festive gathering" } },
-  { src: schoolOffice.url, alt: { ar: "مكتب الإدارة والشهادات", fr: "Bureau et certificats", en: "School office and certificates" } },
-  ...supportPhotos.slice(0, 2),
-  gallery[0],
-].filter((photo): photo is SchoolPhoto => photo !== undefined);
+  { src: childrenCertificates.url, alt: { ar: "أطفال يحملون شهادات تقدير", fr: "Enfants avec leurs certificats", en: "Children holding certificates" } },
+  { src: schoolHonours.url, alt: { ar: "لقاء تكريم وتوزيع شهادات", fr: "Rencontre de remise de certificats", en: "Recognition and certificate presentation" } },
+  { src: certificateCeremony.url, alt: { ar: "صورة جماعية مع الشهادات", fr: "Photo de groupe avec les certificats", en: "Group photo with certificates" } },
+  { src: birthdayCelebration.url, alt: { ar: "احتفال الأطفال بالمدرسة", fr: "Fête des enfants à l’école", en: "Children celebrating at school" } },
+  { src: birthdayTable.url, alt: { ar: "الأطفال حول مائدة الاحتفال", fr: "Enfants autour de la table de fête", en: "Children around the celebration table" } },
+  { src: schoolCelebration.url, alt: { ar: "لقاء ترفيهي للأطفال", fr: "Animation pour enfants", en: "Children’s festive gathering" } },
+  { src: schoolOffice.url, alt: { ar: "مكتب الإدارة والشهادات", fr: "Bureau et certificats", en: "Office and certificates" } },
+];
 export const occasionTitle: L = { ar: "مناسبات وحياة المدرسة", fr: "Événements et vie de l’école", en: "Occasions and school life" };
 export const serviceSeo = [
   { keywords: "روضة، أقسام تحضيرية، تلمسان", description: "روضة وأقسام تحضيرية في سيدي سعيد، تلمسان، للتعلّم والأنشطة التربوية." },
@@ -248,7 +264,7 @@ export const ui = {
     regText: "Places in preparatory classes are limited. Contact us to enquire about a place for your child and visit the school.",
     regSteps: [{ t: "Contact us", d: "Via WhatsApp or phone." }, { t: "Visit the school", d: "Meet the team and discover the space." }, { t: "Confirm registration", d: "Reserve your child’s place for the school year." }],
     regCall: "Call us", contactLabel: "Contact & location", contactTitle: "We look forward to welcoming you",
-    addressLabel: "Address", phoneLabel: "Phone", emailLabel: "Email", openMap: "Open in Maps", mapNote: "The map shows the Sidi Saïd area — the precise location will be confirmed soon.",
+    addressLabel: "Address", phoneLabel: "Phone", emailLabel: "Email", openMap: "Open in Maps", mapNote: "SALAOUANDJI SCHOOL location from the official school link.",
     footerAbout: "Private school in Sidi Saïd, Tlemcen — preparatory classes, English workshops and educational activities.", footerLinks: "Links", footerContact: "Contact us", follow: "Follow us",
     rights: "Salaouandji School — All rights reserved", sample: "Illustrative image", menu: "Menu", close: "Close", prev: "Previous", next: "Next"
   }
