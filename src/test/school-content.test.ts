@@ -7,7 +7,7 @@ describe("Varied school media", () => {
     const filenames = (photos: { src: string }[]) => photos.map(photo => photo.src.split("/").pop());
     expect(filenames(eventPhotos)).toContain("certificate-ceremony.jpg");
     expect(filenames(eventPhotos)).toContain("school-celebration.jpg");
-    expect(filenames(supportPhotos)).toEqual(["classroom-desks.jpg", "classroom-colour.jpg"]);
+    expect(filenames(supportPhotos)).toEqual(["classroom-desks.jpg", "classroom-colour.jpg", "classroom-alphabet.jpg"]);
     expect(filenames(nurseryPhotos)).toEqual(expect.arrayContaining(["nursery-letters.jpg", "nursery-numbers.jpg"]));
     expect(filenames(gallery)).toEqual(expect.arrayContaining(["outing-horse-touch.jpg", "outing-stable.jpg"]));
   });

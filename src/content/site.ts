@@ -33,7 +33,7 @@ import nurseryLetters from "@/assets/nursery-letters.jpg.asset.json";
 import nurseryNumbers from "@/assets/nursery-numbers.jpg.asset.json";
 import videoTwo from "@/assets/school-video-2.webm.asset.json";
 import videoFour from "@/assets/school-video-4.webm.asset.json";
-const actScience = classroomAlphabet.url;
+const actScience = learningGames.url;
 const actKids = nurserySwing.url;
 const actStudy = supportLesson.url;
 const actEnglish = childrenLearning.url;
@@ -196,11 +196,11 @@ export const gallery: SchoolPhoto[] = [
   { src: outingRest.url, alt: { ar: "استراحة الأطفال خلال الخرجة", fr: "Pause des enfants pendant la sortie", en: "Children resting during the outing" } },
   { src: schoolOuting.url, alt: { ar: "خرجة جماعية للأطفال", fr: "Sortie des enfants", en: "Children on a school outing" } },
   { src: creativeWorkshop.url, alt: { ar: "ورشة أعمال يدوية", fr: "Atelier créatif", en: "Creative classroom workshop" } },
-  { src: learningGames.url, alt: { ar: "ألعاب تعليمية للأطفال", fr: "Jeux éducatifs pour enfants", en: "Children’s learning games" } },
 ];
 export const supportPhotos: SchoolPhoto[] = [
   { src: classroomDesks.url, alt: { ar: "قاعة دروس الدعم", fr: "Salle de soutien", en: "Support classroom" } },
   { src: classroomColour.url, alt: { ar: "قاعة التعلّم بالمدرسة", fr: "Salle d’apprentissage de l’école", en: "School learning classroom" } },
+  { src: classroomAlphabet.url, alt: { ar: "قاعة الحروف بالمدرسة", fr: "Salle des lettres", en: "School alphabet classroom" } },
 ];
 // Uploaded certificates, honours and celebrations; no inferred identities or dates.
 export const occasionPhotos: SchoolPhoto[] = [
