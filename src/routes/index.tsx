@@ -28,7 +28,12 @@ import {
   MessageCircle,
   School,
   CheckCircle2,
+  ArrowUpRight,
+  type LucideIcon,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { getAcademicYear } from "@/content/academic-year";
+export { getAcademicYear } from "@/content/academic-year";
 import logo from "@/assets/logo.jpg.asset.json";
 import {
   activities,
@@ -39,23 +44,19 @@ import {
   subjects,
   teachers,
   testimonials,
+  supportCourses,
+  supportUi,
+  translateSupport,
   ui,
   type IconKey,
   type Lang,
   type L,
 } from "@/content/site";
 
-export function getAcademicYear(date = new Date()) {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const startYear = month >= 8 ? year : year - 1;
-  return `${startYear}/${startYear + 1}`;
-}
-
-const academicYear = getAcademicYear();
-
 export const Route = createFileRoute("/")({
-  head: () => ({
+  head: () => {
+    const academicYear = getAcademicYear();
+    return ({
     meta: [
       {
         title:
@@ -86,7 +87,8 @@ export const Route = createFileRoute("/")({
         content: "summary_large_image",
       },
     ],
-  }),
+  });
+  },
   component: Index,
 });
 
@@ -104,72 +106,6 @@ const ICONS: Record<IconKey, typeof BookA> = {
   exam: GraduationCap,
   games: Puzzle,
 };
-
-type SupportCourse = {
-  level: string;
-  shortLevel: string;
-  description: {
-    ar: string;
-    fr: string;
-  };
-  subjects: {
-    ar: string;
-    fr: string;
-  }[];
-};
-
-const supportCourses: SupportCourse[] = [
-  {
-    level: "الثالثة ابتدائي",
-    shortLevel: "3AP",
-    description: {
-      ar: "مرافقة تربوية تساعد التلميذ على تثبيت المكتسبات وفهم الدروس بشكل أفضل.",
-      fr: "Un accompagnement pédagogique pour consolider les acquis et mieux comprendre les cours.",
-    },
-    subjects: [
-      { ar: "اللغة العربية", fr: "Arabe" },
-      { ar: "الرياضيات", fr: "Mathématiques" },
-      { ar: "اللغة الفرنسية", fr: "Français" },
-      { ar: "اللغة الإنجليزية", fr: "Anglais" },
-      { ar: "التربية الإسلامية", fr: "Éducation islamique" },
-    ],
-  },
-  {
-    level: "الثالثة متوسط",
-    shortLevel: "3AM",
-    description: {
-      ar: "دروس دعم ومراجعة منظمة لسد الثغرات ورفع مستوى التلميذ في مختلف المواد.",
-      fr: "Des cours de soutien structurés pour combler les lacunes et améliorer le niveau scolaire.",
-    },
-    subjects: [
-      { ar: "اللغة العربية", fr: "Arabe" },
-      { ar: "الرياضيات", fr: "Mathématiques" },
-      { ar: "اللغة الفرنسية", fr: "Français" },
-      { ar: "اللغة الإنجليزية", fr: "Anglais" },
-      { ar: "العلوم الفيزيائية", fr: "Sciences physiques" },
-      { ar: "علوم الطبيعة والحياة", fr: "Sciences naturelles" },
-      { ar: "التاريخ والجغرافيا", fr: "Histoire & Géographie" },
-    ],
-  },
-  {
-    level: "الثالثة ثانوي",
-    shortLevel: "3AS",
-    description: {
-      ar: "تحضير منهجي ومرافقة موجهة نحو شهادة البكالوريا مع التركيز على الفهم والمنهجية.",
-      fr: "Une préparation méthodique au baccalauréat avec un accompagnement axé sur la compréhension et la méthode.",
-    },
-    subjects: [
-      { ar: "الرياضيات", fr: "Mathématiques" },
-      { ar: "العلوم الطبيعية", fr: "Sciences naturelles" },
-      { ar: "العلوم الفيزيائية", fr: "Sciences physiques" },
-      { ar: "اللغة العربية", fr: "Arabe" },
-      { ar: "اللغة الفرنسية", fr: "Français" },
-      { ar: "اللغة الإنجليزية", fr: "Anglais" },
-      { ar: "الفلسفة", fr: "Philosophie" },
-      { ar: "التاريخ والجغرافيا", fr: "Histoire & Géographie" },
-    ],
-  },
-];
 
 function useReveal() {
   useEffect(() => {
@@ -227,9 +163,21 @@ function Section({
 function Index() {
   const [lang, setLang] = useState<Lang>("ar");
   const [menu, setMenu] = useState(false);
+  const [academicYear, setAcademicYear] = useState(() => getAcademicYear());
   const [lb, setLb] = useState<number | null>(null);
 
   const t = ui[lang];
+  const st = supportUi[lang];
+  const activeImage = lb === null ? undefined : gallery[lb];
+  const seasonText = (text: string) => text.replaceAll("{academicYear}", academicYear);
+
+  useEffect(() => {
+    const refresh = () => setAcademicYear(getAcademicYear());
+    refresh();
+    const timer = window.setInterval(refresh, 60_000);
+    window.addEventListener("focus", refresh);
+    return () => { window.clearInterval(timer); window.removeEventListener("focus", refresh); };
+  }, []);
   const p = (x: L) => x[lang];
   const dir = lang === "ar" ? "rtl" : "ltr";
 
@@ -260,17 +208,17 @@ function Index() {
     const k = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLb(null);
       if (e.key === "ArrowRight") {
-        setLb((i) => (i! + (dir === "rtl" ? -1 : 1) + n) % n);
+        setLb((i) => ((i ?? 0) + (dir === "rtl" ? -1 : 1) + n) % n);
       }
       if (e.key === "ArrowLeft") {
-        setLb((i) => (i! + (dir === "rtl" ? 1 : -1) + n) % n);
+        setLb((i) => ((i ?? 0) + (dir === "rtl" ? 1 : -1) + n) % n);
       }
     };
     window.addEventListener("keydown", k);
     return () => window.removeEventListener("keydown", k);
   }, [lb, dir]);
 
-  const supportLabel = lang === "ar" ? "دروس الدعم" : "Cours de soutien";
+  const supportLabel = st.title;
 
   const navs: [string, string][] = [
     ["#about", t.nav.about],
@@ -289,8 +237,8 @@ function Index() {
       role="group"
       aria-label="Language"
     >
-      {(["ar", "fr"] as Lang[]).map((c) => (
-        <button
+      {(["ar", "fr", "en"] as Lang[]).map((c) => (
+        <Button variant="ghost"
           key={c}
           onClick={() => setLang(c)}
           aria-pressed={lang === c}
@@ -300,8 +248,8 @@ function Index() {
               : "text-forest/70 hover:text-forest"
           }`}
         >
-          {c === "ar" ? "ع" : "FR"}
-        </button>
+          {c === "ar" ? "ع" : c.toUpperCase()}
+        </Button>
       ))}
     </div>
   );
@@ -324,14 +272,14 @@ function Index() {
 
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-forest/10 bg-cream/85 backdrop-blur-xl">
-        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-3 lg:flex lg:justify-between lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 xl:flex xl:justify-between lg:px-8">
           <a href="#top" className="flex min-w-0 items-center gap-3">
             <img
               src={logo.url}
               alt="Salaouandji School"
               width={44}
               height={44}
-              className="h-11 w-11 shrink-0 rounded-xl object-contain"
+              className="h-11 w-11 shrink-0 rounded-full object-cover"
             />
             <div className="min-w-0">
               <div
@@ -346,12 +294,12 @@ function Index() {
             </div>
           </a>
 
-          <nav className="hidden items-center gap-5 lg:flex" aria-label="Main">
+          <nav className="hidden items-center gap-3 xl:flex" aria-label="Main">
             {navs.map(([h, l]) => (
               <a
                 key={h}
                 href={h}
-                className="text-sm font-medium text-forest/70 transition hover:text-forest"
+                className="whitespace-nowrap text-xs font-medium text-forest/70 transition hover:text-forest"
               >
                 {l}
               </a>
@@ -368,20 +316,20 @@ function Index() {
             >
               {t.nav.register}
             </a>
-            <button
+            <Button variant="ghost"
               onClick={() => setMenu(true)}
               aria-label={t.menu}
-              className="flex h-11 w-11 items-center justify-center rounded-xl bg-sand text-forest lg:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-xl bg-sand text-forest xl:hidden"
             >
               <Menu />
-            </button>
+            </Button>
           </div>
         </div>
       </header>
 
       {/* Mobile Menu */}
       {menu && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 xl:hidden" role="dialog" aria-modal="true">
           <div
             className="absolute inset-0 bg-forest/50 backdrop-blur-sm"
             onClick={() => setMenu(false)}
@@ -389,13 +337,13 @@ function Index() {
           <div className="absolute inset-y-0 end-0 flex w-[82%] max-w-sm flex-col gap-2 bg-cream p-6 shadow-soft">
             <div className="mb-4 flex items-center justify-between">
               <LangSwitch />
-              <button
+              <Button variant="ghost"
                 onClick={() => setMenu(false)}
                 aria-label={t.close}
                 className="flex h-11 w-11 items-center justify-center rounded-xl bg-sand"
               >
                 <X />
-              </button>
+              </Button>
             </div>
             {[...navs, ["#register", t.nav.register] as [string, string]].map(([h, l]) => (
               <a
@@ -424,15 +372,12 @@ function Index() {
         {/* Hero */}
         <section id="top" className="relative isolate overflow-hidden">
           <div className="bg-grid absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
-          <div className="float-a absolute -top-10 end-[8%] -z-10 h-56 w-56 rounded-full bg-peach blur-2xl" />
 
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 pb-16 pt-10 lg:grid-cols-[1.1fr_1fr] lg:px-8 lg:pb-24 lg:pt-16">
             <div className="reveal flex flex-col gap-6">
               <span className="inline-flex items-center gap-2 self-start rounded-full border border-primary/30 bg-peach px-4 py-2 text-[13px] font-bold text-forest">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-                {lang === "ar"
-                  ? `السنة الدراسية ${academicYear}`
-                  : `Année scolaire ${academicYear}`}
+                {seasonText(t.heroBadge)}
               </span>
 
               <h1 className="text-[2.35rem] font-bold leading-[1.2] text-forest sm:text-5xl lg:text-[3.6rem]">
@@ -489,7 +434,7 @@ function Index() {
                   alt=""
                   width={48}
                   height={48}
-                  className="h-12 w-12 rounded-xl object-contain"
+                  className="h-12 w-12 shrink-0 rounded-full object-cover"
                 />
                 <div>
                   <div className="text-xs text-forest/60">
@@ -516,7 +461,7 @@ function Index() {
                 className="flex items-center gap-10 whitespace-nowrap font-display text-sm font-semibold text-cream"
               >
                 SALAOUANDJI SCHOOL — صلوانجي سكول
-                <span className="text-primary">✦</span>
+                <img src={logo.url} alt="" width={40} height={40} className="h-10 w-10 shrink-0 rounded-full border border-primary/40 object-cover" />
               </span>
             ))}
           </div>
@@ -537,7 +482,7 @@ function Index() {
             </div>
             <div className="grid gap-4 sm:grid-cols-3 lg:col-span-2">
               {t.pillars.map((x, i) => {
-                const I = [ShieldCheck, Sparkles, Users][i];
+                const I = [ShieldCheck, Sparkles, Users][i] ?? ShieldCheck;
                 return (
                   <div
                     key={x.t}
@@ -579,85 +524,56 @@ function Index() {
         </Section>
 
         {/* Support Courses */}
-        <section id="support" className="relative overflow-hidden bg-shell py-20 lg:py-28">
-          <div className="absolute inset-0 bg-grid opacity-40" />
-          <div className="relative mx-auto max-w-7xl px-5 lg:px-8">
-            <div className="reveal mx-auto mb-12 max-w-3xl text-center">
-              <Eyebrow>
-                {lang === "ar"
-                  ? "الموسم الدراسي الحالي"
-                  : "Saison scolaire actuelle"}
-              </Eyebrow>
-
-              <div className="mb-4 flex justify-center">
-                <span className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-peach px-4 py-2 text-xs font-bold text-forest">
-                  <School className="h-4 w-4 text-primary" />
-                  {academicYear}
-                </span>
+        <section id="support" className="relative bg-shell py-20 lg:py-28">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="reveal mb-12 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
+              <div className="min-w-0">
+                <Eyebrow>{st.year} <bdi>{academicYear}</bdi></Eyebrow>
+                <h2 className="text-3xl font-bold text-forest sm:text-4xl">{st.title}</h2>
+                <p className="mt-3 text-sm font-medium text-forest/70">{lang === "ar" ? "دروس الدعم في سيدي سعيد، تلمسان" : lang === "fr" ? "Soutien scolaire à Sidi Saïd, Tlemcen" : "School support in Sidi Saïd, Tlemcen"}</p>
               </div>
-
-              <h2 className="text-3xl font-bold leading-snug text-forest sm:text-4xl">
-                {lang === "ar"
-                  ? "دروس الدعم لمختلف الأطوار"
-                  : "Cours de soutien pour différents niveaux"}
-              </h2>
+              <p className="max-w-xl text-base leading-8 text-forest/75">{st.description}</p>
             </div>
-
-            <div className="grid gap-8 lg:grid-cols-3">
-              {supportCourses.map((course) => (
-                <div
-                  key={course.level}
-                  className="reveal flex flex-col rounded-3xl border border-forest/10 bg-card p-8 shadow-soft"
-                >
-                  <div className="mb-4 flex items-center justify-between">
-                    <span className="rounded-xl bg-peach px-3 py-1 text-xs font-bold text-forest">
-                      {course.shortLevel}
-                    </span>
-                  </div>
-                  <h3 className="mb-3 text-2xl font-bold text-forest">
-                    {course.level}
-                  </h3>
-                  <p className="mb-6 text-sm leading-relaxed text-forest/70">
-                    {course.description[lang]}
-                  </p>
-                  <div className="mt-auto border-t border-forest/10 pt-6">
-                    <h4 className="mb-4 text-xs font-bold uppercase tracking-wider text-forest/60">
-                      {lang === "ar" ? "المواد المتاحة:" : "Matières disponibles:"}
-                    </h4>
-                    <ul className="space-y-2.5">
-                      {course.subjects.map((sub) => (
-                        <li key={sub.ar} className="flex items-center gap-2.5 text-sm font-medium text-forest">
-                          <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
-                          {sub[lang]}
-                        </li>
-                      ))}
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {supportCourses.map((course, index) => {
+                const LevelIcon: LucideIcon = [BookOpen, School, GraduationCap][index] ?? BookOpen;
+                return (
+                  <article key={course.shortLevel} className="lift reveal flex min-w-0 flex-col rounded-lg border border-forest/10 border-t-4 border-t-primary bg-card p-6 shadow-soft sm:p-7">
+                    <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+                      <span className="w-fit rounded-full border border-primary/25 bg-peach px-4 py-1.5 font-display text-sm font-bold text-forest" dir="ltr">{course.shortLevel}</span>
+                      <LevelIcon className="h-8 w-8 shrink-0 text-primary" aria-hidden="true" />
+                    </div>
+                    <h3 className="text-2xl font-bold leading-snug text-forest">{translateSupport(course.level, lang)}</h3>
+                    <p className="mb-6 mt-3 text-sm leading-7 text-forest/70">{translateSupport(course.description, lang)}</p>
+                    <h4 className="mb-3 text-sm font-semibold text-forest">{st.subjects}</h4>
+                    <ul className="mb-8 flex flex-wrap gap-2">
+                      {course.subjects.map((subject) => <li key={subject} className="max-w-full rounded-md border border-forest/10 bg-shell px-3 py-1.5 text-xs font-medium leading-6 text-forest">{translateSupport(subject, lang)}</li>)}
                     </ul>
-                  </div>
-                </div>
-              ))}
+                    <Button asChild className="mt-auto h-auto w-full whitespace-normal py-3.5 font-bold">
+                      <a href={wa} target="_blank" rel="noopener noreferrer"><MessageCircle />{st.cta}<ArrowUpRight /></a>
+                    </Button>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
 
         {/* Teachers */}
         <Section id="teachers" label={t.teachersLabel} title={t.teachersTitle}>
+          <p className="mb-8 text-center text-sm text-forest/70">{t.teachersNote}</p>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {teachers.map((m) => (
               <div
-                key={m.name}
+                key={m.role.ar}
                 className="reveal group overflow-hidden rounded-3xl border border-forest/10 bg-card shadow-soft"
               >
                 <div className="aspect-square overflow-hidden bg-sand">
-                  <img
-                    src={m.image}
-                    alt={m.name}
-                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                  />
+                  {m.photo ? <img src={m.photo} alt={p(m.name)} loading="lazy" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" /> : <div className="grid h-full place-items-center"><Users className="h-16 w-16 text-forest/30" aria-hidden="true" /></div>}
                 </div>
                 <div className="p-6">
-                  <h3 className="text-lg font-bold text-forest">{m.name}</h3>
+                  <h3 className="text-lg font-bold text-forest">{p(m.name)}</h3>
                   <p className="text-xs font-bold text-primary">{p(m.role)}</p>
-                  <p className="mt-2 text-xs leading-relaxed text-forest/70">{p(m.bio)}</p>
                 </div>
               </div>
             ))}
@@ -672,6 +588,7 @@ function Index() {
                 key={act.title.ar}
                 className="reveal rounded-3xl border border-forest/10 bg-card p-6 shadow-soft"
               >
+                <img src={act.image} alt={p(act.title)} loading="lazy" width={640} height={480} className="mb-5 aspect-[4/3] w-full rounded-lg object-cover" />
                 <h3 className="mb-2 text-xl font-bold text-forest">{p(act.title)}</h3>
                 <p className="text-sm leading-relaxed text-forest/70">{p(act.desc)}</p>
               </div>
@@ -681,147 +598,148 @@ function Index() {
 
         {/* Gallery */}
         <Section id="gallery" label={t.galleryLabel} title={t.galleryTitle}>
+          <p className="mb-8 text-center text-sm text-forest/70">{t.galleryNote}</p>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {gallery.map((img, index) => (
-              <div
+              <Button variant="ghost"
                 key={index}
+                aria-label={p(img.alt)}
                 onClick={() => setLb(index)}
-                className="reveal group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-2xl bg-sand"
+                className="reveal group relative h-auto w-full aspect-[4/3] cursor-pointer overflow-hidden rounded-lg bg-sand p-0"
               >
                 <img
-                  src={img.url}
-                  alt={p(img.caption)}
+                  src={img.src}
+                  alt={p(img.alt)}
+                  loading="lazy"
                   className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
                 <p className="absolute bottom-4 start-4 end-4 text-xs font-bold text-cream opacity-0 transition group-hover:opacity-100">
-                  {p(img.caption)}
+                  {p(img.alt)}
                 </p>
-              </div>
+              </Button>
             ))}
           </div>
         </Section>
 
         {/* Lightbox Modal */}
-        {lb !== null && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-forest/90 p-4 backdrop-blur-md">
-            <button
+        {lb !== null && activeImage && (
+          <div role="dialog" aria-modal="true" aria-label={t.galleryLabel} className="fixed inset-0 z-50 flex items-center justify-center bg-forest/90 p-4 backdrop-blur-md">
+            <Button variant="ghost"
+              aria-label={t.close}
               onClick={() => setLb(null)}
               className="absolute top-6 end-6 rounded-full bg-cream/10 p-3 text-cream hover:bg-cream/20"
             >
               <X className="h-6 w-6" />
-            </button>
+            </Button>
 
-            <button
+            <Button variant="ghost"
+              aria-label={t.prev}
               onClick={() => setLb((lb - 1 + gallery.length) % gallery.length)}
-              className="absolute start-6 rounded-full bg-cream/10 p-3 text-cream hover:bg-cream/20"
+              className="absolute bottom-6 start-6 rounded-full bg-cream/10 p-3 text-cream hover:bg-cream/20"
             >
               <ChevronLeft className="h-6 w-6" />
-            </button>
+            </Button>
 
             <div className="max-w-4xl max-h-[80vh] text-center">
               <img
-                src={gallery[lb].url}
-                alt={p(gallery[lb].caption)}
-                className="max-h-[70vh] rounded-2xl object-contain mx-auto shadow-2xl"
+                src={activeImage.src}
+                alt={p(activeImage.alt)}
+                className="mx-auto max-h-[70vh] max-w-full rounded-lg object-contain shadow-soft"
               />
-              <p className="mt-4 text-sm font-medium text-cream">{p(gallery[lb].caption)}</p>
+              <p className="mt-4 text-sm font-medium text-cream">{p(activeImage.alt)}</p>
             </div>
 
-            <button
+            <Button variant="ghost"
+              aria-label={t.next}
               onClick={() => setLb((lb + 1) % gallery.length)}
-              className="absolute end-6 rounded-full bg-cream/10 p-3 text-cream hover:bg-cream/20"
+              className="absolute bottom-6 end-6 rounded-full bg-cream/10 p-3 text-cream hover:bg-cream/20"
             >
               <ChevronRight className="h-6 w-6" />
-            </button>
+            </Button>
           </div>
         )}
 
-        {/* Contact & Registration */}
-        <section id="contact" className="py-20 lg:py-28 bg-forest text-cream">
-          <div className="mx-auto max-w-7xl px-5 lg:px-8">
-            <div className="grid gap-12 lg:grid-cols-2">
-              <div className="reveal space-y-6">
-                <Eyebrow>{t.contactLabel}</Eyebrow>
-                <h2 className="text-3xl font-bold sm:text-4xl">{t.contactTitle}</h2>
-                <p className="text-cream/80 text-base leading-relaxed">{t.contactText}</p>
+        {/* Schedule */}
+        <Section id="schedule" label={t.scheduleLabel} title={t.scheduleTitle} className="bg-shell">
+          <p className="mb-8 text-center text-sm text-forest/70">{t.scheduleNote}</p>
+          <div className="hidden overflow-x-auto rounded-lg border border-forest/10 bg-card md:block">
+            <table className="w-full text-start text-sm">
+              <thead className="bg-forest text-cream"><tr><th scope="col" className="p-4 text-start">{t.time}</th>{schedule.days.map(day => <th scope="col" key={day.ar} className="p-4 text-start">{p(day)}</th>)}</tr></thead>
+              <tbody>{schedule.slots.map(slot => <tr key={slot.time} className="border-t border-forest/10"><th scope="row" className="whitespace-nowrap p-4 text-start font-medium"><bdi>{slot.time}</bdi></th>{slot.cells.map((cell, i) => <td key={i} className="p-4">{schedule.labels[cell] ? p(schedule.labels[cell]) : "—"}</td>)}</tr>)}</tbody>
+            </table>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 md:hidden">{schedule.days.map((day, i) => <article key={day.ar} className="rounded-lg border border-forest/10 bg-card p-5"><h3 className="mb-4 font-bold text-forest">{p(day)}</h3><ul className="space-y-3">{schedule.slots.map(slot => { const label = schedule.labels[slot.cells[i] ?? ""]; return <li key={slot.time} className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 text-sm"><span>{label ? p(label) : "—"}</span><bdi className="text-xs text-forest/65">{slot.time}</bdi></li>; })}</ul></article>)}</div>
+        </Section>
 
-                <div className="space-y-4 pt-4">
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cream/10 text-primary">
-                      <MapPin className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <div className="text-xs text-cream/60">{t.addressLabel}</div>
-                      <div className="text-sm font-bold">{contact.address}</div>
-                    </div>
-                  </div>
+        {/* Testimonials */}
+        <Section id="testimonials" label={t.testimonialsLabel} title={t.testimonialsTitle}>
+          <p className="mb-8 text-center text-sm text-forest/70">{t.testimonialsNote}</p>
+          <div className="grid gap-6 md:grid-cols-3">{testimonials.map(item => <figure key={item.author.ar} className="reveal rounded-lg border border-forest/10 bg-card p-7 shadow-soft"><MessageCircle className="mb-5 h-7 w-7 text-primary" aria-hidden="true" /><blockquote className="mb-6 text-base leading-8 text-forest/75">{p(item.quote)}</blockquote><figcaption className="text-sm font-bold text-forest">{p(item.author)}</figcaption></figure>)}</div>
+        </Section>
 
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cream/10 text-primary">
-                      <Phone className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <div className="text-xs text-cream/60">{t.phoneLabel}</div>
-                      <a href={`tel:${contact.phone}`} className="text-sm font-bold dir-ltr hover:text-primary">
-                        {contact.phone}
-                      </a>
-                    </div>
-                  </div>
-                </div>
+        {/* Registration */}
+        <section id="register" className="bg-shell py-20 lg:py-28">
+          <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
+            <div className="reveal min-w-0">
+              <Eyebrow>{t.regLabel}</Eyebrow>
+              <h2 className="text-3xl font-bold leading-snug text-forest sm:text-4xl">{seasonText(t.regTitle)}</h2>
+              <p className="mb-8 mt-5 text-base leading-8 text-forest/75">{t.regText}</p>
+              <ol className="space-y-6">{t.regSteps.map((step, i) => <li key={step.t} className="flex gap-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-peach text-sm font-bold text-forest">{i + 1}</span><div className="min-w-0"><h3 className="font-bold text-forest">{step.t}</h3><p className="mt-1 text-sm text-forest/70">{step.d}</p></div></li>)}</ol>
+              <Button asChild variant="outline" className="mt-8 h-auto py-3"><a href={`tel:${contact.phoneTel}`}><Phone />{t.regCall}</a></Button>
+            </div>
+            <div className="reveal rounded-lg border border-forest/10 bg-card p-6 shadow-soft sm:p-8">
+              <h3 className="mb-6 text-2xl font-bold text-forest">{t.nav.register}</h3>
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                const data = new FormData(e.currentTarget);
+                const text = `${p(contact.waMessage)}\n${st.name}: ${String(data.get("parentName") ?? "")}\n${st.phone}: ${String(data.get("phone") ?? "")}\n${st.level}: ${String(data.get("level") ?? "")}\n${st.year}: ${academicYear}`;
+                window.open(`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+              }} className="space-y-5">
+                <div><label htmlFor="parent-name" className="mb-2 block text-sm font-semibold text-forest">{st.name}</label><input id="parent-name" name="parentName" autoComplete="name" required className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest" /></div>
+                <div><label htmlFor="parent-phone" className="mb-2 block text-sm font-semibold text-forest">{st.phone}</label><input id="parent-phone" name="phone" type="tel" autoComplete="tel" dir="ltr" required className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest" /></div>
+                <div><label htmlFor="school-level" className="mb-2 block text-sm font-semibold text-forest">{st.level}</label><select id="school-level" name="level" className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest"><option>{t.heroPoints[0]}</option>{supportCourses.map(c => <option key={c.shortLevel}>{translateSupport(c.level, lang)}</option>)}</select></div>
+                <Button type="submit" className="h-auto w-full whitespace-normal py-4 font-bold"><MessageCircle />{t.ctaRegister}</Button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="bg-forest py-20 text-cream lg:py-28">
+          <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
+            <div className="reveal min-w-0">
+              <Eyebrow>{t.contactLabel}</Eyebrow>
+              <h2 className="mb-8 text-3xl font-bold leading-snug sm:text-4xl">{t.contactTitle}</h2>
+              <address className="space-y-6 not-italic">
+                <div className="flex gap-4"><MapPin className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-cream/65">{t.addressLabel}</p><p className="text-sm font-semibold leading-7">{p(contact.address)}</p></div></div>
+                <div className="flex gap-4"><Phone className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-cream/65">{t.phoneLabel}</p><a href={`tel:${contact.phoneTel}`} className="text-sm font-semibold hover:text-primary"><bdi>{contact.phoneDisplay}</bdi></a></div></div>
+                <div className="flex gap-4"><Mail className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-cream/65">{t.emailLabel}</p><a href={`mailto:${contact.email}`} className="break-all text-sm font-semibold hover:text-primary" dir="ltr">{contact.email}</a></div></div>
+              </address>
+              <div className="mt-8 flex gap-3" aria-label={t.follow}>
+                <Button asChild variant="ghost" size="icon" className="text-cream hover:bg-cream/10 hover:text-primary"><a href={contact.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook /></a></Button>
+                <Button asChild variant="ghost" size="icon" className="text-cream hover:bg-cream/10 hover:text-primary"><a href={contact.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram /></a></Button>
+                <Button asChild variant="ghost" size="icon" className="text-cream hover:bg-cream/10 hover:text-primary"><a href={contact.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"><Music /></a></Button>
+                <Button asChild variant="ghost" size="icon" className="text-cream hover:bg-cream/10 hover:text-primary"><a href={wa} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><MessageCircle /></a></Button>
               </div>
-
-              {/* Form / Map Embed */}
-              <div id="register" className="reveal rounded-3xl bg-card p-8 text-forest shadow-soft">
-                <h3 className="mb-6 text-2xl font-bold">{t.nav.register}</h3>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    window.open(wa, "_blank");
-                  }}
-                  className="space-y-4"
-                >
-                  <div>
-                    <label className="mb-2 block text-xs font-bold uppercase">{t.formName}</label>
-                    <input
-                      type="text"
-                      required
-                      className="w-full rounded-xl border border-forest/15 p-3.5 text-sm focus:border-primary focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-xs font-bold uppercase">{t.formPhone}</label>
-                    <input
-                      type="tel"
-                      required
-                      className="w-full rounded-xl border border-forest/15 p-3.5 text-sm focus:border-primary focus:outline-none"
-                    />
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-xs font-bold uppercase">{t.formLevel}</label>
-                    <select className="w-full rounded-xl border border-forest/15 p-3.5 text-sm focus:border-primary focus:outline-none">
-                      {supportCourses.map((c) => (
-                        <option key={c.level}>{c.level}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full rounded-xl bg-primary py-4 font-bold text-primary-foreground shadow-glow transition hover:bg-primary/90"
-                  >
-                    {t.ctaRegister}
-                  </button>
-                </form>
-              </div>
+            </div>
+            <div className="reveal min-w-0">
+              <iframe src={mapSrc} title={t.contactLabel} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-80 w-full rounded-lg border border-cream/20 bg-shell" />
+              <p className="mt-4 text-xs leading-6 text-cream/70">{t.mapNote}</p>
+              <Button asChild variant="ghost" className="mt-2 text-cream hover:bg-cream/10 hover:text-primary"><a href={mapHref} target="_blank" rel="noopener noreferrer"><MapPin />{t.openMap}<ArrowUpRight /></a></Button>
             </div>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-forest/10 bg-cream py-8 text-center text-xs text-forest/60">
-        <div className="mx-auto max-w-7xl px-5">
-          <p>© {new Date().getFullYear()} Salaouandji School. All rights reserved.</p>
+      <footer className="border-t border-forest/10 bg-cream py-10 text-sm text-forest/70">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div className="grid gap-8 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+            <div className="min-w-0"><a href="#top" className="flex items-center gap-3 font-display font-bold text-forest"><img src={logo.url} alt="" width={44} height={44} className="h-11 w-11 rounded-full object-cover" /><span dir="ltr">SALAOUANDJI SCHOOL</span></a><p className="mt-4 max-w-md leading-7">{t.footerAbout}</p></div>
+            <div><h3 className="mb-4 font-bold text-forest">{t.footerLinks}</h3><nav className="grid grid-cols-2 gap-3">{[...navs, ["#register", t.nav.register] as [string, string]].map(([href,label]) => <a key={href} href={href} className="hover:text-primary">{label}</a>)}</nav></div>
+          </div>
+          <p className="mt-8 border-t border-forest/10 pt-6 text-center text-xs">© {new Date().getFullYear()} Salaouandji School — {lang === "ar" ? "جميع الحقوق محفوظة" : lang === "fr" ? "Tous droits réservés" : "All rights reserved"}</p>
         </div>
       </footer>
     </div>
