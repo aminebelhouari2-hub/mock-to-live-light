@@ -638,7 +638,7 @@ function Index() {
                 </p>
               </Button>
             ))}
-          </div>
+          </SchoolCarousel>
         </Section>
 
         {/* Lightbox Modal */}
@@ -782,6 +782,6 @@ function Index() {
           <p className="mt-8 border-t border-forest/10 pt-6 text-center text-xs">© {new Date().getFullYear()} Salaouandji School — {lang === "ar" ? "جميع الحقوق محفوظة" : lang === "fr" ? "Tous droits réservés" : "All rights reserved"}</p>
         </div>
       </footer>
-    </SchoolCarousel>
+    </div>
   );
 }
