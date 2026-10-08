@@ -15,17 +15,22 @@ import childrenCertificates from "@/assets/children-certificates.jpg.asset.json"
 import birthdayTable from "@/assets/birthday-table.jpg.asset.json";
 import birthdayCelebration from "@/assets/birthday-celebration.jpg.asset.json";
 import schoolHonours from "@/assets/school-honours.jpg.asset.json";
+import certificateCeremony from "@/assets/certificate-ceremony.jpg.asset.json";
 import schoolOuting from "@/assets/school-outing.jpg.asset.json";
 import creativeWorkshop from "@/assets/creative-workshop.jpg.asset.json";
 import childrenLearning from "@/assets/children-learning.jpg.asset.json";
 import outingRest from "@/assets/outing-rest.jpg.asset.json";
 import outingHorseGroup from "@/assets/outing-horse-group.jpg.asset.json";
+import outingHorseTouch from "@/assets/outing-horse-touch.jpg.asset.json";
+import outingStable from "@/assets/outing-stable.jpg.asset.json";
 import nurserySwing from "@/assets/nursery-swing.jpg.asset.json";
 import nurseryPlayground from "@/assets/nursery-playground.jpg.asset.json";
 import nurseryPuzzle from "@/assets/nursery-puzzle.jpg.asset.json";
 import nurseryEducator from "@/assets/nursery-educator.jpg.asset.json";
 import nurseryShapes from "@/assets/nursery-shapes.jpg.asset.json";
 import nurseryCounting from "@/assets/nursery-counting.jpg.asset.json";
+import nurseryLetters from "@/assets/nursery-letters.jpg.asset.json";
+import nurseryNumbers from "@/assets/nursery-numbers.jpg.asset.json";
 import videoTwo from "@/assets/school-video-2.webm.asset.json";
 import videoFour from "@/assets/school-video-4.webm.asset.json";
 const actScience = classroomAlphabet.url;
@@ -180,23 +185,29 @@ export const schoolVideosTitle: L = { ar: "لحظات من المدرسة بال
 export const nurseryPhotos: SchoolPhoto[] = [
   { src: nurseryShapes.url, alt: { ar: "التعلّم بالأشكال والألوان", fr: "Apprentissage des formes et couleurs", en: "Learning shapes and colours" } },
   { src: nurseryCounting.url, alt: { ar: "التعلّم بألعاب العدّ", fr: "Jeux de comptage", en: "Learning with counting games" } },
+  { src: nurseryLetters.url, alt: { ar: "التعلّم بألعاب الحروف", fr: "Jeux de lettres", en: "Learning with letter games" } },
+  { src: nurseryNumbers.url, alt: { ar: "ألعاب الأرقام والتركيب", fr: "Jeux de chiffres et puzzles", en: "Number games and puzzles" } },
   { src: nurseryPlayground.url, alt: { ar: "فضاء ألعاب الروضة", fr: "Espace de jeux de la maternelle", en: "Nursery play area" } },
 ];
 export const gallery: SchoolPhoto[] = [
+  { src: outingHorseTouch.url, alt: { ar: "طفلة تتعرّف على حصان", fr: "Enfant découvrant un cheval", en: "Child meeting a horse" } },
+  { src: outingStable.url, alt: { ar: "جولة الأطفال في الإسطبل", fr: "Découverte de l’écurie", en: "Children exploring the stable" } },
   { src: outingHorseGroup.url, alt: { ar: "الأطفال بجانب حصان في الإسطبل", fr: "Enfants près d’un cheval à l’écurie", en: "Children beside a horse at the stable" } },
   { src: outingRest.url, alt: { ar: "استراحة الأطفال خلال الخرجة", fr: "Pause des enfants pendant la sortie", en: "Children resting during the outing" } },
   { src: schoolOuting.url, alt: { ar: "خرجة جماعية للأطفال", fr: "Sortie des enfants", en: "Children on a school outing" } },
   { src: creativeWorkshop.url, alt: { ar: "ورشة أعمال يدوية", fr: "Atelier créatif", en: "Creative classroom workshop" } },
   { src: learningGames.url, alt: { ar: "ألعاب تعليمية للأطفال", fr: "Jeux éducatifs pour enfants", en: "Children’s learning games" } },
-  { src: classroomColour.url, alt: { ar: "قاعة التعلّم", fr: "Salle d’apprentissage", en: "Learning classroom" } },
 ];
 export const supportPhotos: SchoolPhoto[] = [
   { src: classroomDesks.url, alt: { ar: "قاعة دروس الدعم", fr: "Salle de soutien", en: "Support classroom" } },
+  { src: classroomColour.url, alt: { ar: "قاعة التعلّم بالمدرسة", fr: "Salle d’apprentissage de l’école", en: "School learning classroom" } },
 ];
 // Uploaded certificates, honours and celebrations; no inferred identities or dates.
 export const occasionPhotos: SchoolPhoto[] = [
   { src: childrenCertificates.url, alt: { ar: "أطفال يحملون شهادات تقدير", fr: "Enfants avec leurs certificats", en: "Children holding certificates" } },
   { src: schoolHonours.url, alt: { ar: "لقاء تكريم وتوزيع شهادات", fr: "Rencontre de remise de certificats", en: "Recognition and certificate presentation" } },
+  { src: certificateCeremony.url, alt: { ar: "صورة جماعية مع الشهادات", fr: "Photo de groupe avec les certificats", en: "Group photo with certificates" } },
+  { src: schoolCelebration.url, alt: { ar: "لقاء ترفيهي للأطفال", fr: "Animation pour enfants", en: "Children’s festive gathering" } },
   { src: birthdayCelebration.url, alt: { ar: "احتفال الأطفال بالمدرسة", fr: "Fête des enfants à l’école", en: "Children celebrating at school" } },
   { src: birthdayTable.url, alt: { ar: "الأطفال حول مائدة الاحتفال", fr: "Enfants autour de la table de fête", en: "Children around the celebration table" } },
   { src: schoolOffice.url, alt: { ar: "مكتب الإدارة والشهادات", fr: "Bureau et certificats", en: "Office and certificates" } },
