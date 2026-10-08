@@ -11,3 +11,4 @@
 
 - Keep multilingual school copy and support course arrays in local content modules so additions preserve a single editable source without database dependencies.
 - Compute academic seasons through the shared September-boundary helper; refresh the displayed season while a page remains open so seasonal changes never require manual updates.
+- Keep photo collections in the local content module using CDN asset pointers; reuse the existing Embla carousel for occasions with pause and reduced-motion support so media stays editable and accessible.
