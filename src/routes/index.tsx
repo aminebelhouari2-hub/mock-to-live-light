@@ -545,9 +545,10 @@ function Index() {
             <SchoolCarousel lang={lang} label={st.title} className="mb-8">
               {supportCourses.map((course, index) => {
                 const LevelIcon: LucideIcon = [BookOpen, School, GraduationCap][index] ?? BookOpen;
+                const photo = supportPhotos.find(item => item.stage === course.shortLevel);
                 return (
                   <article key={course.shortLevel} className="lift flex min-w-0 flex-col rounded-lg border border-forest/10 border-t-4 border-t-primary bg-card shadow-soft overflow-hidden">
-                    <img src={supportPhotos[index]?.src} alt={supportPhotos[index]?.alt[lang]} loading="lazy" width={640} height={480} className="aspect-[4/3] w-full object-cover" />
+                    {photo && <img src={photo.src} alt={photo.alt[lang]} loading="lazy" width={640} height={480} className="aspect-[4/3] w-full object-cover" />}
                     <div className="flex flex-1 flex-col p-6 sm:p-7">
                     <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
                       <span className="w-fit rounded-full border border-primary/25 bg-peach px-4 py-1.5 font-display text-sm font-bold text-forest" dir="ltr">{course.shortLevel}</span>

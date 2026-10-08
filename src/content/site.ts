@@ -35,8 +35,8 @@ import videoTwo from "@/assets/school-video-2.webm.asset.json";
 import videoFour from "@/assets/school-video-4.webm.asset.json";
 const actScience = learningGames.url;
 const actKids = nurserySwing.url;
-const actStudy = supportLesson.url;
-const actEnglish = childrenLearning.url;
+const actStudy = classroomDesks.url;
+const actEnglish = classroomAlphabet.url;
 const actWorkshop = nurseryPuzzle.url;
 const heroImg = classroomDesks.url;
 
@@ -176,7 +176,7 @@ export const activities: { icon: IconKey; image: string; title: L; desc: L }[] =
   { icon: "english", image: actEnglish, title: { ar: "الإنجليزية والنطق", fr: "Anglais & prononciation", en: "English & pronunciation" }, desc: { ar: "كلمات أولى ونطق سليم في جوّ تفاعلي.", fr: "Premiers mots et bonne prononciation, en interaction.", en: "First words and clear pronunciation through interaction." } },
   { icon: "science", image: actScience, title: { ar: "العلوم والتجارب", fr: "Sciences & expériences", en: "Science & experiments" }, desc: { ar: "تجارب بسيطة تنمّي الفضول وروح الاكتشاف.", fr: "Des expériences simples qui nourrissent la curiosité.", en: "Simple experiments that nurture curiosity." } },
   { icon: "kids", image: actKids, title: { ar: "أنشطة الأطفال", fr: "Activités enfants", en: "Children’s activities" }, desc: { ar: "الرسم، القصص والموسيقى في جوّ من المرح.", fr: "Dessin, contes et musique dans la bonne humeur.", en: "Drawing, stories and music in a cheerful atmosphere." } },
-  { icon: "exam", image: supportWorkshop.url, title: { ar: "التحضير للامتحانات", fr: "Préparation aux examens", en: "Exam preparation" }, desc: { ar: "تمارين منهجية لبناء الثقة قبل الامتحان.", fr: "Exercices méthodiques pour aborder l'examen en confiance.", en: "Methodical practice to approach exams with confidence." } },
+  { icon: "exam", image: classroomColour.url, title: { ar: "التحضير للامتحانات", fr: "Préparation aux examens", en: "Exam preparation" }, desc: { ar: "تمارين منهجية لبناء الثقة قبل الامتحان.", fr: "Exercices méthodiques pour aborder l'examen en confiance.", en: "Methodical practice to approach exams with confidence." } },
 ];
 
 export type SchoolPhoto = { src: string; alt: L };
@@ -197,10 +197,11 @@ export const gallery: SchoolPhoto[] = [
   { src: schoolOuting.url, alt: { ar: "خرجة جماعية للأطفال", fr: "Sortie des enfants", en: "Children on a school outing" } },
   { src: creativeWorkshop.url, alt: { ar: "ورشة أعمال يدوية", fr: "Atelier créatif", en: "Creative classroom workshop" } },
 ];
-export const supportPhotos: SchoolPhoto[] = [
-  { src: classroomDesks.url, alt: { ar: "قاعة دروس الدعم", fr: "Salle de soutien", en: "Support classroom" } },
-  { src: classroomColour.url, alt: { ar: "قاعة التعلّم بالمدرسة", fr: "Salle d’apprentissage de l’école", en: "School learning classroom" } },
-  { src: classroomAlphabet.url, alt: { ar: "قاعة الحروف بالمدرسة", fr: "Salle des lettres", en: "School alphabet classroom" } },
+// Editorial stage assignments from supplied scenes, not verified pupil records.
+export const supportPhotos: (SchoolPhoto & { stage: "AP" | "AM" | "AS" })[] = [
+  { stage: "AP", src: childrenLearning.url, alt: { ar: "تلاميذ صغار خلال حصة تعلّم", fr: "Jeunes élèves en séance d’apprentissage", en: "Young pupils during a learning session" } },
+  { stage: "AM", src: supportWorkshop.url, alt: { ar: "تلاميذ يتابعون الشرح في القسم", fr: "Élèves suivant une explication en classe", en: "Pupils following a classroom explanation" } },
+  { stage: "AS", src: supportLesson.url, alt: { ar: "تلاميذ خلال حصة دروس الدعم", fr: "Élèves en séance de soutien scolaire", en: "Students during a support lesson" } },
 ];
 // Uploaded certificates, honours and celebrations; no inferred identities or dates.
 export const occasionPhotos: SchoolPhoto[] = [

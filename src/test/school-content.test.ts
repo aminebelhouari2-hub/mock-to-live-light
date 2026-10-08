@@ -7,9 +7,14 @@ describe("Varied school media", () => {
     const filenames = (photos: { src: string }[]) => photos.map(photo => photo.src.split("/").pop());
     expect(filenames(eventPhotos)).toContain("certificate-ceremony.jpg");
     expect(filenames(eventPhotos)).toContain("school-celebration.jpg");
-    expect(filenames(supportPhotos)).toEqual(["classroom-desks.jpg", "classroom-colour.jpg", "classroom-alphabet.jpg"]);
+    expect(activities.map(activity => activity.image.split("/").pop())).toEqual(expect.arrayContaining(["classroom-desks.jpg", "classroom-colour.jpg", "classroom-alphabet.jpg"]));
     expect(filenames(nurseryPhotos)).toEqual(expect.arrayContaining(["nursery-letters.jpg", "nursery-numbers.jpg"]));
     expect(filenames(gallery)).toEqual(expect.arrayContaining(["outing-horse-touch.jpg", "outing-stable.jpg"]));
+  });
+  it("assigns supplied pupil scenes to each support stage", () => {
+    expect(Object.fromEntries(supportPhotos.map(photo => [photo.stage, photo.src.split("/").pop()]))).toEqual({
+      AP: "children-learning.jpg", AM: "support-workshop.jpg", AS: "support-lesson.jpg",
+    });
   });
   it("does not repeat photos across school sections", () => {
     const sources = [...homepagePhotos, ...eventPhotos, ...nurseryPhotos, ...gallery, ...supportPhotos].map(photo => photo.src);
