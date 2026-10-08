@@ -298,3 +298,28 @@ export const teachingUi: Record<Lang, { subjectsTitle: string; teachersTitle: st
   fr: { subjectsTitle: "Les matières par niveau scolaire", teachersTitle: "Les enseignants par matière et par niveau", preparatory: "Apprentissage et activités en classe préparatoire" },
   en: { subjectsTitle: "Subjects by school stage", teachersTitle: "Subject teachers across the three stages", preparatory: "Preparatory learning and activities" },
 };
+
+export type PrimaryLesson = { day: L; time: string };
+const primaryDays = {
+  saturday: { ar: "السبت", fr: "Samedi", en: "Saturday" },
+  sunday: { ar: "الأحد", fr: "Dimanche", en: "Sunday" },
+  monday: { ar: "الإثنين", fr: "Lundi", en: "Monday" },
+  tuesday: { ar: "الثلاثاء", fr: "Mardi", en: "Tuesday" },
+  wednesday: { ar: "الأربعاء", fr: "Mercredi", en: "Wednesday" },
+  thursday: { ar: "الخميس", fr: "Jeudi", en: "Thursday" },
+} satisfies Record<string, L>;
+
+// Supplied primary timetable: null means no time was supplied, not a cancelled lesson.
+export const primarySchedule: { year: number; label: L; lessons: (PrimaryLesson | null)[] }[] = [
+  { year: 1, label: { ar: "السنة الأولى", fr: "1re année", en: "Year 1" }, lessons: [{ day: primaryDays.sunday, time: "17:00" }, { day: primaryDays.wednesday, time: "17:00" }, null, null] },
+  { year: 2, label: { ar: "السنة الثانية", fr: "2e année", en: "Year 2" }, lessons: [{ day: primaryDays.thursday, time: "13:30" }, { day: primaryDays.monday, time: "15:30" }, null, null] },
+  { year: 3, label: { ar: "السنة الثالثة", fr: "3e année", en: "Year 3" }, lessons: [{ day: primaryDays.wednesday, time: "15:30" }, { day: primaryDays.thursday, time: "15:00" }, null, { day: primaryDays.monday, time: "17:00" }] },
+  { year: 4, label: { ar: "السنة الرابعة", fr: "4e année", en: "Year 4" }, lessons: [{ day: primaryDays.tuesday, time: "13:00" }, { day: primaryDays.saturday, time: "10:30" }, { day: primaryDays.thursday, time: "15:00" }, { day: primaryDays.saturday, time: "12:00" }] },
+  { year: 5, label: { ar: "السنة الخامسة", fr: "5e année", en: "Year 5" }, lessons: [{ day: primaryDays.saturday, time: "12:00" }, { day: primaryDays.sunday, time: "15:30" }, { day: primaryDays.tuesday, time: "14:30" }, { day: primaryDays.saturday, time: "10:30" }] },
+];
+export const primaryScheduleSubjects = ["اللغة العربية", "الرياضيات", "اللغة الفرنسية", "اللغة الإنجليزية"];
+export const primaryScheduleUi: Record<Lang, { title: string; year: string; note: string }> = {
+  ar: { title: "استعمال الزمن الخاص بالمستوى الابتدائي", year: "السنة", note: "المواعيد حسب جدول المدرسة — الخانات دون توقيت لم يُحدّد موعدها." },
+  fr: { title: "Emploi du temps du niveau primaire", year: "Année", note: "Horaires selon le tableau de l’école — les cases sans horaire n’ont pas de créneau précisé." },
+  en: { title: "Primary school timetable", year: "Year", note: "Times from the school timetable — empty slots have no specified time." },
+};

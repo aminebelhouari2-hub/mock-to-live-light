@@ -41,7 +41,9 @@ import {
   contact,
   gallery,
   images,
-  schedule,
+  primarySchedule,
+  primaryScheduleSubjects,
+  primaryScheduleUi,
   subjects,
   teachers,
   teachingStages,
@@ -704,15 +706,15 @@ function Index() {
         <Section id="occasions" label={t.galleryLabel} title={p(occasionTitle)} className="bg-shell"><SchoolOccasions lang={lang} /></Section>
 
         {/* Schedule */}
-        <Section id="schedule" label={t.scheduleLabel} title={t.scheduleTitle} className="bg-shell">
-          <p className="mb-8 text-center text-sm text-forest/70">{t.scheduleNote}</p>
+        <Section id="schedule" label={t.scheduleLabel} title={primaryScheduleUi[lang].title} className="bg-shell">
+          <p className="mb-8 text-center text-sm text-forest/70">{primaryScheduleUi[lang].note}</p>
           <div className="hidden overflow-x-auto rounded-lg border border-forest/10 bg-card md:block">
             <table className="w-full text-start text-sm">
-              <thead className="bg-forest text-cream"><tr><th scope="col" className="p-4 text-start">{t.time}</th>{schedule.days.map(day => <th scope="col" key={day.ar} className="p-4 text-start">{p(day)}</th>)}</tr></thead>
-              <tbody>{schedule.slots.map(slot => <tr key={slot.time} className="border-t border-forest/10"><th scope="row" className="whitespace-nowrap p-4 text-start font-medium"><bdi>{slot.time}</bdi></th>{slot.cells.map((cell, i) => <td key={i} className="p-4">{schedule.labels[cell] ? p(schedule.labels[cell]) : "—"}</td>)}</tr>)}</tbody>
+              <thead className="bg-forest text-cream"><tr><th scope="col" className="p-4 text-start">{primaryScheduleUi[lang].year}</th>{primaryScheduleSubjects.map(subject => <th scope="col" key={subject} className="p-4 text-start">{translateSupport(subject, lang)}</th>)}</tr></thead>
+              <tbody>{primarySchedule.map(row => <tr key={row.year} className="border-t border-forest/10"><th scope="row" className="p-4 text-start font-bold text-forest">{p(row.label)}</th>{row.lessons.map((lesson, i) => <td key={i} className="p-4">{lesson ? <div className="flex flex-wrap items-center gap-2"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></div> : "—"}</td>)}</tr>)}</tbody>
             </table>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 md:hidden">{schedule.days.map((day, i) => <article key={day.ar} className="rounded-lg border border-forest/10 bg-card p-5"><h3 className="mb-4 font-bold text-forest">{p(day)}</h3><ul className="space-y-3">{schedule.slots.map(slot => { const label = schedule.labels[slot.cells[i] ?? ""]; return <li key={slot.time} className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 text-sm"><span>{label ? p(label) : "—"}</span><bdi className="text-xs text-forest/65">{slot.time}</bdi></li>; })}</ul></article>)}</div>
+          <div className="grid gap-4 sm:grid-cols-2 md:hidden">{primarySchedule.map(row => <article key={row.year} className="min-w-0 rounded-lg border border-forest/10 bg-card p-5"><h3 className="mb-4 font-bold text-forest">{p(row.label)}</h3><ul className="divide-y divide-forest/10">{primaryScheduleSubjects.map((subject, i) => { const lesson = row.lessons[i]; return <li key={subject} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"><span>{translateSupport(subject, lang)}</span>{lesson ? <span className="flex items-center gap-2 text-forest/75"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></span> : <span className="text-forest/65">—</span>}</li>; })}</ul></article>)}</div>
         </Section>
 
         {/* Testimonials */}
