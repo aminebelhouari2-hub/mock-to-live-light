@@ -1,6 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { getAcademicYear } from "@/content/academic-year";
-import { contact, supportCourses, teachingStages, primarySchedule, primaryScheduleSubjects } from "@/content/site";
+import { contact, supportCourses, teachingStages, primarySchedule, primaryScheduleSubjects, homepagePhotos, eventPhotos, nurseryPhotos, gallery, supportPhotos, activities, teachers, schoolVideos } from "@/content/site";
+
+describe("Varied school media", () => {
+  it("does not repeat photos across school sections", () => {
+    const sources = [...homepagePhotos, ...eventPhotos, ...nurseryPhotos, ...gallery, ...supportPhotos].map(photo => photo.src);
+    sources.push(...activities.map(activity => activity.image), ...teachers.flatMap(teacher => teacher.photo ? [teacher.photo] : []));
+    expect(new Set(sources).size).toBe(sources.length);
+  });
+  it("keeps distinct classroom and swimming scenes without the repeated pool clips", () => {
+    expect(schoolVideos.map(video => video.src.split("/").pop())).toEqual(["school-video-2.webm", "school-video-4.webm"]);
+  });
+});
 
 describe("Academic year starts in September", () => {
   it("shows 2026/2027 in October 2026", () => {
