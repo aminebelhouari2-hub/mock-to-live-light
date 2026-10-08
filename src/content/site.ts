@@ -206,12 +206,22 @@ export const schedule = {
   } as Record<string, L>,
 };
 
-// Illustrative testimonials — replace with real, approved parent quotes.
-export const testimonials: { quote: L; author: L }[] = [
-  { quote: { ar: "مكان لشهادة وليّ أمر حقيقية بعد موافقته على النشر.", fr: "Emplacement pour un témoignage réel d'un parent, après son accord.", en: "Space for a real parent testimonial, published with permission." }, author: { ar: "وليّ أمر — نموذج", fr: "Parent — exemple", en: "Parent — sample" } },
-  { quote: { ar: "يمكن هنا عرض رأي عائلة حول تجربة طفلها في القسم التحضيري.", fr: "Ici, l'avis d'une famille sur l'expérience de son enfant en classe préparatoire.", en: "Space for a family’s experience of their child’s preparatory class." }, author: { ar: "وليّة أمر — نموذج", fr: "Maman — exemple", en: "Mother — sample" } },
-  { quote: { ar: "مساحة لشهادة حول ورشات اللغة الإنجليزية والأنشطة.", fr: "Espace pour un avis sur les ateliers d'anglais et les activités.", en: "Space for feedback on English workshops and activities." }, author: { ar: "وليّ أمر — نموذج", fr: "Papa — exemple", en: "Father — sample" } },
+// Transcribed from supplied screenshots. Keep original wording and language;
+// these are static excerpts, not a live Facebook feed or verified parent identities.
+export const testimonials: { quote: string; author: string; lang: "ar" | "fr"; initials: string }[] = [
+  { author: "Om Abd Elwadoud", initials: "OA", lang: "ar", quote: "يعطيكم صح مشاء الله ولداتي جابو نتائج جيد عام ماضي و ملتحق هد عام نشاء الله" },
+  { author: "Naz Ihaa", initials: "NI", lang: "ar", quote: "اختي قرات عندكم و تحصلت على شهادة التعليم المتوسط الله يعطيكم الصحة و مزيد من النجاحات ليكم و لاطفالنا 🌸🌸✨" },
+  { author: "Mer Yem", initials: "MY", lang: "ar", quote: "دخول موفق لولادنا و نشكر الاستاذة لي خلاو ولادنا يطوروا من مواهبهم و يزيدو فالمعدلات 🌸🌹" },
+  { author: "Amina Wissam", initials: "AW", lang: "fr", quote: "Rien à dire c'est une école à la hauteur.Bonne reprise et bonne chance pour la suite,plus de succès et de réussite nchalah" },
+  { author: "Omm Fathi Tlm", initials: "OF", lang: "fr", quote: "Bravo toujours à la hauteur" },
+  { author: "Dou Dy II", initials: "DD", lang: "fr", quote: "Une belle school" },
 ];
+
+export const facebookCommentsUi: Record<Lang, { title: string; label: string; source: string; link: string }> = {
+  ar: { title: "ماذا يقول الأولياء عنّا", label: "من تعليقات صفحتنا", source: "مقتطفات من تعليقات صفحتنا على فايسبوك", link: "زيارة صفحتنا على فايسبوك" },
+  fr: { title: "Les mots de notre communauté", label: "Commentaires Facebook", source: "Extraits des commentaires de notre page Facebook", link: "Voir notre page Facebook" },
+  en: { title: "Words from our community", label: "Facebook comments", source: "Excerpts from comments on our Facebook page", link: "Visit our Facebook page" },
+};
 
 
 export const ui = {

@@ -1,4 +1,5 @@
 # Requested updates
+- [x] Replace illustrative testimonials with six supplied Facebook comment excerpts; verified desktop/mobile presentation, page link, no overflow, and 19 passing tests.
 - [x] Group subjects and subject-specific teacher roles by primary, middle and secondary stages; preserve preparatory content.
 - [x] Replace the displayed timetable with the supplied primary schedule for years one through five; leave unspecified slots without invented times. Verified with 19 passing tests and desktop/mobile checks.
 - [x] Preserve sections, multilingual content, social links and dynamic academic season.
