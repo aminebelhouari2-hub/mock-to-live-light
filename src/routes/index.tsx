@@ -36,6 +36,7 @@ import { SchoolOccasions } from "@/components/school-occasions";
 import { SchoolVideo } from "@/components/school-video";
 import { Button } from "@/components/ui/button";
 import { getAcademicYear } from "@/content/academic-year";
+import { founder } from "@/content/founder";
 export { getAcademicYear } from "@/content/academic-year";
 import logo from "@/assets/logo.jpg.asset.json";
 import {
@@ -71,19 +72,19 @@ export const Route = createFileRoute("/")({
     const academicYear = getAcademicYear();
     return ({
     meta: [
-      { name: "keywords", content: serviceSeo.map(item => item.keywords).join("، ") },
+      { name: "keywords", content: serviceSeo.map(item => item.keywords).join("، ") + "، صلوانجي هيبة منال، أخصائية نفسانية إكلينيكية، سوروبان تلمسان" },
       {
         title:
           "Salaouandji School | صلوانجي سكول — مدرسة خاصة بسيدي سعيد، تلمسان",
       },
-      { name: "description", content: serviceSeo.map(item => item.description).join(" ") + ` التسجيل للموسم ${academicYear}.` },
+      { name: "description", content: `صلوانجي سكول بسيدي سعيد، تلمسان، بإدارة ${founder.name.ar}، أخصائية نفسانية إكلينيكية ومدرّبة معتمدة. روضة ودروس دعم للابتدائي والمتوسط والثانوي. التسجيل للموسم ${academicYear}.` },
       {
         property: "og:title",
         content: "Salaouandji School | صلوانجي سكول — تلمسان",
       },
       {
         property: "og:description",
-        content: `مدرسة خاصة في سيدي سعيد، تلمسان — تعلّم، تطوّر، وابدأ رحلتك نحو النجاح خلال الموسم الدراسي ${academicYear}.`,
+        content: `صلوانجي سكول بسيدي سعيد، تلمسان، بإدارة ${founder.name.ar}، أخصائية نفسانية إكلينيكية ومدرّبة معتمدة. روضة ودعم مدرسي للموسم ${academicYear}.`,
       },
       {
         property: "og:type",
@@ -490,6 +491,25 @@ function Index() {
             </div>
           </div>
         </section>
+
+        <Section id="founder" label={p(founder.label)} title={p(founder.name)}>
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
+            <figure className="min-w-0">
+              <img src={founder.photo} alt={p(founder.photoAlt)} loading="lazy" width={1024} height={768} className="aspect-[4/3] w-full rounded-lg object-contain bg-sand" />
+              <figcaption className="mt-3 text-sm leading-7 text-forest/60">{p(founder.photoAlt)}</figcaption>
+            </figure>
+            <div className="min-w-0 space-y-5 border-s-2 border-primary ps-6">
+              <p className="text-xl font-semibold leading-9 text-forest">{p(founder.role)}</p>
+              <p className="text-base leading-8 text-forest/75">{p(founder.intro)}</p>
+            </div>
+          </div>
+          <div className="mt-12 grid gap-10 border-t border-forest/10 pt-10 lg:grid-cols-2 lg:gap-12">
+            {founder.groups.map(group => <div key={group.title.ar} className="min-w-0">
+              <h3 className="mb-6 flex items-start gap-3 text-xl font-bold leading-8 text-forest"><GraduationCap className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" /><span>{p(group.title)}</span></h3>
+              <ul className="space-y-6">{group.items.map(item => <li key={item.title.ar} className="border-s border-primary/30 ps-5"><h4 className="font-semibold leading-8 text-forest">{p(item.title)}</h4><p className="mt-1 text-sm leading-7 text-forest/70">{p(item.description)}</p></li>)}</ul>
+            </div>)}
+          </div>
+        </Section>
 
         {/* Subjects */}
         <Section id="subjects" label={t.subjectsLabel} title={teachingUi[lang].subjectsTitle}>
