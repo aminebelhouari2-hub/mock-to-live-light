@@ -492,24 +492,6 @@ function Index() {
           </div>
         </section>
 
-        <Section id="founder" label={p(founder.label)} title={p(founder.name)}>
-          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
-            <figure className="min-w-0">
-              <img src={founder.photo} alt={p(founder.photoAlt)} loading="lazy" width={1024} height={768} className="aspect-[4/3] w-full rounded-lg object-contain bg-sand" />
-              <figcaption className="mt-3 text-sm leading-7 text-forest/60">{p(founder.photoAlt)}</figcaption>
-            </figure>
-            <div className="min-w-0 space-y-5 border-s-2 border-primary ps-6">
-              <p className="text-xl font-semibold leading-9 text-forest">{p(founder.role)}</p>
-              <p className="text-base leading-8 text-forest/75">{p(founder.intro)}</p>
-            </div>
-          </div>
-          <div className="mt-12 grid gap-10 border-t border-forest/10 pt-10 lg:grid-cols-2 lg:gap-12">
-            {founder.groups.map(group => <div key={group.title.ar} className="min-w-0">
-              <h3 className="mb-6 flex items-start gap-3 text-xl font-bold leading-8 text-forest"><GraduationCap className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" /><span>{p(group.title)}</span></h3>
-              <ul className="space-y-6">{group.items.map(item => <li key={item.title.ar} className="border-s border-primary/30 ps-5"><h4 className="font-semibold leading-8 text-forest">{p(item.title)}</h4><p className="mt-1 text-sm leading-7 text-forest/70">{p(item.description)}</p></li>)}</ul>
-            </div>)}
-          </div>
-        </Section>
 
         {/* Subjects */}
         <Section id="subjects" label={t.subjectsLabel} title={teachingUi[lang].subjectsTitle}>
@@ -804,6 +786,27 @@ function Index() {
             </div>
           </div>
         </section>
+
+        <LogoDivider />
+        {/* Founder */}
+        <Section id="founder" label={p(founder.label)} title={p(founder.name)}>
+          <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
+            <figure className="min-w-0">
+              <img src={founder.photo} alt={p(founder.photoAlt)} loading="lazy" width={1024} height={768} className="aspect-[4/3] w-full rounded-lg object-contain bg-sand" />
+              <figcaption className="mt-3 text-sm leading-7 text-forest/60">{p(founder.photoAlt)}</figcaption>
+            </figure>
+            <div className="min-w-0 space-y-5 border-s-2 border-primary ps-6">
+              <p className="text-xl font-semibold leading-9 text-forest">{p(founder.role)}</p>
+              <p className="text-base leading-8 text-forest/75">{p(founder.intro)}</p>
+            </div>
+          </div>
+          <div className="mt-12 grid gap-10 border-t border-forest/10 pt-10 lg:grid-cols-2 lg:gap-12">
+            {founder.groups.map(group => <div key={group.title.ar} className="min-w-0">
+              <h3 className="mb-6 flex items-start gap-3 text-xl font-bold leading-8 text-forest"><GraduationCap className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" /><span>{p(group.title)}</span></h3>
+              <ul className="space-y-6">{group.items.map(item => <li key={item.title.ar} className="border-s border-primary/30 ps-5"><h4 className="font-semibold leading-8 text-forest">{p(item.title)}</h4><p className="mt-1 text-sm leading-7 text-forest/70">{p(item.description)}</p></li>)}</ul>
+            </div>)}
+          </div>
+        </Section>
       </main>
 
       {/* Footer */}
