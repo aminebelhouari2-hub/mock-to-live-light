@@ -582,7 +582,7 @@ function Index() {
             ))}
           </SchoolCarousel>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {teachers.filter(m => m.name.ar === "أستاذ القسم التحضيري").map((m) => (
+            {teachers.filter(m => m.name.ar === "مربية روضة").map((m) => (
               <div
                 key={m.name.ar}
                 className="reveal group overflow-hidden rounded-3xl border border-forest/10 bg-card shadow-soft"

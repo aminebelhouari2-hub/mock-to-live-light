@@ -154,7 +154,7 @@ export const teachers: { name: L; role: L; photo?: string }[] = [
   { name: { ar: "أستاذ الرياضيات", fr: "Enseignant de mathématiques", en: "Mathematics teacher" }, role: { ar: "دروس الدعم المدرسي", fr: "Soutien scolaire", en: "School support" } },
   { name: { ar: "أستاذ الفيزياء", fr: "Enseignant de physique", en: "Physics teacher" }, role: { ar: "دروس الدعم المدرسي", fr: "Soutien scolaire", en: "School support" } },
   { name: { ar: "أستاذ اللغة الإنجليزية", fr: "Enseignant d’anglais", en: "English teacher" }, role: { ar: "اللغة والنطق", fr: "Langue et prononciation", en: "Language and pronunciation" } },
-  { name: { ar: "أستاذ القسم التحضيري", fr: "Enseignant de classe préparatoire", en: "Preparatory class teacher" }, role: { ar: "التعلّم والأنشطة التربوية", fr: "Apprentissage et activités éducatives", en: "Learning and educational activities" } },
+  { name: { ar: "مربية روضة", fr: "Éducatrice de maternelle", en: "Kindergarten educator" }, role: { ar: "التعلّم والأنشطة التربوية", fr: "Apprentissage et activités éducatives", en: "Learning and educational activities" } },
 ];
 
 export const activities: { icon: IconKey; image: string; title: L; desc: L }[] = [
