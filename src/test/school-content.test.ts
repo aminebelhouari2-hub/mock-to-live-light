@@ -3,6 +3,11 @@ import { getAcademicYear } from "@/content/academic-year";
 import { contact, supportCourses, teachingStages, primarySchedule, primaryScheduleSubjects, homepagePhotos, eventPhotos, nurseryPhotos, gallery, supportPhotos, activities, teachers, schoolVideos } from "@/content/site";
 
 describe("Varied school media", () => {
+  it("classifies the ten supplied writing, craft and group photos without replacing previous media", () => {
+    const activityFiles = activities.map(activity => activity.image.split("/").pop());
+    expect(activityFiles).toEqual(expect.arrayContaining(["handwriting-practice.jpg", "paper-flower-workshop.jpg", "colourful-star-craft.jpg", "classroom-learning-group.jpg"]));
+    expect(gallery.map(photo => photo.src.split("/").pop())).toEqual(expect.arrayContaining(["pupil-writing.jpg", "arabic-letter-practice.jpg", "notebook-writing.jpg", "first-letter-writing.jpg", "writing-exercise.jpg", "school-pupil-group.jpg"]));
+  });
   it("retains distinct certificates, classrooms and activities in their sections", () => {
     const filenames = (photos: { src: string }[]) => photos.map(photo => photo.src.split("/").pop());
     expect(filenames(eventPhotos)).toContain("certificate-ceremony.jpg");

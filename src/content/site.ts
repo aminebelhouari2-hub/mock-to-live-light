@@ -33,6 +33,16 @@ import nurseryLetters from "@/assets/nursery-letters.jpg.asset.json";
 import nurseryNumbers from "@/assets/nursery-numbers.jpg.asset.json";
 import videoTwo from "@/assets/school-video-2.webm.asset.json";
 import videoFour from "@/assets/school-video-4.webm.asset.json";
+import handwritingPractice from "@/assets/handwriting-practice.jpg.asset.json";
+import pupilWriting from "@/assets/pupil-writing.jpg.asset.json";
+import paperFlowerWorkshop from "@/assets/paper-flower-workshop.jpg.asset.json";
+import schoolPupilGroup from "@/assets/school-pupil-group.jpg.asset.json";
+import arabicLetterPractice from "@/assets/arabic-letter-practice.jpg.asset.json";
+import notebookWriting from "@/assets/notebook-writing.jpg.asset.json";
+import firstLetterWriting from "@/assets/first-letter-writing.jpg.asset.json";
+import colourfulStarCraft from "@/assets/colourful-star-craft.jpg.asset.json";
+import classroomLearningGroup from "@/assets/classroom-learning-group.jpg.asset.json";
+import writingExercise from "@/assets/writing-exercise.jpg.asset.json";
 const actScience = learningGames.url;
 const actKids = nurserySwing.url;
 const actStudy = classroomDesks.url;
@@ -171,6 +181,10 @@ export const teachers: { name: L; role: L; photo?: string }[] = [
 ];
 
 export const activities: { icon: IconKey; image: string; title: L; desc: L }[] = [
+  { icon: "letters", image: handwritingPractice.url, title: { ar: "تمارين الكتابة", fr: "Exercices d’écriture", en: "Writing practice" }, desc: { ar: "التدرّب على كتابة الحروف في الكراس.", fr: "S’entraîner à écrire les lettres dans le cahier.", en: "Practising letter writing in a notebook." } },
+  { icon: "arts", image: paperFlowerWorkshop.url, title: { ar: "ورشة الزهور الورقية", fr: "Atelier de fleurs en papier", en: "Paper flower workshop" }, desc: { ar: "أعمال يدوية جماعية بأشكال الزهور والألوان.", fr: "Activité créative en groupe avec des fleurs et des couleurs.", en: "Group craft activity with colourful paper flowers." } },
+  { icon: "arts", image: colourfulStarCraft.url, title: { ar: "نجمة الألوان", fr: "Étoile de couleurs", en: "Colourful star craft" }, desc: { ar: "عمل فني بورق ملوّن على شكل نجمة.", fr: "Création d’une étoile avec du papier coloré.", en: "Making a star with colourful paper." } },
+  { icon: "workshop", image: classroomLearningGroup.url, title: { ar: "التعلّم في مجموعة", fr: "Apprentissage en groupe", en: "Group learning" }, desc: { ar: "الأطفال حول طاولات القسم مع الكراسات وأوراق التمارين.", fr: "Les enfants en classe avec leurs cahiers et fiches d’exercices.", en: "Children at classroom tables with notebooks and worksheets." } },
   { icon: "review", image: actStudy, title: { ar: "المراجعة والدعم", fr: "Révision & soutien", en: "Revision & support" }, desc: { ar: "حصص مراجعة منظّمة لترسيخ المكتسبات.", fr: "Séances de révision pour consolider les acquis.", en: "Structured revision to consolidate learning." } },
   { icon: "workshop", image: actWorkshop, title: { ar: "ورشات تعليمية", fr: "Ateliers éducatifs", en: "Educational workshops" }, desc: { ar: "تعلّم بالممارسة عبر الألعاب التربوية والتركيب.", fr: "Apprendre en manipulant : jeux éducatifs et construction.", en: "Hands-on learning through educational games and building." } },
   { icon: "english", image: actEnglish, title: { ar: "الإنجليزية والنطق", fr: "Anglais & prononciation", en: "English & pronunciation" }, desc: { ar: "كلمات أولى ونطق سليم في جوّ تفاعلي.", fr: "Premiers mots et bonne prononciation, en interaction.", en: "First words and clear pronunciation through interaction." } },
@@ -190,6 +204,12 @@ export const nurseryPhotos: SchoolPhoto[] = [
   { src: nurseryPlayground.url, alt: { ar: "فضاء ألعاب الروضة", fr: "Espace de jeux de la maternelle", en: "Nursery play area" } },
 ];
 export const gallery: SchoolPhoto[] = [
+  { src: pupilWriting.url, alt: { ar: "طفل يتدرّب على الكتابة", fr: "Enfant s’exerçant à écrire", en: "Child practising writing" } },
+  { src: arabicLetterPractice.url, alt: { ar: "طفلة تكتب الحروف العربية في الكراس", fr: "Enfant écrivant des lettres arabes dans son cahier", en: "Child writing Arabic letters in a notebook" } },
+  { src: notebookWriting.url, alt: { ar: "طفلة تتابع تمرين الكتابة", fr: "Enfant réalisant un exercice d’écriture", en: "Child working on a writing exercise" } },
+  { src: firstLetterWriting.url, alt: { ar: "التدرّب على رسم الحروف", fr: "Enfant s’exerçant à tracer les lettres", en: "Child practising letter shapes" } },
+  { src: writingExercise.url, alt: { ar: "طفلة تكتب في كراس التمارين", fr: "Enfant écrivant dans son cahier d’exercices", en: "Child writing in an exercise notebook" } },
+  { src: schoolPupilGroup.url, alt: { ar: "صورة جماعية أمام لافتة المدرسة", fr: "Photo de groupe devant la bannière de l’école", en: "Group photo in front of the school banner" } },
   { src: outingHorseTouch.url, alt: { ar: "طفلة تتعرّف على حصان", fr: "Enfant découvrant un cheval", en: "Child meeting a horse" } },
   { src: outingStable.url, alt: { ar: "جولة الأطفال في الإسطبل", fr: "Découverte de l’écurie", en: "Children exploring the stable" } },
   { src: outingHorseGroup.url, alt: { ar: "الأطفال بجانب حصان في الإسطبل", fr: "Enfants près d’un cheval à l’écurie", en: "Children beside a horse at the stable" } },

@@ -1,4 +1,5 @@
 # Requested updates
+- [x] Add all ten supplied photos, classify writing, crafts and classroom group work under activities, and individual learning moments and school group photos under the gallery; preserve previous media without reuse.
 - [x] Assign supplied pupil photos to each support stage and preserve empty classroom photos elsewhere without reuse.
 - [x] Restore distinct classroom, certificate, celebration, nursery and outing photos to their relevant sections; fill all three support-stage photos and exclude only actual duplicates.
 - [x] Curate similar photos and videos: keep distinct classroom and swimming clips, one horse-group photo, varied nursery activities, and separate homepage/event selections without reused photos.
