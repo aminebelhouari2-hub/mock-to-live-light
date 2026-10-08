@@ -1,5 +1,5 @@
 # Requested updates
-- [ ] Add the supplied founder/director biography, academic qualifications and certified training in Arabic, French and English with the ceremony photo and relevant search metadata; verify alongside the new activity photos.
+- [x] Add the supplied founder/director biography, academic qualifications and certified training in Arabic, French and English with the ceremony photo and relevant search metadata; verified seven qualifications, all 22 activity/gallery images, no mobile overflow, no runtime errors and 25 passing tests.
 - [x] Add all ten supplied photos, classify writing, crafts and classroom group work under activities, and individual learning moments and school group photos under the gallery; preserve previous media without reuse.
 - [x] Assign supplied pupil photos to each support stage and preserve empty classroom photos elsewhere without reuse.
 - [x] Restore distinct classroom, certificate, celebration, nursery and outing photos to their relevant sections; fill all three support-stage photos and exclude only actual duplicates.
