@@ -49,6 +49,7 @@ import {
   teachingStages,
   teachingUi,
   testimonials,
+  facebookCommentsUi,
   supportPhotos,
   occasionTitle,
   serviceSeo,
@@ -718,9 +719,26 @@ function Index() {
         </Section>
 
         {/* Testimonials */}
-        <Section id="testimonials" label={t.testimonialsLabel} title={t.testimonialsTitle}>
-          <p className="mb-8 text-center text-sm text-forest/70">{t.testimonialsNote}</p>
-          <div className="grid gap-6 md:grid-cols-3">{testimonials.map(item => <figure key={item.author.ar} className="reveal rounded-lg border border-forest/10 bg-card p-7 shadow-soft"><MessageCircle className="mb-5 h-7 w-7 text-primary" aria-hidden="true" /><blockquote className="mb-6 text-base leading-8 text-forest/75">{p(item.quote)}</blockquote><figcaption className="text-sm font-bold text-forest">{p(item.author)}</figcaption></figure>)}</div>
+        <Section id="testimonials" label={facebookCommentsUi[lang].label} title={facebookCommentsUi[lang].title}>
+          <div className="mb-10 flex flex-col items-center justify-between gap-5 border-b border-forest/10 pb-6 sm:flex-row">
+            <div className="flex items-center gap-3">
+              <img src={logo.url} alt="" width={48} height={48} className="h-12 w-12 shrink-0 rounded-full border border-forest/10 object-cover" />
+              <div><p className="text-sm font-bold text-forest" dir="ltr">Salaouandji School</p><p className="mt-1 text-xs leading-6 text-forest/65">{facebookCommentsUi[lang].source}</p></div>
+            </div>
+            <Button asChild variant="outline" className="h-auto max-w-full whitespace-normal py-3 text-sm"><a href={contact.social.facebook} target="_blank" rel="noopener noreferrer"><Facebook className="shrink-0" />{facebookCommentsUi[lang].link}<ArrowUpRight className="shrink-0" /></a></Button>
+          </div>
+          <div className="grid items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {testimonials.map((item, index) => (
+              <figure key={item.author} className="reveal min-w-0 rounded-lg border border-forest/10 bg-card p-5 shadow-soft transition duration-300 motion-safe:hover:-translate-y-1 sm:p-6">
+                <figcaption className="mb-5 flex items-center gap-3">
+                  <span aria-hidden="true" className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xs font-bold ${index % 2 === 0 ? "bg-peach text-forest" : "bg-sand text-forest"}`}>{item.initials}</span>
+                  <div className="min-w-0 flex-1"><p dir="ltr" className="text-start text-sm font-bold text-forest">{item.author}</p><p className="mt-1 flex items-center gap-1.5 text-xs text-forest/60"><Facebook className="h-3 w-3" aria-hidden="true" />Facebook</p></div>
+                  <MessageCircle className="h-5 w-5 shrink-0 text-primary/70" aria-hidden="true" />
+                </figcaption>
+                <blockquote lang={item.lang} dir={item.lang === "ar" ? "rtl" : "ltr"} className="rounded-lg bg-shell p-4 text-start text-sm leading-8 text-forest/85 [overflow-wrap:anywhere]">{item.quote}</blockquote>
+              </figure>
+            ))}
+          </div>
         </Section>
 
         <LogoDivider />
