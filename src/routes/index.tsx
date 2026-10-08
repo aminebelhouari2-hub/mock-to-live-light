@@ -38,7 +38,7 @@ import { Button } from "@/components/ui/button";
 import { getAcademicYear } from "@/content/academic-year";
 import { founder } from "@/content/founder";
 export { getAcademicYear } from "@/content/academic-year";
-import logo from "@/assets/logo.jpg.asset.json";
+import logo from "@/assets/optimized/logo.jpg.asset.json";
 import {
   activities,
   contact,

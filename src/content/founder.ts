@@ -1,4 +1,4 @@
-import founderPhoto from "@/assets/founder-certificate-presentation.jpg.asset.json";
+import founderPhoto from "@/assets/optimized/founder-certificate-presentation.jpg.asset.json";
 import type { L } from "@/content/site";
 
 export const founder = {
