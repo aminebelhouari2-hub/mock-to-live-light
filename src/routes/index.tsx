@@ -98,7 +98,21 @@ export const Route = createFileRoute("/")({
         name: "twitter:card",
         content: "summary_large_image",
       },
+      { property: "og:url", content: "https://salaouandjschool.lovable.app/" },
     ],
+    links: [{ rel: "canonical", href: "https://salaouandjschool.lovable.app/" }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "School",
+        name: "Salaouandji School — صلوانجي سكول",
+        url: "https://salaouandjschool.lovable.app/",
+        telephone: "+213556057176",
+        address: { "@type": "PostalAddress", addressLocality: "Sidi Said, Tlemcen", addressCountry: "DZ" },
+        founder: { "@type": "Person", name: founder.name.ar },
+      }),
+    }],
   });
   },
   component: Index,
@@ -507,7 +521,7 @@ function Index() {
           </SchoolCarousel>
           <h3 className="mb-6 text-center text-xl font-bold text-forest">{teachingUi[lang].preparatory}</h3>
           <SchoolCarousel lang={lang} label={teachingUi[lang].preparatory} className="mb-8">
-            {nurseryPhotos.map(photo => <figure key={photo.src} className="overflow-hidden rounded-lg border border-forest/10 bg-card"><img src={photo.src} alt={p(photo.alt)} loading="lazy" width={768} height={1024} className="aspect-[4/3] w-full object-cover" /><figcaption className="p-4 text-sm font-semibold text-forest">{p(photo.alt)}</figcaption></figure>)}
+            {nurseryPhotos.map(photo => <figure key={photo.src} className="overflow-hidden rounded-lg border border-forest/10 bg-card"><img src={photo.src} alt={p(photo.alt)} loading="lazy" decoding="async" width={768} height={1024} className="aspect-[4/3] w-full object-cover" /><figcaption className="p-4 text-sm font-semibold text-forest">{p(photo.alt)}</figcaption></figure>)}
           </SchoolCarousel>
           <SchoolCarousel lang={lang} label={teachingUi[lang].preparatory} className="mb-8">
             {subjects.map((s) => {
@@ -550,7 +564,7 @@ function Index() {
                 const photo = supportPhotos.find(item => item.stage === course.shortLevel);
                 return (
                   <article key={course.shortLevel} className="lift flex min-w-0 flex-col rounded-lg border border-forest/10 border-t-4 border-t-primary bg-card shadow-soft overflow-hidden">
-                    {photo && <img src={photo.src} alt={photo.alt[lang]} loading="lazy" width={640} height={480} className="aspect-[4/3] w-full object-cover" />}
+                    {photo && <img src={photo.src} alt={photo.alt[lang]} loading="lazy" decoding="async" width={640} height={480} className="aspect-[4/3] w-full object-cover" />}
                     <div className="flex flex-1 flex-col p-6 sm:p-7">
                     <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
                       <span className="w-fit rounded-full border border-primary/25 bg-peach px-4 py-1.5 font-display text-sm font-bold text-forest" dir="ltr">{course.shortLevel}</span>
@@ -598,7 +612,7 @@ function Index() {
                 className="reveal group overflow-hidden rounded-3xl border border-forest/10 bg-card shadow-soft"
               >
                 <div className="aspect-square overflow-hidden bg-sand">
-                  {m.photo ? <img src={m.photo} alt={p(m.name)} loading="lazy" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" /> : <div className="grid h-full place-items-center"><Users className="h-16 w-16 text-forest/30" aria-hidden="true" /></div>}
+                  {m.photo ? <img src={m.photo} alt={p(m.name)} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" /> : <div className="grid h-full place-items-center"><Users className="h-16 w-16 text-forest/30" aria-hidden="true" /></div>}
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-forest">{p(m.name)}</h3>
@@ -617,7 +631,7 @@ function Index() {
                 key={act.title.ar}
                 className="rounded-lg border border-forest/10 bg-card p-6 shadow-soft"
               >
-                <img src={act.image} alt={lang === "ar" ? (act.icon === "kids" ? "نشاط ترفيهي للأطفال" : act.icon === "workshop" ? "ألعاب تعليمية" : act.icon === "review" || act.icon === "exam" ? "حصة دروس الدعم" : "قاعة التعلّم") : (act.icon === "kids" ? "Children’s celebration" : act.icon === "workshop" ? "Learning games" : act.icon === "review" || act.icon === "exam" ? "Support lesson" : "Learning classroom")} loading="lazy" width={640} height={480} className="mb-5 aspect-[4/3] w-full rounded-lg object-cover" />
+                <img src={act.image} alt={lang === "ar" ? (act.icon === "kids" ? "نشاط ترفيهي للأطفال" : act.icon === "workshop" ? "ألعاب تعليمية" : act.icon === "review" || act.icon === "exam" ? "حصة دروس الدعم" : "قاعة التعلّم") : (act.icon === "kids" ? "Children’s celebration" : act.icon === "workshop" ? "Learning games" : act.icon === "review" || act.icon === "exam" ? "Support lesson" : "Learning classroom")} loading="lazy" decoding="async" width={640} height={480} className="mb-5 aspect-[4/3] w-full rounded-lg object-cover" />
                 <h3 className="mb-2 text-xl font-bold text-forest">{p(act.title)}</h3>
                 <p className="text-sm leading-relaxed text-forest/70">{p(act.desc)}</p>
               </div>
@@ -639,7 +653,7 @@ function Index() {
                 <img
                   src={img.src}
                   alt={p(img.alt)}
-                  loading="lazy"
+                  loading="lazy" decoding="async"
                   className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
@@ -792,7 +806,7 @@ function Index() {
         <Section id="founder" label={p(founder.label)} title={p(founder.name)}>
           <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
             <figure className="min-w-0">
-              <img src={founder.photo} alt={p(founder.photoAlt)} loading="lazy" width={1024} height={768} className="aspect-[4/3] w-full rounded-lg object-contain bg-sand" />
+              <img src={founder.photo} alt={p(founder.photoAlt)} loading="lazy" decoding="async" width={1024} height={768} className="aspect-[4/3] w-full rounded-lg object-contain bg-sand" />
               <figcaption className="mt-3 text-sm leading-7 text-forest/60">{p(founder.photoAlt)}</figcaption>
             </figure>
             <div className="min-w-0 space-y-5 border-s-2 border-primary ps-6">

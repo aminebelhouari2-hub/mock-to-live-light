@@ -25,5 +25,5 @@ export function SchoolVideo({ src, label }: { src: string; label: string }) {
       video.pause();
     };
   }, []);
-  return <video ref={ref} src={src} aria-label={label} muted loop playsInline controls preload="metadata" className="aspect-video max-h-[65vh] w-full rounded-lg bg-forest object-contain" />;
+  return <video ref={ref} src={src} aria-label={label} muted loop playsInline controls preload="none" className="aspect-video max-h-[65vh] w-full rounded-lg bg-forest object-contain" />;
 }
