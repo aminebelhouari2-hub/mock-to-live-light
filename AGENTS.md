@@ -15,4 +15,5 @@
 - Match support photos by explicit stage keys rather than array position so course reordering preserves editorial photo assignments.
 - Compute academic seasons through the shared September-boundary helper; refresh the displayed season while a page remains open so seasonal changes never require manual updates.
 - Keep photo collections in the local content module using CDN asset pointers; use the shared Embla school carousel for homepage media and repeated section items with viewport-aware autoplay, pause and reduced-motion support so media stays editable and accessible.
+- Use compressed photo asset pointers for displayed school media and keep reveal content visible before hydration so slow connections never produce blank sections.
 - Keep uploaded videos in the local content module as CDN pointers and render them through the visibility-aware video component; disable timed slide advance for video carousels so playback is not interrupted.
