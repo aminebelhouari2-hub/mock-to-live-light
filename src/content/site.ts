@@ -278,3 +278,23 @@ const supportTranslations: Record<string, L> = {
 export function translateSupport(text: string, lang: Lang): string {
   return supportTranslations[text]?.[lang] ?? text;
 }
+
+// One subject-based role per stage and subject, without inferred staff identities.
+export const teachingStages = supportCourses.map(course => ({
+  level: course.level,
+  shortLevel: course.shortLevel,
+  subjects: course.subjects.map(subject => ({
+    subject,
+    teacher: {
+      ar: `أستاذ ${subject}`,
+      fr: `Enseignant · ${translateSupport(subject, "fr")}`,
+      en: `${translateSupport(subject, "en")} teacher`,
+    } satisfies L,
+  })),
+}));
+
+export const teachingUi: Record<Lang, { subjectsTitle: string; teachersTitle: string; preparatory: string }> = {
+  ar: { subjectsTitle: "المواد حسب الأطوار الدراسية", teachersTitle: "أساتذة المواد حسب الأطوار الثلاثة", preparatory: "التعلّم والأنشطة في القسم التحضيري" },
+  fr: { subjectsTitle: "Les matières par niveau scolaire", teachersTitle: "Les enseignants par matière et par niveau", preparatory: "Apprentissage et activités en classe préparatoire" },
+  en: { subjectsTitle: "Subjects by school stage", teachersTitle: "Subject teachers across the three stages", preparatory: "Preparatory learning and activities" },
+};

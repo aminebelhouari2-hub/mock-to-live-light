@@ -44,6 +44,8 @@ import {
   schedule,
   subjects,
   teachers,
+  teachingStages,
+  teachingUi,
   testimonials,
   supportPhotos,
   occasionTitle,
@@ -508,7 +510,18 @@ function Index() {
         </section>
 
         {/* Subjects */}
-        <Section id="subjects" label={t.subjectsLabel} title={t.subjectsTitle}>
+        <Section id="subjects" label={t.subjectsLabel} title={teachingUi[lang].subjectsTitle}>
+          <div className="mb-12 grid gap-6 lg:grid-cols-3">
+            {teachingStages.map(stage => (
+              <article key={stage.shortLevel} className="reveal min-w-0 rounded-lg border border-forest/10 bg-card p-6 shadow-soft">
+                <h3 className="mb-5 text-xl font-bold text-forest">{translateSupport(stage.level, lang)}</h3>
+                <ul className="space-y-3">
+                  {stage.subjects.map(({ subject }) => <li key={subject} className="flex items-start gap-3 text-sm leading-7 text-forest/80"><BookOpen className="mt-1 h-5 w-5 shrink-0 text-primary" aria-hidden="true" /><span>{translateSupport(subject, lang)}</span></li>)}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <h3 className="mb-6 text-center text-xl font-bold text-forest">{teachingUi[lang].preparatory}</h3>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {subjects.map((s) => {
               const I = ICONS[s.icon];
@@ -573,10 +586,25 @@ function Index() {
         </section>
 
         {/* Teachers */}
-        <Section id="teachers" label={t.teachersLabel} title={t.teachersTitle}>
+        <Section id="teachers" label={t.teachersLabel} title={teachingUi[lang].teachersTitle}>
           {t.teachersNote && <p className="mb-8 text-center text-sm text-forest/70">{t.teachersNote}</p>}
+          <div className="mb-10 grid gap-6 lg:grid-cols-3">
+            {teachingStages.map(stage => (
+              <div key={stage.shortLevel} className="reveal min-w-0">
+                <h3 className="mb-5 border-b border-primary/25 pb-4 text-xl font-bold text-forest">{translateSupport(stage.level, lang)}</h3>
+                <div className="grid gap-3">
+                  {stage.subjects.map(({ subject, teacher }) => (
+                    <article key={subject} className="flex min-w-0 items-start gap-3 rounded-lg border border-forest/10 bg-card p-4">
+                      <GraduationCap className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
+                      <div className="min-w-0"><h4 className="text-sm font-bold leading-7 text-forest">{p(teacher)}</h4><p className="text-xs leading-6 text-forest/65">{translateSupport(subject, lang)}</p></div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {teachers.map((m) => (
+            {teachers.filter(m => m.name.ar === "أستاذ القسم التحضيري").map((m) => (
               <div
                 key={m.name.ar}
                 className="reveal group overflow-hidden rounded-3xl border border-forest/10 bg-card shadow-soft"
