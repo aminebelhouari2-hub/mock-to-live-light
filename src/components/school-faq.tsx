@@ -7,8 +7,8 @@ import type { Lang } from "@/content/site";
 
 export function SchoolFaq({ lang }: { lang: Lang }) {
   return <div className="mx-auto max-w-3xl">
-    <Accordion type="single" collapsible className="border-t border-forest/15">
-      {getSchoolFaq(lang).map(item => <AccordionItem key={item.id} value={item.id} className="border-forest/15">
+    <Accordion type="single" collapsible className="space-y-3">
+      {getSchoolFaq(lang).map(item => <AccordionItem key={item.id} value={item.id} className="school-glass px-5 sm:px-6">
         <AccordionTrigger className="gap-5 py-6 text-start text-base font-semibold leading-8 text-forest hover:no-underline">{item.question}</AccordionTrigger>
         <AccordionContent className="pe-8 pb-6 text-start text-sm leading-8 text-forest/75">{item.answer}</AccordionContent>
       </AccordionItem>)}
