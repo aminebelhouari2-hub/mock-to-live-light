@@ -712,8 +712,6 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
         </>}
 
-        {show("faq") && <Section id="faq" label={faqUi.label[lang]} title={faqUi.title[lang]} className="bg-shell"><SchoolFaq lang={lang} /></Section>}
-
         {show("registration") && <>
         <LogoDivider />
         {/* Registration */}
@@ -742,8 +740,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
             </div>
           </div>
         </section>
-
         </>}
+
+        {show("faq") && <Section id="faq" label={faqUi.label[lang]} title={faqUi.title[lang]} className="bg-shell"><SchoolFaq lang={lang} /></Section>}
 
         {show("contact") && <>
         <LogoDivider />

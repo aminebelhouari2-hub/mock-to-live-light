@@ -1,4 +1,5 @@
 # Requested updates
+- [x] Move FAQ next to contact & location at the end of the page and reorder page links: registration, FAQ, then contact; verified section order on the homepage and 36 passing tests.
 - [x] Organize school pages and navigation with 11 dedicated URLs, preserving homepage sections and all media; add six multilingual factual FAQ answers. Verified every page, unique search titles, expandable answers, language retention, mobile links, no overflow or runtime errors, and 36 passing tests.
 - [x] Compress all 40 school photos without removing scenes: reduced their total size by 64%, verified every optimized asset and all photo sections load, and removed initially hidden reveal content; 25 tests pass.
 - [x] Add the supplied founder/director biography, academic qualifications and certified training in Arabic, French and English with the ceremony photo and relevant search metadata; verified seven qualifications, all 22 activity/gallery images, no mobile overflow, no runtime errors and 25 passing tests.
