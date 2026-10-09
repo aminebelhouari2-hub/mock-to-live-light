@@ -183,10 +183,6 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
   useReveal();
 
-  useEffect(() => {
-    document.documentElement.lang = lang;
-    document.documentElement.dir = dir;
-  }, [lang, dir]);
 
   useEffect(() => {
     if (lb === null) return;
@@ -287,12 +283,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
             <div className="hidden sm:block">
               <LangSwitch />
             </div>
-            <Link
-              to="/registration"
-              className="hidden rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-glow transition hover:-translate-y-0.5 md:inline-block"
-            >
-              {t.nav.register}
-            </Link>
+            <Button asChild className="hidden h-auto px-4 py-2.5 font-bold md:inline-flex"><Link to="/registration">{t.nav.register}</Link></Button>
             <Button variant="ghost"
               onClick={() => setMenu(true)}
               aria-label={t.menu}
@@ -424,9 +415,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </div>
         </div>
 
-        {show("about") && <>
         </>}
 
+        {show("about") && <>
         {/* About */}
         <section id="about" className="bg-dots relative bg-forest text-cream">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8 lg:py-28">
@@ -459,9 +450,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         </section>
 
 
-        {show("subjects") && <>
         </>}
 
+        {show("subjects") && <>
         {/* Subjects */}
         <Section id="subjects" label={t.subjectsLabel} title={teachingUi[lang].subjectsTitle}>
           <SchoolCarousel lang={lang} label={teachingUi[lang].subjectsTitle} className="mb-8">
@@ -501,9 +492,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </SchoolCarousel>
         </Section>
 
-        {show("support") && <>
         </>}
 
+        {show("support") && <>
         <LogoDivider />
         {/* Support Courses */}
         <section id="support" className="relative bg-shell py-20 lg:py-28">
@@ -545,9 +536,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </div>
         </section>
 
-        {show("teachers") && <>
         </>}
 
+        {show("teachers") && <>
         {/* Teachers */}
         <Section id="teachers" label={t.teachersLabel} title={teachingUi[lang].teachersTitle}>
           {t.teachersNote && <p className="mb-8 text-center text-sm text-forest/70">{t.teachersNote}</p>}
@@ -584,9 +575,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </div>
         </Section>
 
-        {show("activities") && <>
         </>}
 
+        {show("activities") && <>
         {/* Activities */}
         <Section id="activities" label={t.activitiesLabel} title={t.activitiesTitle} className="bg-sand/40">
           <SchoolCarousel lang={lang} label={t.activitiesTitle} className="mb-8">
@@ -603,9 +594,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </SchoolCarousel>
         </Section>
 
-        {show("gallery") && <>
         </>}
 
+        {show("gallery") && <>
         {/* Gallery */}
         <Section id="gallery" label={t.galleryLabel} title={t.galleryTitle}>
           {t.galleryNote && <p className="mb-8 text-center text-sm text-forest/70">{t.galleryNote}</p>}
@@ -678,9 +669,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
         <Section id="occasions" label={t.galleryLabel} title={p(occasionTitle)} className="bg-shell"><SchoolOccasions lang={lang} /></Section>
 
-        {show("schedule") && <>
         </>}
 
+        {show("schedule") && <>
         {/* Schedule */}
         <Section id="schedule" label={t.scheduleLabel} title={primaryScheduleUi[lang].title} className="bg-shell">
           <p className="mb-8 text-center text-sm text-forest/70">{primaryScheduleUi[lang].note}</p>
@@ -693,9 +684,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           <SchoolCarousel lang={lang} label={primaryScheduleUi[lang].title} className="md:hidden">{primarySchedule.map(row => <article key={row.year} className="min-w-0 rounded-lg border border-forest/10 bg-card p-5"><h3 className="mb-4 font-bold text-forest">{p(row.label)}</h3><ul className="divide-y divide-forest/10">{primaryScheduleSubjects.map((subject, i) => { const lesson = row.lessons[i]; return <li key={subject} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"><span>{translateSupport(subject, lang)}</span>{lesson ? <span className="flex items-center gap-2 text-forest/75"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></span> : <span className="text-forest/65">—</span>}</li>; })}</ul></article>)}</SchoolCarousel>
         </Section>
 
-        {page === "home" && <>
         </>}
 
+        {page === "home" && <>
         {/* Testimonials */}
         <Section id="testimonials" label={facebookCommentsUi[lang].label} title={facebookCommentsUi[lang].title}>
           <div className="mb-10 flex flex-col items-center justify-between gap-5 border-b border-forest/10 pb-6 sm:flex-row">
@@ -719,11 +710,11 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </SchoolCarousel>
         </Section>
 
+        </>}
+
         {show("faq") && <Section id="faq" label={faqUi.label[lang]} title={faqUi.title[lang]} className="bg-shell"><SchoolFaq lang={lang} /></Section>}
 
         {show("registration") && <>
-        </>}
-
         <LogoDivider />
         {/* Registration */}
         <section id="register" className="bg-shell py-20 lg:py-28">
@@ -752,9 +743,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </div>
         </section>
 
-        {show("contact") && <>
         </>}
 
+        {show("contact") && <>
         <LogoDivider />
         {/* Contact */}
         <section id="contact" className="bg-forest py-20 text-cream lg:py-28">
@@ -782,9 +773,9 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </div>
         </section>
 
-        {page === "home" && <>
         </>}
 
+        {page === "home" && <>
         <LogoDivider />
         {/* Founder */}
         <Section id="founder" label={p(founder.label)} title={p(founder.name)}>
