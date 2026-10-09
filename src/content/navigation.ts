@@ -12,6 +12,7 @@ export const schoolNavigation = [
   { to: "/registration", label: { ar: ui.ar.nav.register, fr: ui.fr.nav.register, en: ui.en.nav.register } },
   { to: "/faq", label: { ar: "الأسئلة الشائعة", fr: "FAQ", en: "FAQ" } },
   { to: "/contact", label: { ar: "التواصل والموقع", fr: "Contact", en: "Contact & location" } },
+  { to: "/founder", label: { ar: "صاحبة المؤسسة", fr: "Fondatrice", en: "Founder" } },
 ] as const satisfies ReadonlyArray<{ to: string; label: L }>;
 
-export type SchoolPageKey = "home" | "about" | "subjects" | "support" | "teachers" | "activities" | "gallery" | "schedule" | "registration" | "faq" | "contact";
+export type SchoolPageKey = "home" | "about" | "subjects" | "support" | "teachers" | "activities" | "gallery" | "schedule" | "registration" | "faq" | "contact" | "founder";

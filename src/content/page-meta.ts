@@ -16,6 +16,7 @@ const pageDescriptions: Record<SchoolPageKey, { title: string; description: stri
   faq: { title: "الأسئلة الشائعة", description: "إجابات عن موقع صلوانجي سكول، المستويات والمواد، التسجيل والبرنامج والأنشطة في سيدي سعيد، تلمسان." },
   registration: { title: "التسجيل والاستفسار", description: "تواصل مع صلوانجي سكول للاستفسار عن تسجيل طفلك في الأقسام التحضيرية أو دروس الدعم عبر واتساب والهاتف." },
   contact: { title: "التواصل وموقع المدرسة", description: "عنوان ورقم هاتف صلوانجي سكول وروابط التواصل وموقع المدرسة الدقيق في سيدي سعيد، تلمسان." },
+  founder: { title: "صاحبة المؤسسة", description: `تعرّف على ${founder.name.ar}، مؤسِّسة ومديرة صلوانجي سكول، أخصائية نفسانية إكلينيكية ومدرّبة معتمدة، ومؤهلاتها الأكاديمية والتدريبية.` },
 };
 
 export function schoolPageHead(page: SchoolPageKey) {

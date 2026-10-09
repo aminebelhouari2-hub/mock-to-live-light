@@ -774,7 +774,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
         </>}
 
-        {page === "home" && <>
+        {show("founder") && <>
         <LogoDivider />
         {/* Founder */}
         <Section id="founder" label={p(founder.label)} title={p(founder.name)}>
