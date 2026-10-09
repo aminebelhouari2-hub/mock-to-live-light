@@ -127,10 +127,12 @@
   --page-middle: oklch(1 0 0);
   --page-bottom: oklch(0.985 0 0);
   --gradient-page: linear-gradient(to bottom, var(--page-top), var(--page-middle) 38%, var(--page-bottom));
-  --glass-surface: oklch(1 0 0 / .8);
-  --glass-border: oklch(0.954 0.038 75 / .6);
+  --glass-surface: oklch(1 0 0 / .64);
+  --glass-border: oklch(0.954 0.038 75 / .48);
+  --glass-highlight: oklch(1 0 0 / .75);
+  --glass-blur: 16px;
   --divider: oklch(0.901 0.076 70);
-  --glass-shadow: 0 2px 8px oklch(0.24 0.007 50 / .04);
+  --glass-shadow: inset 0 1px 0 var(--glass-highlight), 0 3px 6px oklch(0.24 0.007 50 / .025), 0 12px 28px -18px oklch(0.24 0.007 50 / .12);
   --cta-shadow: 0 5px 12px oklch(0.66 0.168 52.4 / .18);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.93 0.03 75);
@@ -174,8 +176,9 @@
   --page-top: oklch(0.24 0.02 60);
   --page-middle: oklch(0.19 0.008 60);
   --page-bottom: oklch(0.16 0.006 60);
-  --glass-surface: oklch(0.25 0.01 60 / .8);
-  --glass-border: oklch(0.65 0.08 65 / .2);
+  --glass-surface: oklch(0.25 0.01 60 / .64);
+  --glass-border: oklch(0.65 0.08 65 / .24);
+  --glass-highlight: oklch(0.95 0.008 60 / .08);
   --divider: oklch(0.65 0.08 65 / .35);
   --forest: oklch(0.95 0.008 60);
 }
@@ -243,10 +246,16 @@ body { font-family: var(--font-sans); }
 }
 @utility school-glass {
   background: var(--glass-surface);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(var(--glass-blur)) saturate(115%);
   border: 1px solid var(--glass-border);
   border-radius: 1.5rem;
   box-shadow: var(--glass-shadow);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .school-glass {
+    background: var(--card);
+    backdrop-filter: none;
+  }
 }
 @utility school-cta {
   background-image: var(--gradient-cta);
