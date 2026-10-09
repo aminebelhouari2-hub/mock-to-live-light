@@ -9,8 +9,8 @@ export const schoolNavigation = [
   { to: "/activities", label: { ar: ui.ar.nav.activities, fr: ui.fr.nav.activities, en: ui.en.nav.activities } },
   { to: "/gallery", label: { ar: ui.ar.nav.gallery, fr: ui.fr.nav.gallery, en: ui.en.nav.gallery } },
   { to: "/schedule", label: { ar: ui.ar.nav.schedule, fr: ui.fr.nav.schedule, en: ui.en.nav.schedule } },
-  { to: "/faq", label: { ar: "الأسئلة الشائعة", fr: "FAQ", en: "FAQ" } },
   { to: "/registration", label: { ar: ui.ar.nav.register, fr: ui.fr.nav.register, en: ui.en.nav.register } },
+  { to: "/faq", label: { ar: "الأسئلة الشائعة", fr: "FAQ", en: "FAQ" } },
   { to: "/contact", label: { ar: "التواصل والموقع", fr: "Contact", en: "Contact & location" } },
 ] as const satisfies ReadonlyArray<{ to: string; label: L }>;
 
