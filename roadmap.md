@@ -1,4 +1,5 @@
 # Requested updates
+- [x] Unify titles and breadcrumbs on all twelve existing pages, apply new multilingual page labels and organize the footer into the three requested groups without changing URLs, body content or behavior; verified all pages at 369/1280/1920px, language switching, navigation, no clipped headings or runtime errors, build OK and 39 passing tests.
 - [x] Add a dedicated founder page (صاحبة المؤسسة) as the last navigation link with its own search metadata and sitemap entry; verified the page renders and 37 tests pass.
 - [x] Move FAQ next to contact & location at the end of the page and reorder page links: registration, FAQ, then contact; verified section order on the homepage and 36 passing tests.
 - [x] Organize school pages and navigation with 11 dedicated URLs, preserving homepage sections and all media; add six multilingual factual FAQ answers. Verified every page, unique search titles, expandable answers, language retention, mobile links, no overflow or runtime errors, and 36 passing tests.

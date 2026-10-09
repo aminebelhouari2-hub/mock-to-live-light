@@ -3,6 +3,7 @@ import { homepagePhotos, contact } from "@/content/site";
 import { getAcademicYear } from "@/content/academic-year";
 import { getSchoolFaq } from "@/content/faq";
 import type { SchoolPageKey } from "@/content/navigation";
+import { schoolPageLabel } from "@/content/navigation";
 
 const pageDescriptions: Record<SchoolPageKey, { title: string; description: string }> = {
   home: { title: "صلوانجي سكول — مدرسة خاصة بسيدي سعيد، تلمسان", description: `روضة وأقسام تحضيرية ودروس دعم للابتدائي والمتوسط والثانوي بإدارة ${founder.name.ar} في سيدي سعيد، تلمسان.` },
@@ -21,7 +22,7 @@ const pageDescriptions: Record<SchoolPageKey, { title: string; description: stri
 
 export function schoolPageHead(page: SchoolPageKey) {
   const data = pageDescriptions[page];
-  const title = `${data.title} | Salaouandji School`;
+  const title = `${schoolPageLabel(page).ar} | SALAOUANDJI SCHOOL`;
   const description = `${data.description} الموسم الدراسي ${getAcademicYear()}.`;
   const path = page === "home" ? "/" : page === "registration" ? "/registration" : `/${page}`;
   const url = `https://salaouandjschool.lovable.app${path}`;
