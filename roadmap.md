@@ -1,4 +1,5 @@
 # Requested updates
+- [x] Refine shared cards with subtle transparent glass, restrained highlights and soft shadows without changing content; verified identical main text on all twelve pages, desktop/mobile layouts, no runtime errors and 39 passing tests.
 - [x] Replace all black marquee dividers and the Management duplicate; refresh page backgrounds, glass cards and gradient CTAs while preserving all 15 homepage sections and interactions. Verified desktop/mobile rendering, loaded founder photo, expandable FAQ, registration form, no overflow or runtime errors, build OK and 39 passing tests.
 - [x] Unify titles and breadcrumbs on all twelve existing pages, apply new multilingual page labels and organize the footer into the three requested groups without changing URLs, body content or behavior; verified all pages at 369/1280/1920px, language switching, navigation, no clipped headings or runtime errors, build OK and 39 passing tests.
 - [x] Add a dedicated founder page (صاحبة المؤسسة) as the last navigation link with its own search metadata and sitemap entry; verified the page renders and 37 tests pass.
