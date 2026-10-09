@@ -1,9 +1,9 @@
 import { cdn } from "@/lib/cdn";
 import { Link } from "@tanstack/react-router";
+import { SchoolHeading, SchoolPageHeading } from "@/components/school-heading";
 import { SchoolFaq } from "@/components/school-faq";
 import { useSchoolLanguage } from "@/components/school-language";
-import { faqUi } from "@/content/faq";
-import { schoolNavigation, type SchoolPageKey } from "@/content/navigation";
+import { schoolNavigation, schoolFooterGroups, schoolPageLabel, type SchoolPageKey } from "@/content/navigation";
 import { useEffect, useState } from "react";
 import {
   BookA,
@@ -120,24 +120,24 @@ function Section({
   title,
   children,
   className = "",
+  compact = false,
 }: {
   id: string;
   label: string;
   title: string;
   children: React.ReactNode;
   className?: string;
+  compact?: boolean;
 }) {
   return (
     <>
     <LogoDivider />
-    <section id={id} className={`py-20 lg:py-28 ${className}`}>
+    <section id={id} className={`${compact ? "pb-16 pt-8 lg:pb-24 lg:pt-10" : "py-16 lg:py-24"} ${className}`}>
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <div className="reveal mx-auto mb-14 max-w-2xl text-center">
-          <Eyebrow>{label}</Eyebrow>
-          <h2 className="text-3xl font-bold text-forest sm:text-4xl">
-            {title}
-          </h2>
-        </div>
+        {(!compact || title !== label) && <div className={`reveal mx-auto max-w-3xl text-center ${compact ? "mb-8" : "mb-10"}`}>
+          {!compact && label !== title && <Eyebrow>{label}</Eyebrow>}
+          <SchoolHeading compact={compact} className="text-forest">{title}</SchoolHeading>
+        </div>}
         {children}
       </div>
     </section>
@@ -243,7 +243,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-forest/10 bg-cream/85 backdrop-blur-xl">
-        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 2xl:flex 2xl:justify-between lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 min-[1800px]:flex min-[1800px]:justify-between lg:px-8">
           <Link to="/" className="flex min-w-0 items-center gap-3">
             <img
               src={cdn(logo.url)}
@@ -265,7 +265,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-3 2xl:flex" aria-label="Main">
+          <nav className="hidden items-center gap-3 min-[1800px]:flex" aria-label="Main">
             {navs.filter(item => item.to !== "/registration").map(item => (
               <Link
                 key={item.to}
@@ -283,11 +283,11 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
             <div className="hidden sm:block">
               <LangSwitch />
             </div>
-            <Button asChild className="hidden h-auto px-4 py-2.5 font-bold md:inline-flex"><Link to="/registration">{t.nav.register}</Link></Button>
+            <Button asChild className="hidden h-auto px-4 py-2.5 font-bold md:inline-flex"><Link to="/registration">{p(schoolPageLabel("registration"))}</Link></Button>
             <Button variant="ghost"
               onClick={() => setMenu(true)}
               aria-label={t.menu}
-              className="flex h-11 w-11 items-center justify-center rounded-xl bg-sand text-forest 2xl:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-xl bg-sand text-forest min-[1800px]:hidden"
             >
               <Menu />
             </Button>
@@ -297,7 +297,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
       {/* Mobile Menu */}
       {menu && (
-        <div className="fixed inset-0 z-50 2xl:hidden" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 min-[1800px]:hidden" role="dialog" aria-modal="true">
           <div
             className="absolute inset-0 bg-forest/50 backdrop-blur-sm"
             onClick={() => setMenu(false)}
@@ -339,7 +339,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
       )}
 
       <main id="main">
-        {page !== "home" && <div className="mx-auto max-w-7xl px-5 pt-8 lg:px-8"><nav aria-label={lang === "ar" ? "مسار الصفحة" : "Breadcrumb"} className="mb-5 flex flex-wrap items-center gap-2 text-sm text-forest/65"><Link to="/" className="hover:text-primary">{schoolNavigation[0].label[lang]}</Link><span aria-hidden="true">/</span><span aria-current="page">{schoolNavigation.find(item => item.to === `/${page}`)?.label[lang]}</span></nav><h1 className="text-3xl font-bold leading-relaxed text-forest">{schoolNavigation.find(item => item.to === `/${page}`)?.label[lang]}</h1></div>}
+        {page !== "home" && <SchoolPageHeading page={page} lang={lang} />}
 
         {page === "home" && <>
         {/* Hero */}
@@ -353,11 +353,11 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                 {seasonText(t.heroBadge)}
               </span>
 
-              <h1 className="text-[2.35rem] font-bold leading-[1.2] text-forest sm:text-5xl lg:text-[3.6rem]">
+              <SchoolHeading level={1} className="text-forest">
                 {t.heroTitle[0]}
                 <br />
                 <span className="text-primary">{t.heroTitle[1]}</span>
-              </h1>
+              </SchoolHeading>
 
               <p className="max-w-[56ch] text-[17px] leading-[1.95] text-forest/75">
                 {t.heroText}
@@ -422,10 +422,10 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         <section id="about" className="bg-dots relative bg-forest text-cream">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8 lg:py-28">
             <div className="reveal">
-              <Eyebrow>{t.aboutLabel}</Eyebrow>
-              <h2 className="text-3xl font-bold leading-snug sm:text-4xl">
+              {page === "home" && <Eyebrow>{p(schoolPageLabel("about"))}</Eyebrow>}
+              <SchoolHeading compact={page !== "home"}>
                 {t.aboutTitle}
-              </h2>
+              </SchoolHeading>
             </div>
             <div className="reveal space-y-4 text-[16.5px] leading-[2] text-cream/80">
               <p>{t.aboutP1}</p>
@@ -454,7 +454,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
         {show("subjects") && <>
         {/* Subjects */}
-        <Section id="subjects" label={t.subjectsLabel} title={teachingUi[lang].subjectsTitle}>
+        <Section id="subjects" compact={page !== "home"} label={p(schoolPageLabel("subjects"))} title={teachingUi[lang].subjectsTitle}>
           <SchoolCarousel lang={lang} label={teachingUi[lang].subjectsTitle} className="mb-8">
             {teachingStages.map(stage => (
               <article key={stage.shortLevel} className="min-w-0 rounded-lg border border-forest/10 bg-card p-6 shadow-soft">
@@ -502,7 +502,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
             <div className="reveal mb-12 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
               <div className="min-w-0">
                 <Eyebrow>{st.year} <bdi>{academicYear}</bdi></Eyebrow>
-                <h2 className="text-3xl font-bold text-forest sm:text-4xl">{st.title}</h2>
+                {page === "home" && <SchoolHeading className="text-forest">{p(schoolPageLabel("support"))}</SchoolHeading>}
                 <p className="mt-3 text-sm font-medium text-forest/70">{lang === "ar" ? "دروس الدعم في سيدي سعيد، تلمسان" : lang === "fr" ? "Soutien scolaire à Sidi Saïd, Tlemcen" : "School support in Sidi Saïd, Tlemcen"}</p>
               </div>
               <p className="max-w-xl text-base leading-8 text-forest/75">{st.description}</p>
@@ -540,7 +540,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
         {show("teachers") && <>
         {/* Teachers */}
-        <Section id="teachers" label={t.teachersLabel} title={teachingUi[lang].teachersTitle}>
+        <Section id="teachers" compact={page !== "home"} label={p(schoolPageLabel("teachers"))} title={teachingUi[lang].teachersTitle}>
           {t.teachersNote && <p className="mb-8 text-center text-sm text-forest/70">{t.teachersNote}</p>}
           <SchoolCarousel lang={lang} label={teachingUi[lang].teachersTitle} className="mb-8">
             {teachingStages.map(stage => (
@@ -579,7 +579,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
         {show("activities") && <>
         {/* Activities */}
-        <Section id="activities" label={t.activitiesLabel} title={t.activitiesTitle} className="bg-sand/40">
+        <Section id="activities" compact={page !== "home"} label={p(schoolPageLabel("activities"))} title={t.activitiesTitle} className="bg-sand/40">
           <SchoolCarousel lang={lang} label={t.activitiesTitle} className="mb-8">
             {activities.map((act) => (
               <div
@@ -598,7 +598,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
         {show("gallery") && <>
         {/* Gallery */}
-        <Section id="gallery" label={t.galleryLabel} title={t.galleryTitle}>
+        <Section id="gallery" compact={page !== "home"} label={p(schoolPageLabel("gallery"))} title={t.galleryTitle}>
           {t.galleryNote && <p className="mb-8 text-center text-sm text-forest/70">{t.galleryNote}</p>}
           <SchoolCarousel lang={lang} label={t.galleryTitle} className="mb-8">
             {gallery.map((img, index) => (
@@ -673,7 +673,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
         {show("schedule") && <>
         {/* Schedule */}
-        <Section id="schedule" label={t.scheduleLabel} title={primaryScheduleUi[lang].title} className="bg-shell">
+        <Section id="schedule" compact={page !== "home"} label={p(schoolPageLabel("schedule"))} title={primaryScheduleUi[lang].title} className="bg-shell">
           <p className="mb-8 text-center text-sm text-forest/70">{primaryScheduleUi[lang].note}</p>
           <div className="hidden overflow-x-auto rounded-lg border border-forest/10 bg-card md:block">
             <table className="w-full text-start text-sm">
@@ -718,14 +718,14 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         <section id="register" className="bg-shell py-20 lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
             <div className="min-w-0">
-              <Eyebrow>{t.regLabel}</Eyebrow>
-              <h2 className="text-3xl font-bold leading-snug text-forest sm:text-4xl">{seasonText(t.regTitle)}</h2>
+              {page === "home" && <Eyebrow>{p(schoolPageLabel("registration"))}</Eyebrow>}
+              <SchoolHeading compact={page !== "home"} className="text-forest">{seasonText(t.regTitle)}</SchoolHeading>
               <p className="mb-8 mt-5 text-base leading-8 text-forest/75">{t.regText}</p>
               <ol className="space-y-6">{t.regSteps.map((step, i) => <li key={step.t} className="flex gap-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-peach text-sm font-bold text-forest">{i + 1}</span><div className="min-w-0"><h3 className="font-bold text-forest">{step.t}</h3><p className="mt-1 text-sm text-forest/70">{step.d}</p></div></li>)}</ol>
               <Button asChild variant="outline" className="mt-8 h-auto py-3"><a href={`tel:${contact.phoneTel}`}><Phone />{t.regCall}</a></Button>
             </div>
             <div className="reveal rounded-lg border border-forest/10 bg-card p-6 shadow-soft sm:p-8">
-              <h3 className="mb-6 text-2xl font-bold text-forest">{t.nav.register}</h3>
+              <h3 className="mb-6 text-xl font-bold text-forest">{p(schoolPageLabel("registration"))}</h3>
               <form onSubmit={(e) => {
                 e.preventDefault();
                 const data = new FormData(e.currentTarget);
@@ -742,7 +742,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         </section>
         </>}
 
-        {show("faq") && <Section id="faq" label={faqUi.label[lang]} title={faqUi.title[lang]} className="bg-shell"><SchoolFaq lang={lang} /></Section>}
+        {show("faq") && <Section id="faq" compact={page !== "home"} label={p(schoolPageLabel("faq"))} title={p(schoolPageLabel("faq"))} className="bg-shell"><SchoolFaq lang={lang} /></Section>}
 
         {show("contact") && <>
         <LogoDivider />
@@ -750,8 +750,8 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         <section id="contact" className="bg-forest py-20 text-cream lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
             <div className="min-w-0">
-              <Eyebrow>{t.contactLabel}</Eyebrow>
-              <h2 className="mb-8 text-3xl font-bold leading-snug sm:text-4xl">{t.contactTitle}</h2>
+              {page === "home" && <Eyebrow>{p(schoolPageLabel("contact"))}</Eyebrow>}
+              <SchoolHeading compact={page !== "home"} className="mb-8">{t.contactTitle}</SchoolHeading>
               <address className="space-y-6 not-italic">
                 <div className="flex gap-4"><MapPin className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-cream/65">{t.addressLabel}</p><p className="text-sm font-semibold leading-7">{p(contact.address)}</p></div></div>
                 <div className="flex gap-4"><Phone className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-cream/65">{t.phoneLabel}</p><a href={`tel:${contact.phoneTel}`} className="text-sm font-semibold hover:text-primary"><bdi>{contact.phoneDisplay}</bdi></a></div></div>
@@ -777,7 +777,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         {show("founder") && <>
         <LogoDivider />
         {/* Founder */}
-        <Section id="founder" label={p(founder.label)} title={p(founder.name)}>
+        <Section id="founder" compact={page !== "home"} label={p(schoolPageLabel("founder"))} title={p(founder.name)}>
           <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
             <figure className="min-w-0">
               <img src={founder.photo} alt={p(founder.photoAlt)} loading="lazy" decoding="async" width={1024} height={768} className="aspect-[4/3] w-full rounded-lg object-contain bg-sand" />
@@ -802,9 +802,16 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
       {/* Footer */}
       <footer className="border-t border-forest/10 bg-cream py-10 text-sm text-forest/70">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
-          <div className="grid gap-8 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
             <div className="min-w-0"><Link to="/" className="flex items-center gap-3 font-display font-bold text-forest"><img src={cdn(logo.url)} alt="" width={44} height={44} className="h-11 w-11 rounded-full object-cover" /><span dir="ltr">SALAOUANDJI SCHOOL</span></Link><p className="mt-4 max-w-md leading-7">{t.footerAbout}</p></div>
-            <div><h3 className="mb-4 font-bold text-forest">{t.footerLinks}</h3><nav className="grid grid-cols-2 gap-3">{navs.map(item => <Link key={item.to} to={item.to} activeProps={{ className: "font-bold text-primary" }} activeOptions={{ exact: true }} className="hover:text-primary">{item.label[lang]}</Link>)}</nav></div>
+            <div className="grid min-w-0 gap-8 md:grid-cols-3">
+              {schoolFooterGroups.map(group => <div key={group.label.ar} className="min-w-0">
+                <h3 className="mb-4 text-base font-bold leading-7 text-forest">{p(group.label)}</h3>
+                <nav aria-label={p(group.label)} className="flex flex-col items-start gap-3">
+                  {group.paths.map(path => { const item = navs.find(item => item.to === path); return item ? <Link key={item.to} to={item.to} activeProps={{ className: "font-bold text-primary" }} activeOptions={{ exact: true }} className="max-w-full text-sm leading-6 hover:text-primary">{p(item.label)}</Link> : null; })}
+                </nav>
+              </div>)}
+            </div>
           </div>
           <p className="mt-8 border-t border-forest/10 pt-6 text-center text-xs">© {new Date().getFullYear()} Salaouandji School — {lang === "ar" ? "جميع الحقوق محفوظة" : lang === "fr" ? "Tous droits réservés" : "All rights reserved"}</p>
         </div>
