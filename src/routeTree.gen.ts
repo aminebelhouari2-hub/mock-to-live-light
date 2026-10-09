@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FounderRouteImport } from './routes/founder'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as RegistrationRouteImport } from './routes/registration'
 import { Route as ScheduleRouteImport } from './routes/schedule'
@@ -44,6 +45,11 @@ const ContactRoute = ContactRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FounderRoute = FounderRouteImport.update({
+  id: '/founder',
+  path: '/founder',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/activities': typeof ActivitiesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/founder': typeof FounderRoute
   '/gallery': typeof GalleryRoute
   '/registration': typeof RegistrationRoute
   '/schedule': typeof ScheduleRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/activities': typeof ActivitiesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/founder': typeof FounderRoute
   '/gallery': typeof GalleryRoute
   '/registration': typeof RegistrationRoute
   '/schedule': typeof ScheduleRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/activities': typeof ActivitiesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/founder': typeof FounderRoute
   '/gallery': typeof GalleryRoute
   '/registration': typeof RegistrationRoute
   '/schedule': typeof ScheduleRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/activities'
     | '/contact'
     | '/faq'
+    | '/founder'
     | '/gallery'
     | '/registration'
     | '/schedule'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/activities'
     | '/contact'
     | '/faq'
+    | '/founder'
     | '/gallery'
     | '/registration'
     | '/schedule'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/activities'
     | '/contact'
     | '/faq'
+    | '/founder'
     | '/gallery'
     | '/registration'
     | '/schedule'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   ActivitiesRoute: typeof ActivitiesRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  FounderRoute: typeof FounderRoute
   GalleryRoute: typeof GalleryRoute
   RegistrationRoute: typeof RegistrationRoute
   ScheduleRoute: typeof ScheduleRoute
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/founder': {
+      id: '/founder'
+      path: '/founder'
+      fullPath: '/founder'
+      preLoaderRoute: typeof FounderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   ActivitiesRoute: ActivitiesRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  FounderRoute: FounderRoute,
   GalleryRoute: GalleryRoute,
   RegistrationRoute: RegistrationRoute,
   ScheduleRoute: ScheduleRoute,
