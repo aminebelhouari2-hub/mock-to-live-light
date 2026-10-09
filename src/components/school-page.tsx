@@ -1,6 +1,7 @@
 import { cdn } from "@/lib/cdn";
 import { Link } from "@tanstack/react-router";
 import { SchoolHeading, SchoolPageHeading } from "@/components/school-heading";
+import { School3DCard, SchoolHeroGeometry } from "@/components/school-3d-card";
 import { SchoolFaq } from "@/components/school-faq";
 import { useSchoolLanguage } from "@/components/school-language";
 import { schoolNavigation, schoolFooterGroups, schoolPageLabel, type SchoolPageKey } from "@/content/navigation";
@@ -340,6 +341,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         {/* Hero */}
         <section id="top" className="relative isolate overflow-hidden">
           <div className="bg-grid absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
+          <SchoolHeroGeometry />
 
           <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 pb-16 pt-10 lg:grid-cols-[1.1fr_1fr] lg:px-8 lg:pb-24 lg:pt-16">
             <div className="reveal flex flex-col gap-6">
@@ -425,25 +427,25 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         <Section id="subjects" compact={page !== "home"} label={p(schoolPageLabel("subjects"))} title={teachingUi[lang].subjectsTitle}>
           <SchoolCarousel lang={lang} label={teachingUi[lang].subjectsTitle} className="mb-8">
             {teachingStages.map(stage => (
-              <article key={stage.shortLevel} className="min-w-0 school-glass p-6">
+              <School3DCard key={stage.shortLevel} className="min-w-0 school-glass p-6">
                 <h3 className="mb-5 text-xl font-bold text-forest">{translateSupport(stage.level, lang)}</h3>
                 <ul className="space-y-3">
                   {stage.subjects.map(({ subject }) => <li key={subject} className="flex items-start gap-3 text-sm leading-7 text-forest/80"><BookOpen className="mt-1 h-5 w-5 shrink-0 text-primary" aria-hidden="true" /><span>{translateSupport(subject, lang)}</span></li>)}
                 </ul>
-              </article>
+              </School3DCard>
             ))}
           </SchoolCarousel>
           <h3 className="mb-6 text-center text-xl font-bold text-forest">{teachingUi[lang].preparatory}</h3>
           <SchoolCarousel lang={lang} label={teachingUi[lang].preparatory} className="mb-8">
-            {nurseryPhotos.map(photo => <figure key={photo.src} className="overflow-hidden school-glass"><img src={photo.src} alt={p(photo.alt)} loading="lazy" decoding="async" width={768} height={1024} className="aspect-[4/3] w-full object-cover" /><figcaption className="p-4 text-sm font-semibold text-forest">{p(photo.alt)}</figcaption></figure>)}
+            {nurseryPhotos.map(photo => <School3DCard key={photo.src} className="school-glass"><figure><img src={photo.src} alt={p(photo.alt)} loading="lazy" decoding="async" width={768} height={1024} className="aspect-[4/3] w-full rounded-t-3xl object-cover" /><figcaption className="p-4 text-sm font-semibold text-forest">{p(photo.alt)}</figcaption></figure></School3DCard>)}
           </SchoolCarousel>
           <SchoolCarousel lang={lang} label={teachingUi[lang].preparatory} className="mb-8">
             {subjects.map((s) => {
               const I = ICONS[s.icon];
               return (
-                <article
+                <School3DCard
                   key={s.icon}
-                  className="lift group school-glass p-7"
+                  className="group school-glass p-7"
                 >
                   <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-peach text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
                     <I className="h-7 w-7" />
@@ -454,7 +456,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                   <p className="text-[15px] leading-7 text-forest/70">
                     {p(s.desc)}
                   </p>
-                </article>
+                </School3DCard>
               );
             })}
           </SchoolCarousel>
@@ -479,8 +481,8 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                 const LevelIcon: LucideIcon = [BookOpen, School, GraduationCap][index] ?? BookOpen;
                 const photo = supportPhotos.find(item => item.stage === course.shortLevel);
                 return (
-                  <article key={course.shortLevel} className="lift flex min-w-0 flex-col school-glass overflow-hidden">
-                    {photo && <img src={photo.src} alt={photo.alt[lang]} loading="lazy" decoding="async" width={640} height={480} className="aspect-[4/3] w-full object-cover" />}
+                  <School3DCard key={course.shortLevel} className="flex min-w-0 flex-col school-glass">
+                    {photo && <img src={photo.src} alt={photo.alt[lang]} loading="lazy" decoding="async" width={640} height={480} className="aspect-[4/3] w-full rounded-t-3xl object-cover" />}
                     <div className="flex flex-1 flex-col p-6 sm:p-7">
                     <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
                       <span className="w-fit rounded-full border border-primary/25 bg-peach px-4 py-1.5 font-display text-sm font-bold text-forest" dir="ltr">{course.shortLevel}</span>
@@ -496,7 +498,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                       <a href={wa} target="_blank" rel="noopener noreferrer"><MessageCircle />{st.cta}<ArrowUpRight /></a>
                     </Button>
                     </div>
-                  </article>
+                  </School3DCard>
                 );
               })}
             </SchoolCarousel>
@@ -515,10 +517,10 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                 <h3 className="mb-5 border-b border-primary/25 pb-4 text-xl font-bold text-forest">{translateSupport(stage.level, lang)}</h3>
                 <div className="grid gap-3">
                   {stage.subjects.map(({ subject, teacher }) => (
-                    <article key={subject} className="flex min-w-0 items-start gap-3 school-glass p-4">
+                    <School3DCard key={subject} className="flex min-w-0 items-start gap-3 school-glass p-4">
                       <GraduationCap className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
                       <div className="min-w-0"><h4 className="text-sm font-bold leading-7 text-forest">{p(teacher)}</h4><p className="text-xs leading-6 text-forest/65">{translateSupport(subject, lang)}</p></div>
-                    </article>
+                    </School3DCard>
                   ))}
                 </div>
               </div>
@@ -526,18 +528,18 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </SchoolCarousel>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {teachers.filter(m => m.name.ar === "مربية روضة").map((m) => (
-              <div
+              <School3DCard
                 key={m.name.ar}
-                className="reveal group overflow-hidden school-glass"
+                className="group school-glass"
               >
-                <div className="aspect-square overflow-hidden bg-sand">
+                <div className="aspect-square overflow-hidden rounded-t-3xl bg-sand">
                   {m.photo ? <img src={m.photo} alt={p(m.name)} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" /> : <div className="grid h-full place-items-center"><Users className="h-16 w-16 text-forest/30" aria-hidden="true" /></div>}
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-bold text-forest">{p(m.name)}</h3>
                   <p className="text-xs font-bold text-primary">{p(m.role)}</p>
                 </div>
-              </div>
+              </School3DCard>
             ))}
           </div>
         </Section>
@@ -549,14 +551,14 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         <Section id="activities" compact={page !== "home"} label={p(schoolPageLabel("activities"))} title={t.activitiesTitle} >
           <SchoolCarousel lang={lang} label={t.activitiesTitle} className="mb-8">
             {activities.map((act) => (
-              <div
+              <School3DCard
                 key={act.title.ar}
                 className="school-glass p-6"
               >
                 <img src={act.image} alt={lang === "ar" ? (act.icon === "kids" ? "نشاط ترفيهي للأطفال" : act.icon === "workshop" ? "ألعاب تعليمية" : act.icon === "review" || act.icon === "exam" ? "حصة دروس الدعم" : "قاعة التعلّم") : (act.icon === "kids" ? "Children’s celebration" : act.icon === "workshop" ? "Learning games" : act.icon === "review" || act.icon === "exam" ? "Support lesson" : "Learning classroom")} loading="lazy" decoding="async" width={640} height={480} className="mb-5 aspect-[4/3] w-full rounded-lg object-cover" />
                 <h3 className="mb-2 text-xl font-bold text-forest">{p(act.title)}</h3>
                 <p className="text-sm leading-relaxed text-forest/70">{p(act.desc)}</p>
-              </div>
+              </School3DCard>
             ))}
           </SchoolCarousel>
         </Section>
