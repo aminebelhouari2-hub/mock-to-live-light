@@ -24,3 +24,4 @@
 - Keep the selected language in a root-scoped provider so navigating between school pages preserves the user's language without browser-storage hydration mismatches.
 
 - Keep section separators owned by the shared school main-layout CSS, not inserted by section callers, so conditional pages cannot render duplicate separators; use shared theme utilities for glass surfaces and primary buttons.
+- Keep card reveal and pointer tilt in separate shared CSS 3D layers, independent of carousel transforms; retain initially visible content, native touch scrolling and reduced-motion support to protect accessibility and loading speed.

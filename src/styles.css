@@ -134,6 +134,9 @@
   --divider: oklch(0.901 0.076 70);
   --glass-shadow: inset 0 1px 0 var(--glass-highlight), 0 3px 6px oklch(0.24 0.007 50 / .025), 0 12px 28px -18px oklch(0.24 0.007 50 / .12);
   --cta-shadow: 0 5px 12px oklch(0.66 0.168 52.4 / .18);
+  --card-3d-shadow: 0 16px 30px -16px oklch(0.7 0.15 55 / .28);
+  --geometry-face: oklch(0.94 0.05 70 / .32);
+  --geometry-edge: oklch(0.8 0.12 65 / .32);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.93 0.03 75);
   --secondary-foreground: oklch(0.21 0.006 60);
@@ -263,4 +266,44 @@ body { font-family: var(--font-sans); }
   transition: transform .2s ease, box-shadow .2s ease;
   &:hover { transform: scale(1.02); }
   @media (prefers-reduced-motion: reduce) { transition: none; &:hover { transform: none; } }
+}
+
+/* Lightweight CSS 3D layers; content remains visible before hydration. */
+.school-3d-scene { display: flex; perspective: 1000px; }
+.school-3d-reveal { display: flex; flex: 1; min-width: 0; transform-origin: center bottom; }
+.school-3d-scene[data-revealed] > .school-3d-reveal { animation: school-card-enter 850ms both; }
+.school-3d-card {
+  flex: 1;
+  min-width: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+  will-change: auto;
+}
+.school-3d-card[data-tilting] { transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(16px); box-shadow: var(--glass-shadow), var(--card-3d-shadow); }
+.school-3d-card :is(h3, h4) { transform: translateZ(20px); }
+.school-3d-card svg { transform: translateZ(20px); }
+@keyframes school-card-enter {
+  0% { transform: rotateX(15deg) scale(.95) translateY(14px); }
+  55% { transform: rotateX(-2deg) scale(1.008) translateY(-2px); }
+  78% { transform: rotateX(.6deg) scale(.998); }
+  100% { transform: rotateX(0) scale(1) translateY(0); }
+}
+.school-hero-geometry { position: absolute; inset: 0; z-index: -1; pointer-events: none; perspective: 1000px; overflow: hidden; }
+.school-cube-float { position: absolute; width: 48px; height: 48px; animation: school-cube-drift 9s ease-in-out infinite; }
+.school-cube-float-0 { inset-inline-start: 3%; top: 18%; }
+.school-cube-float-1 { inset-inline-end: 6%; top: 9%; animation-delay: -3s; }
+.school-cube-float-2 { inset-inline-start: 47%; bottom: 8%; animation-delay: -6s; }
+.school-cube { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transform: rotateX(-20deg) rotateY(32deg) rotateZ(12deg); }
+.school-cube span { position: absolute; inset: 0; background: var(--geometry-face); border: 1px solid var(--geometry-edge); }
+.school-cube-front { transform: translateZ(24px); }
+.school-cube-back { transform: rotateY(180deg) translateZ(24px); }
+.school-cube-left { transform: rotateY(-90deg) translateZ(24px); }
+.school-cube-right { transform: rotateY(90deg) translateZ(24px); }
+.school-cube-top { transform: rotateX(90deg) translateZ(24px); }
+.school-cube-bottom { transform: rotateX(-90deg) translateZ(24px); }
+@keyframes school-cube-drift { 0%, 100% { transform: translateY(0) rotateZ(0); } 50% { transform: translateY(-18px) rotateZ(7deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .school-3d-scene[data-revealed] > .school-3d-reveal, .school-cube-float { animation: none; }
+  .school-3d-card, .school-3d-card[data-tilting], .school-3d-card :is(h3, h4, svg) { transform: none; transition: none; }
 }
