@@ -22,3 +22,5 @@
 - Derive page labels, breadcrumbs, metadata titles and grouped footer links from the typed navigation content; use shared school headings with a compact descriptive hierarchy on dedicated pages to avoid duplicate prominent titles while retaining section copy.
 - Keep factual multilingual FAQ answers in local content and derive support subjects from existing course data, so visible answers and FAQ search metadata stay consistent without invented school policies.
 - Keep the selected language in a root-scoped provider so navigating between school pages preserves the user's language without browser-storage hydration mismatches.
+
+- Keep section separators owned by the shared school main-layout CSS, not inserted by section callers, so conditional pages cannot render duplicate separators; use shared theme utilities for glass surfaces and primary buttons.

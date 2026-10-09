@@ -110,10 +110,6 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-function LogoDivider() {
-  return <div aria-hidden="true" className="overflow-hidden border-y border-primary/25 bg-forest py-3"><div className="marquee-track">{Array.from({ length: 10 }, (_, i) => <span key={i} className="flex items-center gap-10 whitespace-nowrap text-xs font-semibold text-cream">SALAOUANDJI SCHOOL<img src={cdn(logo.url)} alt="" width={36} height={36} className="h-9 w-9 rounded-full object-cover" /></span>)}</div></div>;
-}
-
 function Section({
   id,
   label,
@@ -131,7 +127,6 @@ function Section({
 }) {
   return (
     <>
-    <LogoDivider />
     <section id={id} className={`${compact ? "pb-16 pt-8 lg:pb-24 lg:pt-10" : "py-16 lg:py-24"} ${className}`}>
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         {(!compact || title !== label) && <div className={`reveal mx-auto max-w-3xl text-center ${compact ? "mb-8" : "mb-10"}`}>
@@ -228,7 +223,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
   return (
     <div
       dir={dir}
-      className="relative overflow-x-hidden bg-background text-foreground"
+      className="school-theme relative overflow-x-hidden text-foreground"
     >
       {/* WhatsApp */}
       <a
@@ -242,7 +237,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
       </a>
 
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-forest/10 bg-cream/85 backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-forest/10 bg-glass-surface backdrop-blur-xl">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 lg:px-8">
           <Link to="/" className="flex min-w-0 items-center gap-3">
             <img
@@ -338,7 +333,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         </div>
       )}
 
-      <main id="main">
+      <main id="main" className="school-sections">
         {page !== "home" && <SchoolPageHeading page={page} lang={lang} />}
 
         {page === "home" && <>
@@ -364,21 +359,12 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
               </p>
 
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Link
-                  to="/registration"
-                  className="rounded-2xl bg-primary px-7 py-4 text-center text-base font-bold text-primary-foreground shadow-glow transition hover:-translate-y-0.5"
-                >
-                  {t.ctaRegister}
-                </Link>
-                <a
-                  href={wa}
-                  target="_blank"
-                  rel="noopener"
-                  className="flex items-center justify-center gap-2 rounded-2xl border-2 border-forest/15 bg-card px-7 py-4 text-base font-bold text-forest transition hover:border-whatsapp"
-                >
-                  <MessageCircle className="h-5 w-5 text-whatsapp" />
-                  {t.ctaWhatsapp}
-                </a>
+                <Button asChild className="h-auto rounded-2xl px-7 py-4 text-base font-bold">
+                  <Link to="/registration">{t.ctaRegister}</Link>
+                </Button>
+                <Button asChild variant="outline" className="h-auto rounded-2xl border-glass-border bg-glass-surface px-7 py-4 text-base font-bold text-forest backdrop-blur-md hover:border-whatsapp">
+                  <a href={wa} target="_blank" rel="noopener"><MessageCircle className="h-5 w-5 text-whatsapp" />{t.ctaWhatsapp}</a>
+                </Button>
               </div>
 
               <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-2 text-sm font-medium text-forest/70">
@@ -397,29 +383,11 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </div>
         </section>
 
-        {/* Marquee */}
-        <div
-          className="overflow-hidden border-y-2 border-primary bg-forest py-3.5"
-          aria-hidden
-        >
-          <div className="marquee-track">
-            {Array.from({ length: 14 }).map((_, i) => (
-              <span
-                key={i}
-                className="flex items-center gap-10 whitespace-nowrap font-display text-sm font-semibold text-cream"
-              >
-                SALAOUANDJI SCHOOL — صلوانجي سكول
-                <img src={cdn(logo.url)} alt="" width={40} height={40} className="h-10 w-10 shrink-0 rounded-full border border-primary/40 object-cover" />
-              </span>
-            ))}
-          </div>
-        </div>
-
         </>}
 
         {show("about") && <>
         {/* About */}
-        <section id="about" className="bg-dots relative bg-forest text-cream">
+        <section id="about" className="relative text-forest">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8 lg:py-28">
             <div className="reveal">
               {page === "home" && <Eyebrow>{p(schoolPageLabel("about"))}</Eyebrow>}
@@ -427,7 +395,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                 {t.aboutTitle}
               </SchoolHeading>
             </div>
-            <div className="reveal space-y-4 text-[16.5px] leading-[2] text-cream/80">
+            <div className="reveal space-y-4 text-[16.5px] leading-[2] text-forest/80">
               <p>{t.aboutP1}</p>
               <p>{t.aboutP2}</p>
             </div>
@@ -437,11 +405,11 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                 return (
                   <div
                     key={x.t}
-                    className="rounded-lg border border-cream/10 bg-cream/5 p-6 backdrop-blur"
+                    className="school-glass p-6"
                   >
                     <I className="mb-4 h-7 w-7 text-primary" />
                     <h3 className="mb-2 text-lg font-semibold">{x.t}</h3>
-                    <p className="text-sm leading-7 text-cream/70">{x.d}</p>
+                    <p className="text-sm leading-7 text-forest/70">{x.d}</p>
                   </div>
                 );
               })}
@@ -457,7 +425,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         <Section id="subjects" compact={page !== "home"} label={p(schoolPageLabel("subjects"))} title={teachingUi[lang].subjectsTitle}>
           <SchoolCarousel lang={lang} label={teachingUi[lang].subjectsTitle} className="mb-8">
             {teachingStages.map(stage => (
-              <article key={stage.shortLevel} className="min-w-0 rounded-lg border border-forest/10 bg-card p-6 shadow-soft">
+              <article key={stage.shortLevel} className="min-w-0 school-glass p-6">
                 <h3 className="mb-5 text-xl font-bold text-forest">{translateSupport(stage.level, lang)}</h3>
                 <ul className="space-y-3">
                   {stage.subjects.map(({ subject }) => <li key={subject} className="flex items-start gap-3 text-sm leading-7 text-forest/80"><BookOpen className="mt-1 h-5 w-5 shrink-0 text-primary" aria-hidden="true" /><span>{translateSupport(subject, lang)}</span></li>)}
@@ -467,7 +435,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </SchoolCarousel>
           <h3 className="mb-6 text-center text-xl font-bold text-forest">{teachingUi[lang].preparatory}</h3>
           <SchoolCarousel lang={lang} label={teachingUi[lang].preparatory} className="mb-8">
-            {nurseryPhotos.map(photo => <figure key={photo.src} className="overflow-hidden rounded-lg border border-forest/10 bg-card"><img src={photo.src} alt={p(photo.alt)} loading="lazy" decoding="async" width={768} height={1024} className="aspect-[4/3] w-full object-cover" /><figcaption className="p-4 text-sm font-semibold text-forest">{p(photo.alt)}</figcaption></figure>)}
+            {nurseryPhotos.map(photo => <figure key={photo.src} className="overflow-hidden school-glass"><img src={photo.src} alt={p(photo.alt)} loading="lazy" decoding="async" width={768} height={1024} className="aspect-[4/3] w-full object-cover" /><figcaption className="p-4 text-sm font-semibold text-forest">{p(photo.alt)}</figcaption></figure>)}
           </SchoolCarousel>
           <SchoolCarousel lang={lang} label={teachingUi[lang].preparatory} className="mb-8">
             {subjects.map((s) => {
@@ -475,7 +443,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
               return (
                 <article
                   key={s.icon}
-                  className="lift group rounded-3xl border border-forest/10 bg-card p-7 shadow-soft"
+                  className="lift group school-glass p-7"
                 >
                   <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-peach text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
                     <I className="h-7 w-7" />
@@ -495,9 +463,8 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         </>}
 
         {show("support") && <>
-        <LogoDivider />
-        {/* Support Courses */}
-        <section id="support" className="relative bg-shell py-20 lg:py-28">
+            {/* Support Courses */}
+        <section id="support" className="relative py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-5 lg:px-8">
             <div className="reveal mb-12 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
               <div className="min-w-0">
@@ -512,7 +479,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                 const LevelIcon: LucideIcon = [BookOpen, School, GraduationCap][index] ?? BookOpen;
                 const photo = supportPhotos.find(item => item.stage === course.shortLevel);
                 return (
-                  <article key={course.shortLevel} className="lift flex min-w-0 flex-col rounded-lg border border-forest/10 border-t-4 border-t-primary bg-card shadow-soft overflow-hidden">
+                  <article key={course.shortLevel} className="lift flex min-w-0 flex-col school-glass overflow-hidden">
                     {photo && <img src={photo.src} alt={photo.alt[lang]} loading="lazy" decoding="async" width={640} height={480} className="aspect-[4/3] w-full object-cover" />}
                     <div className="flex flex-1 flex-col p-6 sm:p-7">
                     <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
@@ -548,7 +515,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                 <h3 className="mb-5 border-b border-primary/25 pb-4 text-xl font-bold text-forest">{translateSupport(stage.level, lang)}</h3>
                 <div className="grid gap-3">
                   {stage.subjects.map(({ subject, teacher }) => (
-                    <article key={subject} className="flex min-w-0 items-start gap-3 rounded-lg border border-forest/10 bg-card p-4">
+                    <article key={subject} className="flex min-w-0 items-start gap-3 school-glass p-4">
                       <GraduationCap className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
                       <div className="min-w-0"><h4 className="text-sm font-bold leading-7 text-forest">{p(teacher)}</h4><p className="text-xs leading-6 text-forest/65">{translateSupport(subject, lang)}</p></div>
                     </article>
@@ -561,7 +528,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
             {teachers.filter(m => m.name.ar === "مربية روضة").map((m) => (
               <div
                 key={m.name.ar}
-                className="reveal group overflow-hidden rounded-3xl border border-forest/10 bg-card shadow-soft"
+                className="reveal group overflow-hidden school-glass"
               >
                 <div className="aspect-square overflow-hidden bg-sand">
                   {m.photo ? <img src={m.photo} alt={p(m.name)} loading="lazy" decoding="async" className="h-full w-full object-cover transition duration-300 group-hover:scale-105" /> : <div className="grid h-full place-items-center"><Users className="h-16 w-16 text-forest/30" aria-hidden="true" /></div>}
@@ -579,12 +546,12 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
         {show("activities") && <>
         {/* Activities */}
-        <Section id="activities" compact={page !== "home"} label={p(schoolPageLabel("activities"))} title={t.activitiesTitle} className="bg-sand/40">
+        <Section id="activities" compact={page !== "home"} label={p(schoolPageLabel("activities"))} title={t.activitiesTitle} >
           <SchoolCarousel lang={lang} label={t.activitiesTitle} className="mb-8">
             {activities.map((act) => (
               <div
                 key={act.title.ar}
-                className="rounded-lg border border-forest/10 bg-card p-6 shadow-soft"
+                className="school-glass p-6"
               >
                 <img src={act.image} alt={lang === "ar" ? (act.icon === "kids" ? "نشاط ترفيهي للأطفال" : act.icon === "workshop" ? "ألعاب تعليمية" : act.icon === "review" || act.icon === "exam" ? "حصة دروس الدعم" : "قاعة التعلّم") : (act.icon === "kids" ? "Children’s celebration" : act.icon === "workshop" ? "Learning games" : act.icon === "review" || act.icon === "exam" ? "Support lesson" : "Learning classroom")} loading="lazy" decoding="async" width={640} height={480} className="mb-5 aspect-[4/3] w-full rounded-lg object-cover" />
                 <h3 className="mb-2 text-xl font-bold text-forest">{p(act.title)}</h3>
@@ -606,7 +573,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                 key={index}
                 aria-label={p(img.alt)}
                 onClick={() => setLb(index)}
-                className="group relative h-auto w-full aspect-[4/3] cursor-pointer overflow-hidden rounded-lg bg-sand p-0"
+                className="group relative h-auto w-full aspect-[4/3] cursor-pointer overflow-hidden rounded-3xl border border-glass-border bg-glass-surface p-0"
               >
                 <img
                   src={img.src}
@@ -667,21 +634,21 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </div>
         )}
 
-        <Section id="occasions" label={t.galleryLabel} title={p(occasionTitle)} className="bg-shell"><SchoolOccasions lang={lang} /></Section>
+        <Section id="occasions" label={t.galleryLabel} title={p(occasionTitle)} ><SchoolOccasions lang={lang} /></Section>
 
         </>}
 
         {show("schedule") && <>
         {/* Schedule */}
-        <Section id="schedule" compact={page !== "home"} label={p(schoolPageLabel("schedule"))} title={primaryScheduleUi[lang].title} className="bg-shell">
+        <Section id="schedule" compact={page !== "home"} label={p(schoolPageLabel("schedule"))} title={primaryScheduleUi[lang].title} >
           <p className="mb-8 text-center text-sm text-forest/70">{primaryScheduleUi[lang].note}</p>
-          <div className="hidden overflow-x-auto rounded-lg border border-forest/10 bg-card md:block">
+          <div className="hidden overflow-x-auto school-glass md:block">
             <table className="w-full text-start text-sm">
               <thead className="bg-forest text-cream"><tr><th scope="col" className="p-4 text-start">{primaryScheduleUi[lang].year}</th>{primaryScheduleSubjects.map(subject => <th scope="col" key={subject} className="p-4 text-start">{translateSupport(subject, lang)}</th>)}</tr></thead>
               <tbody>{primarySchedule.map(row => <tr key={row.year} className="border-t border-forest/10"><th scope="row" className="p-4 text-start font-bold text-forest">{p(row.label)}</th>{row.lessons.map((lesson, i) => <td key={i} className="p-4">{lesson ? <div className="flex flex-wrap items-center gap-2"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></div> : "—"}</td>)}</tr>)}</tbody>
             </table>
           </div>
-          <SchoolCarousel lang={lang} label={primaryScheduleUi[lang].title} className="md:hidden">{primarySchedule.map(row => <article key={row.year} className="min-w-0 rounded-lg border border-forest/10 bg-card p-5"><h3 className="mb-4 font-bold text-forest">{p(row.label)}</h3><ul className="divide-y divide-forest/10">{primaryScheduleSubjects.map((subject, i) => { const lesson = row.lessons[i]; return <li key={subject} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"><span>{translateSupport(subject, lang)}</span>{lesson ? <span className="flex items-center gap-2 text-forest/75"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></span> : <span className="text-forest/65">—</span>}</li>; })}</ul></article>)}</SchoolCarousel>
+          <SchoolCarousel lang={lang} label={primaryScheduleUi[lang].title} className="md:hidden">{primarySchedule.map(row => <article key={row.year} className="min-w-0 school-glass p-5"><h3 className="mb-4 font-bold text-forest">{p(row.label)}</h3><ul className="divide-y divide-forest/10">{primaryScheduleSubjects.map((subject, i) => { const lesson = row.lessons[i]; return <li key={subject} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"><span>{translateSupport(subject, lang)}</span>{lesson ? <span className="flex items-center gap-2 text-forest/75"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></span> : <span className="text-forest/65">—</span>}</li>; })}</ul></article>)}</SchoolCarousel>
         </Section>
 
         </>}
@@ -698,7 +665,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </div>
           <SchoolCarousel lang={lang} label={facebookCommentsUi[lang].title} className="mb-8">
             {testimonials.map((item, index) => (
-              <figure key={item.author} className="min-w-0 rounded-lg border border-forest/10 bg-card p-5 shadow-soft transition duration-300 motion-safe:hover:-translate-y-1 sm:p-6">
+              <figure key={item.author} className="min-w-0 school-glass p-5 transition duration-300 motion-safe:hover:-translate-y-1 sm:p-6">
                 <figcaption className="mb-5 flex items-center gap-3">
                   <span aria-hidden="true" className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-xs font-bold ${index % 2 === 0 ? "bg-peach text-forest" : "bg-sand text-forest"}`}>{item.initials}</span>
                   <div className="min-w-0 flex-1"><p dir="ltr" className="text-start text-sm font-bold text-forest">{item.author}</p><p className="mt-1 flex items-center gap-1.5 text-xs text-forest/60"><Facebook className="h-3 w-3" aria-hidden="true" />Facebook</p></div>
@@ -713,9 +680,8 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         </>}
 
         {show("registration") && <>
-        <LogoDivider />
-        {/* Registration */}
-        <section id="register" className="bg-shell py-20 lg:py-28">
+            {/* Registration */}
+        <section id="register" className="py-20 lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
             <div className="min-w-0">
               {page === "home" && <Eyebrow>{p(schoolPageLabel("registration"))}</Eyebrow>}
@@ -724,7 +690,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
               <ol className="space-y-6">{t.regSteps.map((step, i) => <li key={step.t} className="flex gap-4"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-peach text-sm font-bold text-forest">{i + 1}</span><div className="min-w-0"><h3 className="font-bold text-forest">{step.t}</h3><p className="mt-1 text-sm text-forest/70">{step.d}</p></div></li>)}</ol>
               <Button asChild variant="outline" className="mt-8 h-auto py-3"><a href={`tel:${contact.phoneTel}`}><Phone />{t.regCall}</a></Button>
             </div>
-            <div className="reveal rounded-lg border border-forest/10 bg-card p-6 shadow-soft sm:p-8">
+            <div className="reveal school-glass p-6 sm:p-8">
               <h3 className="mb-6 text-xl font-bold text-forest">{p(schoolPageLabel("registration"))}</h3>
               <form onSubmit={(e) => {
                 e.preventDefault();
@@ -742,32 +708,31 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         </section>
         </>}
 
-        {show("faq") && <Section id="faq" compact={page !== "home"} label={p(schoolPageLabel("faq"))} title={p(schoolPageLabel("faq"))} className="bg-shell"><SchoolFaq lang={lang} /></Section>}
+        {show("faq") && <Section id="faq" compact={page !== "home"} label={p(schoolPageLabel("faq"))} title={p(schoolPageLabel("faq"))} ><SchoolFaq lang={lang} /></Section>}
 
         {show("contact") && <>
-        <LogoDivider />
-        {/* Contact */}
-        <section id="contact" className="bg-forest py-20 text-cream lg:py-28">
+            {/* Contact */}
+        <section id="contact" className="py-20 text-forest lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-2 lg:px-8">
             <div className="min-w-0">
               {page === "home" && <Eyebrow>{p(schoolPageLabel("contact"))}</Eyebrow>}
               <SchoolHeading compact={page !== "home"} className="mb-8">{t.contactTitle}</SchoolHeading>
               <address className="space-y-6 not-italic">
-                <div className="flex gap-4"><MapPin className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-cream/65">{t.addressLabel}</p><p className="text-sm font-semibold leading-7">{p(contact.address)}</p></div></div>
-                <div className="flex gap-4"><Phone className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-cream/65">{t.phoneLabel}</p><a href={`tel:${contact.phoneTel}`} className="text-sm font-semibold hover:text-primary"><bdi>{contact.phoneDisplay}</bdi></a></div></div>
-                <div className="flex gap-4"><Mail className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-cream/65">{t.emailLabel}</p><a href={`mailto:${contact.email}`} className="break-all text-sm font-semibold hover:text-primary" dir="ltr">{contact.email}</a></div></div>
+                <div className="flex gap-4"><MapPin className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-forest/65">{t.addressLabel}</p><p className="text-sm font-semibold leading-7">{p(contact.address)}</p></div></div>
+                <div className="flex gap-4"><Phone className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-forest/65">{t.phoneLabel}</p><a href={`tel:${contact.phoneTel}`} className="text-sm font-semibold hover:text-primary"><bdi>{contact.phoneDisplay}</bdi></a></div></div>
+                <div className="flex gap-4"><Mail className="h-6 w-6 shrink-0 text-primary" /><div className="min-w-0"><p className="mb-1 text-xs text-forest/65">{t.emailLabel}</p><a href={`mailto:${contact.email}`} className="break-all text-sm font-semibold hover:text-primary" dir="ltr">{contact.email}</a></div></div>
               </address>
               <div className="mt-8 flex gap-3" aria-label={t.follow}>
-                <Button asChild variant="ghost" size="icon" className="text-cream hover:bg-cream/10 hover:text-primary"><a href={contact.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook /></a></Button>
-                <Button asChild variant="ghost" size="icon" className="text-cream hover:bg-cream/10 hover:text-primary"><a href={contact.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram /></a></Button>
-                <Button asChild variant="ghost" size="icon" className="text-cream hover:bg-cream/10 hover:text-primary"><a href={contact.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"><Music /></a></Button>
-                <Button asChild variant="ghost" size="icon" className="text-cream hover:bg-cream/10 hover:text-primary"><a href={wa} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><MessageCircle /></a></Button>
+                <Button asChild variant="ghost" size="icon" className="text-forest hover:bg-peach/60 hover:text-primary"><a href={contact.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Facebook /></a></Button>
+                <Button asChild variant="ghost" size="icon" className="text-forest hover:bg-peach/60 hover:text-primary"><a href={contact.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Instagram /></a></Button>
+                <Button asChild variant="ghost" size="icon" className="text-forest hover:bg-peach/60 hover:text-primary"><a href={contact.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok"><Music /></a></Button>
+                <Button asChild variant="ghost" size="icon" className="text-forest hover:bg-peach/60 hover:text-primary"><a href={wa} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><MessageCircle /></a></Button>
               </div>
             </div>
             <div className="min-w-0">
-              <iframe src={mapSrc} title={t.contactLabel} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-80 w-full rounded-lg border border-cream/20 bg-shell" />
-              <p className="mt-4 text-xs leading-6 text-cream/70">{t.mapNote}</p>
-              <Button asChild variant="ghost" className="mt-2 text-cream hover:bg-cream/10 hover:text-primary"><a href={mapHref} target="_blank" rel="noopener noreferrer"><MapPin />{t.openMap}<ArrowUpRight /></a></Button>
+              <iframe src={mapSrc} title={t.contactLabel} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-80 w-full rounded-3xl border border-glass-border bg-glass-surface shadow-glass" />
+              <p className="mt-4 text-xs leading-6 text-forest/70">{t.mapNote}</p>
+              <Button asChild variant="ghost" className="mt-2 text-forest hover:bg-peach/60 hover:text-primary"><a href={mapHref} target="_blank" rel="noopener noreferrer"><MapPin />{t.openMap}<ArrowUpRight /></a></Button>
             </div>
           </div>
         </section>
@@ -775,8 +740,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         </>}
 
         {show("founder") && <>
-        <LogoDivider />
-        {/* Founder */}
+            {/* Founder */}
         <Section id="founder" compact={page !== "home"} label={p(schoolPageLabel("founder"))} title={p(founder.name)}>
           <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
             <figure className="min-w-0">
@@ -800,7 +764,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-forest/10 bg-cream py-10 text-sm text-forest/70">
+      <footer className="border-t border-forest/10 bg-glass-surface py-10 text-sm text-forest/70">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
             <div className="min-w-0"><Link to="/" className="flex items-center gap-3 font-display font-bold text-forest"><img src={cdn(logo.url)} alt="" width={44} height={44} className="h-11 w-11 rounded-full object-cover" /><span dir="ltr">SALAOUANDJI SCHOOL</span></Link><p className="mt-4 max-w-md leading-7">{t.footerAbout}</p></div>
