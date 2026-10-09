@@ -243,7 +243,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-forest/10 bg-cream/85 backdrop-blur-xl">
-        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 min-[1800px]:flex min-[1800px]:justify-between lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 py-3 lg:px-8">
           <Link to="/" className="flex min-w-0 items-center gap-3">
             <img
               src={cdn(logo.url)}
@@ -265,7 +265,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
             </div>
           </Link>
 
-          <nav className="hidden items-center gap-3 min-[1800px]:flex" aria-label="Main">
+          <nav className="col-span-2 row-start-2 hidden flex-wrap items-center justify-center gap-x-5 gap-y-3 border-t border-forest/10 pt-3 min-[1800px]:flex" aria-label="Main">
             {navs.filter(item => item.to !== "/registration").map(item => (
               <Link
                 key={item.to}
