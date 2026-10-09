@@ -14,4 +14,4 @@ export const schoolNavigation = [
   { to: "/contact", label: { ar: "التواصل والموقع", fr: "Contact", en: "Contact & location" } },
 ] as const satisfies ReadonlyArray<{ to: string; label: L }>;
 
-export type SchoolPageKey = "home" | "about" | "subjects" | "support" | "teachers" | "activities" | "gallery" | "schedule" | "faq" | "registration" | "contact";
+export type SchoolPageKey = "home" | "about" | "subjects" | "support" | "teachers" | "activities" | "gallery" | "schedule" | "registration" | "faq" | "contact";
