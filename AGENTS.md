@@ -18,3 +18,6 @@
 - Use compressed photo asset pointers for displayed school media and keep reveal content visible before hydration so slow connections never produce blank sections.
 - Keep uploaded videos in the local content module as CDN pointers and render them through the visibility-aware video component; disable timed slide advance for video carousels so playback is not interrupted.
 - Asset URLs are made absolute via src/lib/cdn.ts so photos load on custom domains not hosted by Lovable.
+- Keep school section rendering shared between the complete homepage and dedicated content routes, with navigation in one typed local module, so page links preserve existing content and media without duplication.
+- Keep factual multilingual FAQ answers in local content and derive support subjects from existing course data, so visible answers and FAQ search metadata stay consistent without invented school policies.
+- Keep the selected language in a root-scoped provider so navigating between school pages preserves the user's language without browser-storage hydration mismatches.
