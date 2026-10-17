@@ -3,6 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { SchoolHeading, SchoolPageHeading } from "@/components/school-heading";
 import { School3DCard, SchoolHeroGeometry } from "@/components/school-3d-card";
 import { SchoolFaq } from "@/components/school-faq";
+import { SchoolAnnouncements } from "@/components/school-announcements";
+import { saveRegistration } from "@/lib/registrations";
 import { useSchoolLanguage } from "@/components/school-language";
 import { schoolNavigation, schoolFooterGroups, schoolPageLabel, type SchoolPageKey } from "@/content/navigation";
 import { useEffect, useState } from "react";
@@ -334,6 +336,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         </div>
       )}
 
+      {page === "home" && <SchoolAnnouncements />}
       <main id="main" className="school-sections">
         {page !== "home" && <SchoolPageHeading page={page} lang={lang} />}
 
@@ -698,6 +701,12 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                 e.preventDefault();
                 const data = new FormData(e.currentTarget);
                 const text = `${p(contact.waMessage)}\n${st.name}: ${String(data.get("parentName") ?? "")}\n${st.phone}: ${String(data.get("phone") ?? "")}\n${st.level}: ${String(data.get("level") ?? "")}\n${st.year}: ${academicYear}`;
+                void saveRegistration({
+                  parent_name: String(data.get("parentName") ?? "").trim().slice(0, 120),
+                  phone: String(data.get("phone") ?? "").trim().slice(0, 30),
+                  level: String(data.get("level") ?? "").slice(0, 120),
+                  academic_year: academicYear,
+                });
                 window.open(`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
               }} className="space-y-5">
                 <div><label htmlFor="parent-name" className="mb-2 block text-sm font-semibold text-forest">{st.name}</label><input id="parent-name" name="parentName" autoComplete="name" required className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest" /></div>
