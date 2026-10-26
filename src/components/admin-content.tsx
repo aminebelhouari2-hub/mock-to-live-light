@@ -70,7 +70,7 @@ export function AdminSchedule() {
       setCells(next);
     });
   }, []);
-  const set = (k: string, patch: Partial<{ day: string; time: string }>) => setCells(c => ({ ...c, [k]: { ...c[k], ...patch } }));
+  const set = (k: string, patch: Partial<{ day: string; time: string }>) => setCells(c => ({ ...c, [k]: { day: "", time: "", ...c[k], ...patch } }));
 
   async function save() {
     const rows = Object.entries(cells).map(([k, v]) => {
