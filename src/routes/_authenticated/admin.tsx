@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { registrationStatusLabels, type RegistrationStatus } from "@/lib/registrations";
+import { AdminGallery, AdminSchedule } from "@/components/admin-content";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -108,7 +109,9 @@ function AdminPage() {
           </section>
 
           <Tabs defaultValue="regs" dir="rtl">
-            <TabsList><TabsTrigger value="regs">طلبات التسجيل</TabsTrigger><TabsTrigger value="news">الإعلانات</TabsTrigger></TabsList>
+            <TabsList className="flex-wrap h-auto"><TabsTrigger value="regs">طلبات التسجيل</TabsTrigger><TabsTrigger value="news">الإعلانات</TabsTrigger><TabsTrigger value="gallery">صور المعرض</TabsTrigger><TabsTrigger value="schedule">مواعيد الحصص</TabsTrigger></TabsList>
+            <TabsContent value="gallery"><AdminGallery /></TabsContent>
+            <TabsContent value="schedule"><AdminSchedule /></TabsContent>
 
             <TabsContent value="regs" className="space-y-4">
               <Input placeholder="ابحث بالاسم أو الهاتف أو المستوى" value={query} onChange={e => setQuery(e.target.value)} />
