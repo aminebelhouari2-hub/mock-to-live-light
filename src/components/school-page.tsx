@@ -4,6 +4,7 @@ import { SchoolHeading, SchoolPageHeading } from "@/components/school-heading";
 import { School3DCard, SchoolHeroGeometry } from "@/components/school-3d-card";
 import { SchoolFaq } from "@/components/school-faq";
 import { SchoolAnnouncements } from "@/components/school-announcements";
+import { fetchGalleryPhotos, fetchScheduleSlots, mergeSchedule } from "@/lib/school-cms";
 import { saveRegistration } from "@/lib/registrations";
 import { useSchoolLanguage } from "@/components/school-language";
 import { schoolNavigation, schoolFooterGroups, schoolPageLabel, type SchoolPageKey } from "@/content/navigation";
@@ -149,10 +150,16 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
   const [menu, setMenu] = useState(false);
   const [academicYear, setAcademicYear] = useState(() => getAcademicYear());
   const [lb, setLb] = useState<number | null>(null);
+  const [photos, setPhotos] = useState(gallery);
+  const [schedule, setSchedule] = useState(primarySchedule);
+  useEffect(() => {
+    fetchGalleryPhotos().then(extra => extra.length && setPhotos([...extra, ...gallery])).catch(() => {});
+    fetchScheduleSlots().then(slots => slots.length && setSchedule(mergeSchedule(primarySchedule, slots))).catch(() => {});
+  }, []);
 
   const t = ui[lang];
   const st = supportUi[lang];
-  const activeImage = lb === null ? undefined : gallery[lb];
+  const activeImage = lb === null ? undefined : photos[lb];
   const seasonText = (text: string) => text.replaceAll("{academicYear}", academicYear);
 
   useEffect(() => {
@@ -184,7 +191,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
   useEffect(() => {
     if (lb === null) return;
-    const n = gallery.length;
+    const n = photos.length;
     const k = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLb(null);
       if (e.key === "ArrowRight") {
@@ -573,7 +580,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         <Section id="gallery" compact={page !== "home"} label={p(schoolPageLabel("gallery"))} title={t.galleryTitle}>
           {t.galleryNote && <p className="mb-8 text-center text-sm text-forest/70">{t.galleryNote}</p>}
           <SchoolCarousel lang={lang} label={t.galleryTitle} className="mb-8">
-            {gallery.map((img, index) => (
+            {photos.map((img, index) => (
               <Button variant="ghost"
                 key={index}
                 aria-label={p(img.alt)}
@@ -614,7 +621,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
             <Button variant="ghost"
               aria-label={t.prev}
-              onClick={() => setLb((lb - 1 + gallery.length) % gallery.length)}
+              onClick={() => setLb((lb - 1 + photos.length) % photos.length)}
               className="absolute bottom-6 start-6 rounded-full bg-cream/10 p-3 text-cream hover:bg-cream/20"
             >
               <ChevronLeft className="h-6 w-6" />
@@ -631,7 +638,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
 
             <Button variant="ghost"
               aria-label={t.next}
-              onClick={() => setLb((lb + 1) % gallery.length)}
+              onClick={() => setLb((lb + 1) % photos.length)}
               className="absolute bottom-6 end-6 rounded-full bg-cream/10 p-3 text-cream hover:bg-cream/20"
             >
               <ChevronRight className="h-6 w-6" />
@@ -650,10 +657,10 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           <div className="hidden overflow-x-auto school-glass md:block">
             <table className="w-full text-start text-sm">
               <thead className="bg-forest text-cream"><tr><th scope="col" className="p-4 text-start">{primaryScheduleUi[lang].year}</th>{primaryScheduleSubjects.map(subject => <th scope="col" key={subject} className="p-4 text-start">{translateSupport(subject, lang)}</th>)}</tr></thead>
-              <tbody>{primarySchedule.map(row => <tr key={row.year} className="border-t border-forest/10"><th scope="row" className="p-4 text-start font-bold text-forest">{p(row.label)}</th>{row.lessons.map((lesson, i) => <td key={i} className="p-4">{lesson ? <div className="flex flex-wrap items-center gap-2"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></div> : "—"}</td>)}</tr>)}</tbody>
+              <tbody>{schedule.map(row => <tr key={row.year} className="border-t border-forest/10"><th scope="row" className="p-4 text-start font-bold text-forest">{p(row.label)}</th>{row.lessons.map((lesson, i) => <td key={i} className="p-4">{lesson ? <div className="flex flex-wrap items-center gap-2"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></div> : "—"}</td>)}</tr>)}</tbody>
             </table>
           </div>
-          <SchoolCarousel lang={lang} label={primaryScheduleUi[lang].title} className="md:hidden">{primarySchedule.map(row => <article key={row.year} className="min-w-0 school-glass p-5"><h3 className="mb-4 font-bold text-forest">{p(row.label)}</h3><ul className="divide-y divide-forest/10">{primaryScheduleSubjects.map((subject, i) => { const lesson = row.lessons[i]; return <li key={subject} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"><span>{translateSupport(subject, lang)}</span>{lesson ? <span className="flex items-center gap-2 text-forest/75"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></span> : <span className="text-forest/65">—</span>}</li>; })}</ul></article>)}</SchoolCarousel>
+          <SchoolCarousel lang={lang} label={primaryScheduleUi[lang].title} className="md:hidden">{schedule.map(row => <article key={row.year} className="min-w-0 school-glass p-5"><h3 className="mb-4 font-bold text-forest">{p(row.label)}</h3><ul className="divide-y divide-forest/10">{primaryScheduleSubjects.map((subject, i) => { const lesson = row.lessons[i]; return <li key={subject} className="flex flex-wrap items-center justify-between gap-2 py-3 text-sm"><span>{translateSupport(subject, lang)}</span>{lesson ? <span className="flex items-center gap-2 text-forest/75"><span>{p(lesson.day)}</span><bdi className="font-bold text-primary">{lesson.time}</bdi></span> : <span className="text-forest/65">—</span>}</li>; })}</ul></article>)}</SchoolCarousel>
         </Section>
 
         </>}
