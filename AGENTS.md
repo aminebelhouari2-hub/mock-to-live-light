@@ -25,3 +25,4 @@
 
 - Keep section separators owned by the shared school main-layout CSS, not inserted by section callers, so conditional pages cannot render duplicate separators; use shared theme utilities for glass surfaces and primary buttons.
 - Keep card reveal and pointer tilt in separate shared CSS 3D layers, independent of carousel transforms; retain initially visible content, native touch scrolling and reduced-motion support to protect accessibility and loading speed.
+- Dashboard-managed gallery photos and timetable edits live in the backend (private gallery bucket with signed URLs) and are layered over the local content defaults, so the site still shows original content if the backend is empty or unreachable.

@@ -369,7 +369,7 @@ export const teachingUi: Record<Lang, { subjectsTitle: string; teachersTitle: st
 };
 
 export type PrimaryLesson = { day: L; time: string };
-const primaryDays = {
+export const primaryDays = {
   saturday: { ar: "السبت", fr: "Samedi", en: "Saturday" },
   sunday: { ar: "الأحد", fr: "Dimanche", en: "Sunday" },
   monday: { ar: "الإثنين", fr: "Lundi", en: "Monday" },

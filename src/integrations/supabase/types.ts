@@ -38,6 +38,30 @@ export type Database = {
         }
         Relationships: []
       }
+      gallery_photos: {
+        Row: {
+          caption: string
+          created_at: string
+          id: string
+          path: string
+          url: string
+        }
+        Insert: {
+          caption?: string
+          created_at?: string
+          id?: string
+          path: string
+          url: string
+        }
+        Update: {
+          caption?: string
+          created_at?: string
+          id?: string
+          path?: string
+          url?: string
+        }
+        Relationships: []
+      }
       registrations: {
         Row: {
           academic_year: string | null
@@ -68,6 +92,33 @@ export type Database = {
           parent_name?: string
           phone?: string
           status?: string
+        }
+        Relationships: []
+      }
+      schedule_slots: {
+        Row: {
+          day: string | null
+          id: string
+          subject_index: number
+          time: string | null
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          day?: string | null
+          id?: string
+          subject_index: number
+          time?: string | null
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          day?: string | null
+          id?: string
+          subject_index?: number
+          time?: string | null
+          updated_at?: string
+          year?: number
         }
         Relationships: []
       }
