@@ -74,7 +74,7 @@ export function AdminSchedule() {
 
   async function save() {
     const rows = Object.entries(cells).map(([k, v]) => {
-      const [year, subject_index] = k.split("-").map(Number);
+      const [year = 0, subject_index = 0] = k.split("-").map(Number);
       const ok = v.day && v.time;
       return { year, subject_index, day: ok ? v.day : null, time: ok ? v.time : null, updated_at: new Date().toISOString() };
     });
