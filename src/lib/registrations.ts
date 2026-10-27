@@ -1,11 +1,14 @@
 import { supabase } from "@/integrations/supabase/client";
 
-export type RegistrationStatus = "new" | "contacted" | "confirmed";
+export type RegistrationStatus = "new" | "contacted" | "confirmed" | "active" | "waiting" | "cancelled";
 
 export const registrationStatusLabels: Record<RegistrationStatus, string> = {
   new: "جديد",
   contacted: "تم التواصل",
   confirmed: "مؤكد",
+  active: "متمدرس",
+  waiting: "قائمة الانتظار",
+  cancelled: "ملغى",
 };
 
 export interface RegistrationInput {
@@ -13,6 +16,10 @@ export interface RegistrationInput {
   phone: string;
   level: string;
   academic_year: string;
+  first_name?: string;
+  last_name?: string;
+  birth_date?: string | null;
+  age?: number | null;
 }
 
 /** Stores the parent's request; WhatsApp still opens even if saving fails. */
