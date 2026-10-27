@@ -22,7 +22,6 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"in" | "up">("in");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
@@ -31,29 +30,21 @@ function AuthPage() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true); setMsg("");
-    if (mode === "in") {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      setBusy(false);
-      if (error) return setMsg("البريد أو كلمة المرور غير صحيحة.");
-      navigate({ to: "/admin", replace: true });
-    } else {
-      const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/admin` } });
-      setBusy(false);
-      setMsg(error ? error.message : "تم إنشاء الحساب. افتح بريدك الإلكتروني لتأكيده ثم سجّل الدخول.");
-    }
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setBusy(false);
+    if (error) return setMsg("البريد أو كلمة المرور غير صحيحة.");
+    navigate({ to: "/admin", replace: true });
   }
 
   return (
     <main dir="rtl" className="school-theme grid min-h-screen place-items-center px-5">
       <form onSubmit={submit} className="school-glass w-full max-w-md space-y-5 p-8 text-forest">
-        <h1 className="text-2xl font-bold">{mode === "in" ? "دخول لوحة التحكم" : "إنشاء حساب الإدارة"}</h1>
+        <h1 className="text-2xl font-bold">دخول لوحة التحكم</h1>
+        <p className="text-sm text-forest/70">للحسابات المعتمدة من إدارة المدرسة فقط</p>
         <div><Label htmlFor="email">البريد الإلكتروني</Label><Input id="email" type="email" dir="ltr" required value={email} onChange={e => setEmail(e.target.value)} className="mt-2" /></div>
         <div><Label htmlFor="password">كلمة المرور</Label><Input id="password" type="password" dir="ltr" required minLength={8} value={password} onChange={e => setPassword(e.target.value)} className="mt-2" /></div>
         {msg && <p className="text-sm text-forest/80" role="status">{msg}</p>}
-        <Button type="submit" disabled={busy} className="h-auto w-full py-3 font-bold">{mode === "in" ? "دخول" : "إنشاء الحساب"}</Button>
-        <button type="button" onClick={() => { setMode(mode === "in" ? "up" : "in"); setMsg(""); }} className="w-full text-sm text-forest/70 underline">
-          {mode === "in" ? "أول مرة؟ أنشئ حساب الإدارة" : "لديك حساب؟ سجّل الدخول"}
-        </button>
+        <Button type="submit" disabled={busy} className="h-auto w-full py-3 font-bold">{busy ? "جارٍ الدخول…" : "دخول"}</Button>
       </form>
     </main>
   );

@@ -66,31 +66,49 @@ export type Database = {
         Row: {
           academic_year: string | null
           admin_notes: string | null
+          age: number | null
+          birth_date: string | null
           created_at: string
+          first_name: string
+          group_name: string
           id: string
+          last_name: string
           level: string
           parent_name: string
           phone: string
+          source: string
           status: string
         }
         Insert: {
           academic_year?: string | null
           admin_notes?: string | null
+          age?: number | null
+          birth_date?: string | null
           created_at?: string
+          first_name?: string
+          group_name?: string
           id?: string
+          last_name?: string
           level: string
           parent_name: string
           phone: string
+          source?: string
           status?: string
         }
         Update: {
           academic_year?: string | null
           admin_notes?: string | null
+          age?: number | null
+          birth_date?: string | null
           created_at?: string
+          first_name?: string
+          group_name?: string
           id?: string
+          last_name?: string
           level?: string
           parent_name?: string
           phone?: string
+          source?: string
           status?: string
         }
         Relationships: []
@@ -119,6 +137,48 @@ export type Database = {
           time?: string | null
           updated_at?: string
           year?: number
+        }
+        Relationships: []
+      }
+      school_documents: {
+        Row: {
+          content: Json
+          key: string
+          updated_at: string
+        }
+        Insert: {
+          content?: Json
+          key: string
+          updated_at?: string
+        }
+        Update: {
+          content?: Json
+          key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      staff_accounts: {
+        Row: {
+          active: boolean
+          created_at: string
+          display_name: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          display_name?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          display_name?: string
+          role?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -152,6 +212,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      school_permission: { Args: { permission: string }; Returns: boolean }
     }
     Enums: {
       app_role: "admin"

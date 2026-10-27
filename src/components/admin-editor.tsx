@@ -1,0 +1,40 @@
+import { useEffect, useState } from "react";
+import { Plus, Trash2, Save, RotateCcw, Upload } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
+import { documentDefaults, documentLabels, mergeDocument, toJson, themeDefaults, validTheme, type DocumentKey } from "@/lib/school-documents";
+
+const labels: Record<string, string> = { ar: "العربية", fr: "الفرنسية", en: "الإنجليزية", title: "العنوان", desc: "الوصف", name: "الاسم", role: "الصفة", photo: "الصورة", src: "الصورة / الفيديو", image: "الصورة", alt: "وصف الصورة", subjects: "المواد", teacher: "الأستاذ", level: "المستوى", description: "الوصف", shortLevel: "رمز الطور", stage: "الطور", groups: "المجموعات", items: "العناصر", question: "السؤال", answer: "الجواب", quote: "التعليق", author: "الاسم", intro: "النبذة", lessons: "الحصص", phoneDisplay: "الهاتف", email: "البريد", address: "العنوان" };
+function clearStrings(value: unknown): unknown { if (typeof value === "string") return ""; if (Array.isArray(value)) return []; if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, ["icon", "stage", "shortLevel", "lang"].includes(k) ? v : clearStrings(v)])); return value; }
+function ContentFields({ value, change, path = "", lang }: { value: unknown; change: (value: unknown) => void; path?: string; lang: string }) {
+  const [error, setError] = useState("");
+  if (typeof value === "string") {
+    const key = path.split(".").pop() ?? "";
+    const media = ["src", "image", "photo"].includes(key);
+    return <div className="space-y-2"><Label>{labels[key] ?? key}</Label>{media && value && <img src={value} alt="" className="h-32 max-w-full rounded-md object-contain" />}{media ? <><Input value={value} onChange={e => change(e.target.value)} aria-label={labels[key] ?? key} dir="ltr" /><label className="flex items-center gap-2 text-sm"><Upload className="h-4 w-4" />رفع صورة<Input aria-label="رفع صورة للمحتوى" type="file" accept="image/*" onChange={async e => { const file = e.target.files?.[0]; if (!file) return; const name = `${crypto.randomUUID()}.${file.name.split(".").pop()}`; const { error: uploadError } = await supabase.storage.from("gallery").upload(name, file); if (uploadError) return setError("تعذّر رفع الصورة"); const { data, error: signError } = await supabase.storage.from("gallery").createSignedUrl(name, 60 * 60 * 24 * 365); if (signError || !data) return setError("تعذّر تجهيز الصورة"); change(data.signedUrl); }} /></label>{error && <p role="status">{error}</p>}</> : value.length > 90 ? <Textarea value={value} onChange={e => change(e.target.value)} rows={4} aria-label={labels[key] ?? key} /> : <Input value={value} onChange={e => change(e.target.value)} aria-label={labels[key] ?? key} />}</div>;
+  }
+  if (Array.isArray(value)) return <div className="space-y-4">{value.map((item, index) => <div key={index} className="border-s-2 border-border ps-4"><div className="mb-3 flex justify-between gap-3"><span className="text-sm font-semibold">{index + 1}</span><Button type="button" variant="ghost" size="icon" title="حذف العنصر" onClick={() => change(value.filter((_, i) => i !== index))}><Trash2 /></Button></div><ContentFields value={item} path={`${path}.${index}`} lang={lang} change={next => change(value.map((x, i) => i === index ? next : x))} /></div>)}<Button variant="outline" type="button" onClick={() => change([...value, clearStrings(value[0] ?? "")])}><Plus />إضافة عنصر</Button></div>;
+  if (value && typeof value === "object") {
+    const entries = Object.entries(value);
+    const multilingual = ["ar", "fr", "en"].every(k => k in value);
+    const languageRoot = entries.every(([k]) => ["ar", "fr", "en"].includes(k));
+    return <div className="grid gap-5">{entries.filter(([k]) => !(multilingual || languageRoot) || k === lang).map(([key, field]) => <div key={key}>{typeof field !== "string" && <h3 className="mb-3 font-semibold">{labels[key] ?? key}</h3>}<ContentFields value={field} path={`${path}.${key}`} lang={lang} change={next => change({ ...value, [key]: next })} /></div>)}</div>;
+  }
+  return null;
+}
+export function AdminEditor() {
+  const [key, setKey] = useState<DocumentKey>("copy"); const [lang, setLang] = useState("ar"); const [value, setValue] = useState<unknown>(documentDefaults.copy); const [message, setMessage] = useState(""); const [busy, setBusy] = useState(false);
+  useEffect(() => { setMessage(""); setBusy(true); supabase.from("school_documents").select("content").eq("key", key).maybeSingle().then(({ data, error }) => { setValue(data ? mergeDocument(documentDefaults[key], data.content) : structuredClone(documentDefaults[key])); if (error) setMessage("تعذّر تحميل النسخة المحفوظة"); setBusy(false); }); }, [key]);
+  async function save() { setBusy(true); const { error } = await supabase.from("school_documents").upsert({ key, content: toJson(value), updated_at: new Date().toISOString() }); setBusy(false); setMessage(error ? "تعذّر الحفظ" : "تم نشر التغييرات في الموقع"); }
+  async function restore() { if (!confirm("استعادة المحتوى الأصلي لهذا القسم؟")) return; const { error } = await supabase.from("school_documents").delete().eq("key", key); if (error) return setMessage("تعذّرت الاستعادة"); setValue(structuredClone(documentDefaults[key])); setMessage("تمت استعادة المحتوى الأصلي"); }
+  return <div className="space-y-6"><div className="flex flex-wrap justify-between gap-3"><h2 className="text-xl font-bold">محتوى الموقع</h2><div className="flex gap-2"><Button variant="outline" onClick={restore} disabled={busy}><RotateCcw />استعادة الأصل</Button><Button onClick={save} disabled={busy}><Save />حفظ ونشر</Button></div></div><div className="flex flex-wrap gap-3"><select aria-label="قسم المحتوى" value={key} onChange={e => setKey(e.target.value as DocumentKey)} className="max-w-full rounded-md border border-input bg-card p-2">{Object.entries(documentLabels).map(([k, label]) => <option key={k} value={k}>{label}</option>)}</select><select aria-label="لغة المحتوى" value={lang} onChange={e => setLang(e.target.value)} className="rounded-md border border-input bg-card p-2"><option value="ar">العربية</option><option value="fr">Français</option><option value="en">English</option></select></div>{message && <p role="status" className="text-sm">{message}</p>}<div className="max-w-3xl border-t border-border pt-6">{busy ? <p>جارٍ التحميل…</p> : <ContentFields value={value} change={setValue} lang={lang} />}</div></div>;
+}
+export function AdminTheme() {
+  const [theme, setTheme] = useState(themeDefaults); const [message, setMessage] = useState("");
+  useEffect(() => { supabase.from("school_documents").select("content").eq("key", "theme").maybeSingle().then(({ data }) => setTheme(validTheme(data?.content))); }, []);
+  async function save() { const { error } = await supabase.from("school_documents").upsert({ key: "theme", content: toJson(theme) }); setMessage(error ? "تعذّر الحفظ" : "تم حفظ ألوان الموقع"); }
+  return <div className="space-y-6"><h2 className="text-xl font-bold">هوية الموقع</h2><div className="grid max-w-2xl gap-5 sm:grid-cols-2">{(Object.keys(theme) as (keyof typeof theme)[]).map(k => <label key={k} className="flex items-center justify-between gap-4 rounded-lg border border-border bg-card p-4"><span>{{ primary: "اللون الرئيسي", end: "لون الأزرار الثاني", foreground: "لون النص", background: "خلفية الموقع" }[k]}</span><Input type="color" aria-label={k} value={theme[k]} onChange={e => setTheme({ ...theme, [k]: e.target.value })} className="h-10 w-14 p-1" /></label>)}</div><div className="flex gap-2"><Button onClick={save}><Save />حفظ الألوان</Button><Button variant="outline" onClick={() => setTheme(themeDefaults)}>الألوان الأصلية</Button></div>{message && <p role="status">{message}</p>}</div>;
+}

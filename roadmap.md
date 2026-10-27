@@ -1,4 +1,8 @@
 # Requested updates
+- [ ] Restrict administration accounts to director-created staff, add role-based permissions and a SaaS-style workspace.
+- [ ] Manage full student records manually and through public registration with status tracking.
+- [ ] Add no-code editing of all school page content, existing/new media and brand colors with local fallbacks.
+- [ ] Verify authenticated management, public read-back and permission restrictions.
 - [x] Add shared 3D scroll reveals and interactive tilt to subject, activity, support and teacher cards; add subtle floating hero cubes while preserving all content. Verified four card sections, dedicated pages, loaded hero photos, touch reset, no overflow, reduced-motion behavior, no runtime errors, build OK and 39 passing tests.
 - [x] Refine shared cards with subtle transparent glass, restrained highlights and soft shadows without changing content; verified identical main text on all twelve pages, desktop/mobile layouts, no runtime errors and 39 passing tests.
 - [x] Replace all black marquee dividers and the Management duplicate; refresh page backgrounds, glass cards and gradient CTAs while preserving all 15 homepage sections and interactions. Verified desktop/mobile rendering, loaded founder photo, expandable FAQ, registration form, no overflow or runtime errors, build OK and 39 passing tests.
