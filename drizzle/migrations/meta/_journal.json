@@ -15,6 +15,13 @@
       "when": 1793036821416,
       "tag": "0001_gallery_and_schedule",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793112991504,
+      "tag": "0002_school_management_workspace",
+      "breakpoints": true
     }
   ]
 }
