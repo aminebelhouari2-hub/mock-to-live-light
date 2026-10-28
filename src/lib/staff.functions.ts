@@ -36,3 +36,15 @@ export const updateStaffAccount = createServerFn({ method: "POST" }).middleware(
     if (updateError) throw new Error("تعذّر تحديث الحساب");
     return { success: true };
   });
+
+export const removeStaffAccount = createServerFn({ method: "POST" }).middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ user_id: z.string().uuid() }).parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: allowed, error } = await context.supabase.rpc("school_permission", { permission: "users" });
+    if (error || !allowed || data.user_id === context.userId) throw new Error("حذف هذا الحساب غير مسموح");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(data.user_id);
+    if (deleteError) throw new Error("تعذّر حذف الحساب");
+    await supabaseAdmin.from("staff_accounts").delete().eq("user_id", data.user_id);
+    return { success: true };
+  });
