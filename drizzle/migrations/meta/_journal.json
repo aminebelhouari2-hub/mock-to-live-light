@@ -29,6 +29,13 @@
       "when": 1793113022095,
       "tag": "0003_active_admin_role_enforcement",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793194215785,
+      "tag": "0004_authorize_staff_account_creation",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,4 @@
+CREATE TABLE public.school_account_authorizations (email text PRIMARY KEY, expires_at timestamptz NOT NULL DEFAULT (now()+interval '5 minutes'));
+GRANT ALL ON public.school_account_authorizations TO service_role;
+ALTER TABLE public.school_account_authorizations ENABLE ROW LEVEL SECURITY;
+CREATE OR REPLACE FUNCTION public.restrict_school_signup() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path=public AS $$ BEGIN IF NOT EXISTS (SELECT 1 FROM public.school_account_authorizations WHERE email=lower(NEW.email) AND expires_at>now()) THEN RAISE EXCEPTION 'School accounts must be created by administration'; END IF; RETURN NEW; END $$;
