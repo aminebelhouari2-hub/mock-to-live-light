@@ -9,7 +9,11 @@ export const createStaffAccount = createServerFn({ method: "POST" }).middleware(
     const { data: allowed, error: permissionError } = await context.supabase.rpc("school_permission", { permission: "users" });
     if (permissionError || !allowed) throw new Error("ليس لديك صلاحية إدارة الحسابات");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const email = data.email.toLowerCase();
+    const { error: authorizationError } = await supabaseAdmin.from("school_account_authorizations").upsert({ email, expires_at: new Date(Date.now() + 30_000).toISOString() });
+    if (authorizationError) throw new Error("تعذّر اعتماد إنشاء الحساب");
     const { data: created, error } = await supabaseAdmin.auth.admin.createUser({ email: data.email, password: data.password, email_confirm: true, app_metadata: { school_admin_created: true } });
+    await supabaseAdmin.from("school_account_authorizations").delete().eq("email", email);
     if (error || !created.user) { console.error("Staff creation failed", error?.code, error?.message); throw new Error("تعذّر إنشاء الحساب؛ تحقق من البريد وكلمة المرور أو وجود حساب سابق."); }
     const id = created.user.id;
     const { error: staffError } = await supabaseAdmin.from("staff_accounts").insert({ user_id: id, display_name: data.display_name, role: data.role });
