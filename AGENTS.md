@@ -9,7 +9,7 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Keep multilingual school copy and support course arrays in local content modules so additions preserve a single editable source without database dependencies.
+- Keep multilingual school copy and support course arrays as complete local defaults; layer validated school_documents overrides over them so staff can edit content without code and failures preserve original content.
 - Keep the founder biography and its translated qualification groups in a dedicated local content module, shared by the visible profile and search metadata, so credentials have one editable source.
 - Derive stage-specific subject and teacher groups from support course content so all three sections stay consistent when subjects change.
 - Match support photos by explicit stage keys rather than array position so course reordering preserves editorial photo assignments.
@@ -26,3 +26,6 @@
 - Keep section separators owned by the shared school main-layout CSS, not inserted by section callers, so conditional pages cannot render duplicate separators; use shared theme utilities for glass surfaces and primary buttons.
 - Keep card reveal and pointer tilt in separate shared CSS 3D layers, independent of carousel transforms; retain initially visible content, native touch scrolling and reduced-motion support to protect accessibility and loading speed.
 - Dashboard-managed gallery photos and timetable edits live in the backend (private gallery bucket with signed URLs) and are layered over the local content defaults, so the site still shows original content if the backend is empty or unreachable.
+- Use staff_accounts as the active role authority with database school_permission checks; privileged staff creation uses authenticated server functions and trusted app metadata, never user-editable metadata, so public signup cannot create school accounts.
+- Store manual and website student records in registrations with additive student fields; preserve existing guardian requests and validate state/source at both application and database boundaries.
+- Keep the existing /admin URL as a permission-scoped workspace with shared focused management panels; never give teachers student records or account-management access.

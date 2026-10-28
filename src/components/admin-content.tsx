@@ -18,19 +18,22 @@ export function AdminGallery() {
 
   async function upload(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const file = (e.currentTarget.elements.namedItem("photo") as HTMLInputElement).files?.[0];
+    const form = e.currentTarget;
+    const file = (form.elements.namedItem("photo") as HTMLInputElement).files?.[0];
     if (!file) return;
     setBusy(true);
     const path = `${crypto.randomUUID()}.${file.name.split(".").pop() ?? "jpg"}`;
     const { error } = await supabase.storage.from("gallery").upload(path, file, { contentType: file.type });
-    if (!error) await supabase.from("gallery_photos").insert({ path, url: path, caption: caption.trim() });
-    else alert("تعذّر رفع الصورة");
-    setBusy(false); setCaption(""); e.currentTarget?.reset(); load();
+    if (error) { setBusy(false); alert("تعذّر رفع الصورة"); return; }
+    const { error: saveError } = await supabase.from("gallery_photos").insert({ path, url: path, caption: caption.trim() });
+    if (saveError) { await supabase.storage.from("gallery").remove([path]); setBusy(false); alert("تعذّر حفظ الصورة"); return; }
+    setBusy(false); setCaption(""); form.reset(); load();
   }
   async function remove(r: GalleryRow) {
     if (!confirm("حذف هذه الصورة؟")) return;
+    const { error } = await supabase.from("gallery_photos").delete().eq("id", r.id);
+    if (error) { alert("تعذّر حذف الصورة"); return; }
     await supabase.storage.from("gallery").remove([r.path]);
-    await supabase.from("gallery_photos").delete().eq("id", r.id);
     setItems(list => list.filter(x => x.id !== r.id));
   }
 

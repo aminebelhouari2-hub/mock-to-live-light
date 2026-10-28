@@ -1,3 +1,6 @@
+import { documentDefaults, fetchSchoolDocuments, validTheme } from "@/lib/school-documents";
+import type { CSSProperties } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { cdn } from "@/lib/cdn";
 import { Link } from "@tanstack/react-router";
 import { SchoolHeading, SchoolPageHeading } from "@/components/school-heading";
@@ -150,14 +153,26 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
   const [menu, setMenu] = useState(false);
   const [academicYear, setAcademicYear] = useState(() => getAcademicYear());
   const [lb, setLb] = useState<number | null>(null);
-  const [photos, setPhotos] = useState(gallery);
+  const [documents, setDocuments] = useState(documentDefaults);
+  const [theme, setTheme] = useState<CSSProperties>({});
+  const { activities, subjects, teachers, supportPhotos, nurseryPhotos, founder, testimonials, contact, faq, support: supportCourses, stages: teachingStages, videos: schoolVideos } = documents;
+  const [extraPhotos, setExtraPhotos] = useState<typeof gallery>([]);
+  const photos = [...extraPhotos, ...documents.gallery];
   const [schedule, setSchedule] = useState(primarySchedule);
   useEffect(() => {
-    fetchGalleryPhotos().then(extra => extra.length && setPhotos([...extra, ...gallery])).catch(() => {});
-    fetchScheduleSlots().then(slots => slots.length && setSchedule(mergeSchedule(primarySchedule, slots))).catch(() => {});
+    const refreshContent = () => {
+      fetchSchoolDocuments().then(setDocuments).catch(() => {});
+      fetchGalleryPhotos().then(setExtraPhotos).catch(() => {});
+      fetchScheduleSlots().then(slots => setSchedule(mergeSchedule(primarySchedule, slots))).catch(() => {});
+      supabase.from("school_documents").select("content").eq("key", "theme").maybeSingle().then(({ data }) => { if (!data) return; const c = validTheme(data.content); setTheme({ "--primary": c.primary, "--cta-start": c.primary, "--cta-end": c.end, "--forest": c.foreground, "--foreground": c.foreground, "--page-middle": c.background } as CSSProperties); });
+    };
+    refreshContent();
+    window.addEventListener("focus", refreshContent);
+    return () => window.removeEventListener("focus", refreshContent);
+
   }, []);
 
-  const t = ui[lang];
+  const t = documents.copy[lang];
   const st = supportUi[lang];
   const activeImage = lb === null ? undefined : photos[lb];
   const seasonText = (text: string) => text.replaceAll("{academicYear}", academicYear);
@@ -233,6 +248,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
   return (
     <div
       dir={dir}
+      style={theme}
       className="school-theme relative overflow-x-hidden text-foreground"
     >
       {/* WhatsApp */}
@@ -390,7 +406,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
             </div>
 
             <div className="reveal mx-auto w-full min-w-0 max-w-xl">
-              <SchoolOccasions lang={lang} hero />
+              <SchoolOccasions lang={lang} hero photos={documents.homepagePhotos} />
             </div>
           </div>
         </section>
@@ -537,7 +553,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
             ))}
           </SchoolCarousel>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {teachers.filter(m => m.name.ar === "مربية روضة").map((m) => (
+            {teachers.map((m) => (
               <School3DCard
                 key={m.name.ar}
                 className="group school-glass"
@@ -646,7 +662,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
           </div>
         )}
 
-        <Section id="occasions" label={t.galleryLabel} title={p(occasionTitle)} ><SchoolOccasions lang={lang} /></Section>
+        <Section id="occasions" label={t.galleryLabel} title={p(occasionTitle)} ><SchoolOccasions lang={lang} photos={documents.eventPhotos} /></Section>
 
         </>}
 
@@ -713,9 +729,14 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
                   phone: String(data.get("phone") ?? "").trim().slice(0, 30),
                   level: String(data.get("level") ?? "").slice(0, 120),
                   academic_year: academicYear,
+                  first_name: String(data.get("firstName") ?? "").trim().slice(0, 120),
+                  last_name: String(data.get("lastName") ?? "").trim().slice(0, 120),
+                  birth_date: String(data.get("birthDate") ?? "") || null,
+                  age: data.get("age") ? Number(data.get("age")) : null,
                 });
                 window.open(`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
               }} className="space-y-5">
+                <div className="grid gap-4 sm:grid-cols-2"><div><label htmlFor="first-name" className="mb-2 block text-sm font-semibold text-forest">{lang === "ar" ? "اسم التلميذ" : lang === "fr" ? "Prénom de l’élève" : "Student first name"}</label><input id="first-name" name="firstName" required className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest" /></div><div><label htmlFor="last-name" className="mb-2 block text-sm font-semibold text-forest">{lang === "ar" ? "لقب التلميذ" : lang === "fr" ? "Nom de l’élève" : "Student surname"}</label><input id="last-name" name="lastName" required className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest" /></div><div><label htmlFor="birth-date" className="mb-2 block text-sm font-semibold text-forest">{lang === "ar" ? "تاريخ الميلاد" : lang === "fr" ? "Date de naissance" : "Birth date"}</label><input id="birth-date" name="birthDate" type="date" className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest" /></div><div><label htmlFor="public-age" className="mb-2 block text-sm font-semibold text-forest">{lang === "ar" ? "السن" : lang === "fr" ? "Âge" : "Age"}</label><input id="public-age" name="age" type="number" min="0" max="100" className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest" /></div></div>
                 <div><label htmlFor="parent-name" className="mb-2 block text-sm font-semibold text-forest">{st.name}</label><input id="parent-name" name="parentName" autoComplete="name" required className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest" /></div>
                 <div><label htmlFor="parent-phone" className="mb-2 block text-sm font-semibold text-forest">{st.phone}</label><input id="parent-phone" name="phone" type="tel" autoComplete="tel" dir="ltr" required className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest" /></div>
                 <div><label htmlFor="school-level" className="mb-2 block text-sm font-semibold text-forest">{st.level}</label><select id="school-level" name="level" className="w-full rounded-md border border-forest/15 bg-card p-3.5 text-sm text-forest"><option>{t.heroPoints[0]}</option>{supportCourses.map(c => <option key={c.shortLevel}>{translateSupport(c.level, lang)}</option>)}</select></div>
@@ -726,7 +747,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
         </section>
         </>}
 
-        {show("faq") && <Section id="faq" compact={page !== "home"} label={p(schoolPageLabel("faq"))} title={p(schoolPageLabel("faq"))} ><SchoolFaq lang={lang} /></Section>}
+        {show("faq") && <Section id="faq" compact={page !== "home"} label={p(schoolPageLabel("faq"))} title={p(schoolPageLabel("faq"))} ><SchoolFaq lang={lang} items={faq.map(item => ({ id: item.id, question: item.question[lang], answer: item.answer[lang] }))} /></Section>}
 
         {show("contact") && <>
             {/* Contact */}
@@ -795,6 +816,7 @@ export function SchoolPage({ page = "home" }: { page?: SchoolPageKey }) {
               </div>)}
             </div>
           </div>
+          <div className="mt-6"><Button asChild variant="ghost" size="sm"><Link to="/admin">{lang === "ar" ? "دخول الإدارة" : lang === "fr" ? "Administration" : "Staff access"}</Link></Button></div>
           <p className="mt-8 border-t border-forest/10 pt-6 text-center text-xs">© {new Date().getFullYear()} Salaouandji School — {lang === "ar" ? "جميع الحقوق محفوظة" : lang === "fr" ? "Tous droits réservés" : "All rights reserved"}</p>
         </div>
       </footer>
