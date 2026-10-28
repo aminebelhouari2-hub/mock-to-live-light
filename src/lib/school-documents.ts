@@ -16,7 +16,7 @@ export const documentDefaults = {
 export type DocumentKey = keyof typeof documentDefaults;
 export type SchoolDocuments = typeof documentDefaults;
 export const documentLabels: Record<DocumentKey, string> = { copy: "نصوص جميع الصفحات", subjects: "مواد التحضيري", stages: "المواد والأساتذة حسب الطور", teachers: "بطاقات الفريق التربوي", activities: "الأنشطة", support: "دروس الدعم", supportPhotos: "صور دروس الدعم", gallery: "صور المعرض الأصلية", nurseryPhotos: "صور الروضة", homepagePhotos: "صور الرئيسية", eventPhotos: "التكريمات والمناسبات", videos: "الفيديوهات", founder: "إدارة المدرسة", testimonials: "تعليقات الأولياء", contact: "بيانات التواصل", faq: "دليل الأولياء" };
-export function safeMediaUrl(value: string) { return value.startsWith("/__l5e/") || /^https:\/\//i.test(value); }
+export function safeMediaUrl(value: string) { return value === "" || value.startsWith("/__l5e/") || /^storage:\/\/gallery\/[a-z0-9.-]+$/i.test(value) || /^https:\/\//i.test(value); }
 export function mergeDocument<T>(fallback: T, value: unknown): T {
   if (Array.isArray(fallback)) {
     if (!Array.isArray(value)) return fallback;
@@ -27,7 +27,7 @@ export function mergeDocument<T>(fallback: T, value: unknown): T {
     const output: Record<string, unknown> = {};
     for (const [key, original] of Object.entries(fallback)) {
       const next = (value as Record<string, unknown>)[key];
-      output[key] = ["src", "image", "photo"].includes(key) && typeof next === "string" && !safeMediaUrl(next) ? original : mergeDocument(original, next);
+      output[key] = ["src", "image", "photo"].includes(key) && typeof next === "string" && !safeMediaUrl(next) ? original : key === "icon" && typeof next === "string" && !["letters", "numbers", "english", "arts", "stories", "music", "review", "workshop", "science", "kids", "exam", "games"].includes(next) ? original : mergeDocument(original, next);
     }
     return output as T;
   }
@@ -43,7 +43,18 @@ export async function fetchSchoolDocuments() {
       Object.assign(next, { [key]: mergeDocument(documentDefaults[key], row.content) });
     }
   }
-  return next;
+  return await resolveDocumentMedia(next);
+}
+export async function resolveDocumentMedia<T>(value: T): Promise<T> {
+  const paths = new Set<string>();
+  function collect(item: unknown) { if (typeof item === "string" && item.startsWith("storage://gallery/")) paths.add(item.slice(18)); else if (Array.isArray(item)) item.forEach(collect); else if (item && typeof item === "object") Object.values(item).forEach(collect); }
+  collect(value);
+  if (!paths.size) return value;
+  const list = [...paths];
+  const { data } = await supabase.storage.from("gallery").createSignedUrls(list, 86400);
+  const urls = new Map(list.map((path, index) => [`storage://gallery/${path}`, data?.[index]?.signedUrl ?? ""]));
+  function replace(item: unknown): unknown { if (typeof item === "string") return urls.get(item) ?? item; if (Array.isArray(item)) return item.map(replace); if (item && typeof item === "object") return Object.fromEntries(Object.entries(item).map(([k, v]) => [k, replace(v)])); return item; }
+  return replace(value) as T;
 }
 export const toJson = (value: unknown): Json => JSON.parse(JSON.stringify(value));
 export const themeDefaults = { primary: "#F58220", end: "#E06D10", foreground: "#302c28", background: "#ffffff" };

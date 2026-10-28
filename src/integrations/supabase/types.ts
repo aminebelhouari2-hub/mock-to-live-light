@@ -140,6 +140,21 @@ export type Database = {
         }
         Relationships: []
       }
+      school_account_authorizations: {
+        Row: {
+          email: string
+          expires_at: string
+        }
+        Insert: {
+          email: string
+          expires_at?: string
+        }
+        Update: {
+          email?: string
+          expires_at?: string
+        }
+        Relationships: []
+      }
       school_documents: {
         Row: {
           content: Json
