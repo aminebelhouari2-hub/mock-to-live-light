@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useHydrated } from "@tanstack/react-router";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const hydrated = useHydrated();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
@@ -44,7 +45,7 @@ function AuthPage() {
         <div><Label htmlFor="email">البريد الإلكتروني</Label><Input id="email" type="email" dir="ltr" required value={email} onChange={e => setEmail(e.target.value)} className="mt-2" /></div>
         <div><Label htmlFor="password">كلمة المرور</Label><Input id="password" type="password" dir="ltr" required minLength={8} value={password} onChange={e => setPassword(e.target.value)} className="mt-2" /></div>
         {msg && <p className="text-sm text-forest/80" role="status">{msg}</p>}
-        <Button type="submit" disabled={busy} className="h-auto w-full py-3 font-bold">{busy ? "جارٍ الدخول…" : "دخول"}</Button>
+        <Button type="submit" disabled={busy || !hydrated} className="h-auto w-full py-3 font-bold">{busy ? "جارٍ الدخول…" : "دخول"}</Button>
       </form>
     </main>
   );
